@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_aging"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.ecs193.hummingbridbee.aging">
+
+        <TextView
+
+            android:text="Aging"
+
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            android:layout_alignParentTop="true"
+
+            android:layout_alignParentStart="true"
+
+            android:id="@+id/title"
+
+            android:background="@android:color/holo_blue_dark"
+
+            android:textSize="36sp"
+
+            android:fontFamily="sans-serif"
+
+            android:textColor="@android:color/background_light"
+
+            android:textAlignment="center"
+
+            tools:layout_marginLeft="0dp"
+
+            android:layout_marginRight="0dp"
+
+            android:layout_marginTop="0dp"
+            android:layout_alignParentLeft="true" />
+
+
+
+        <TextView
+
+            android:text="Age"
+
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            android:layout_below="@+id/title"
+
+            android:layout_alignParentLeft="true"
+
+            android:layout_alignParentStart="true"
+
+            android:layout_marginTop="29dp"
+
+            android:id="@+id/textView2"
+
+            android:textSize="18sp" />
+
+
+    <Spinner
+
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+
+            android:layout_alignTop="@+id/textView3"
+
+            android:layout_alignLeft="@+id/spinner"
+
+            android:layout_alignStart="@+id/spinner"
+
+            android:id="@+id/spinner2" />
+
+
+
+        <TextView
+
+            android:text="Bill Cor"
+
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            android:id="@+id/textView3"
+
+            android:textSize="18sp"
+
+            android:layout_below="@+id/spinner"
+
+            android:layout_alignParentLeft="true"
+
+            android:layout_alignParentStart="true"
+
+            android:layout_marginTop="11dp" />
+
+
+
+        <TextView
+
+            android:text="Cor Appr"
+
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="17dp"
+
+            android:id="@+id/textView4"
+
+            android:textSize="18sp"
+
+            android:layout_below="@+id/spinner2"
+
+            android:layout_alignParentLeft="true"
+
+            android:layout_alignParentStart="true" />
+
+
+
+        <TextView
+
+            android:text="Aging Method"
+
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="20dp"
+
+            android:id="@+id/textView5"
+
+            android:textSize="18sp"
+
+            android:layout_below="@+id/textView4"
+
+            android:layout_alignParentLeft="true"
+
+            android:layout_alignParentStart="true" />
+
+
+    <Spinner
+
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+
+            android:layout_alignTop="@+id/textView4"
+
+            android:layout_toRightOf="@+id/textView5"
+
+            android:layout_toEndOf="@+id/textView5"
+
+            android:id="@+id/spinner3" />
+
+    
+
+    <TextView
+
+        android:text="Secondary Shape Code \n(>June 15; ANHU, COHU)"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="21dp"
+
+        android:id="@+id/textView6"
+
+        android:textSize="18sp"
+
+        android:layout_below="@+id/textView5"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView5"
+        android:layout_toEndOf="@+id/editText2"
+        android:id="@+id/spinner8"
+        android:layout_toRightOf="@+id/editText2" />
+
+    <Spinner
+
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+
+        android:id="@+id/spinner"
+
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView6"
+        android:layout_toEndOf="@+id/textView4"
+        android:id="@+id/spinner10"
+        android:layout_alignLeft="@+id/spinner8"
+        android:layout_alignStart="@+id/spinner8"
+        android:layout_toRightOf="@+id/textView4" />
+
+    <TextView
+        android:text="Tail Base Color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:id="@+id/textView14"
+        android:layout_below="@+id/check1"
+        android:textSize="18sp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:text="Buffy Edge Body Feathers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:id="@+id/check1"
+        android:layout_below="@+id/textView6"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView14"
+        android:id="@+id/spinner11"
+        android:layout_alignLeft="@+id/spinner10"
+        android:layout_alignStart="@+id/spinner10" />
+
+
+</RelativeLayout>
