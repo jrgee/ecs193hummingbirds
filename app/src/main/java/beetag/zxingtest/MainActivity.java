@@ -8,6 +8,7 @@ import android.provider.MediaStore;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -93,60 +94,86 @@ public class MainActivity extends AppCompatActivity {
             //NOTE: "row" and "column" are used below referring to the original orientation of the tag
             //The BEEtag specification uses "column" to refer to rows in the original orientation when mentioning the parity format
             //Also note that BEEtag uses white for 1 and 0 for black while ZXing uses true for black and false for white.
-
-            int dec = 0; //stores decimal number of tag
-            int[] par = new int[5]; //stores expected parity results
-
-            //convert BitMatrix into decimal representation and set column parity bits
-            for(int i=0; i<3; i++){ //for first 3 columns
-                par[i] = 0; //initialize to even (0)
-
-                for(int j=0; j<5; j++){ //for each row
-                    if(!bits.get(i, j)) { //if white square (representing 1)
-                        dec += Math.pow(2, 14 - 5 * i - j);
-                        par[i] = 1 - par[i]; //flip parity for each white
-                    }
-                }
-            }
-
-            //set last two parity bits
-            par[3] = 0; //initialize to even (0)
-            for(int j=0; j<3; j++){ //for first 3 rows
-                for(int i=0; i<3; i++){ //for first 3 columns
-                    if(!bits.get(i, j)) { //if white square (representing 1)
-                        par[3] = 1 - par[3]; //flip parity for each white
-                    }
-                }
-            }
-
-            par[4] = 0; //initialize to even (0)
-            for(int j=3; j<5; j++){ //for last 2 rows
-                for(int i=0; i<3; i++){ //for first 3 columns
-                    if(!bits.get(i, j)) { //if white square (representing 1)
-                        par[4] = 1 - par[4]; //flip parity for each white
-                    }
-                }
-            }
-
-            //check parity for 4th column
-            for(int j=0; j<5; j++){ //for each row
-                if((!bits.get(3, j) && par[j] == 0) || (bits.get(3, j) && par[j] == 1)){ //if failed parity check
-                    decstr.setText("Error: Parity check 1 failed.");
+            int dec = 0;
+            dec = decode(bits);
+            for (int i = 0; i < 4; i++){
+                dec = decode(bits);
+                if(dec != -1) {
+                    decstr.setText(Integer.toString(dec));
                     return;
+                }else{
+                    bits = rotate(bits, 5);
+                    Log.d("bits", bits.toString());
                 }
             }
 
-            //check parity for 5th column (reverse of 4th column)
-            for(int j=0; j<5; j++){ //for each row
-                if((!bits.get(4, j) && par[4-j] == 0) || (bits.get(4, j) && par[4-j] == 1)){ //if failed parity check
-                    decstr.setText("Error: Parity check 2 failed.");
-                    return;
-                }
-            }
-
-            //all parity checks passed, display decimal representation
-            decstr.setText(Integer.toString(dec));
+            //all parity checks failed, display error message
+            decstr.setText("Error: All orientations failed.");
         }
+    }
+
+    BitMatrix rotate(BitMatrix bits, int size){
+        BitMatrix x = new BitMatrix(size, size);
+        for (int i = 0; i < size; ++i) {
+            for (int j = 0; j < size; ++j) {
+                if(bits.get(size - j - 1, i))
+                    x.set(i, j);
+            }
+        }
+        return x;
+    }
+
+    int decode(BitMatrix bits){
+        int dec = 0; //stores decimal number of tag
+        int[] par = new int[5]; //stores expected parity results
+
+        //convert BitMatrix into decimal representation and set column parity bits
+        for(int i=0; i<3; i++){ //for first 3 columns
+            par[i] = 0; //initialize to even (0)
+
+            for(int j=0; j<5; j++){ //for each row
+                if(!bits.get(i, j)) { //if white square (representing 1)
+                    dec += Math.pow(2, 14 - 5 * i - j);
+                    par[i] = 1 - par[i]; //flip parity for each white
+                }
+            }
+        }
+
+        //set last two parity bits
+        par[3] = 0; //initialize to even (0)
+        for(int j=0; j<3; j++){ //for first 3 rows
+            for(int i=0; i<3; i++){ //for first 3 columns
+                if(!bits.get(i, j)) { //if white square (representing 1)
+                    par[3] = 1 - par[3]; //flip parity for each white
+                }
+            }
+        }
+
+        par[4] = 0; //initialize to even (0)
+        for(int j=3; j<5; j++){ //for last 2 rows
+            for(int i=0; i<3; i++){ //for first 3 columns
+                if(!bits.get(i, j)) { //if white square (representing 1)
+                    par[4] = 1 - par[4]; //flip parity for each white
+                }
+            }
+        }
+
+        //check parity for 4th column
+        for(int j=0; j<5; j++){ //for each row
+            if((!bits.get(3, j) && par[j] == 0) || (bits.get(3, j) && par[j] == 1)){ //if failed parity check
+                //decstr.setText("Error: Parity check 1 failed.");
+                return -1;
+            }
+        }
+
+        //check parity for 5th column (reverse of 4th column)
+        for(int j=0; j<5; j++){ //for each row
+            if((!bits.get(4, j) && par[4-j] == 0) || (bits.get(4, j) && par[4-j] == 1)){ //if failed parity check
+                //decstr.setText("Error: Parity check 2 failed.");
+                return -1;
+            }
+        }
+        return dec;
     }
 
 }
