@@ -1,4 +1,4 @@
-/*package beetag.zxingtest;
+package beetag.zxingtest;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 //this is intended as a proof of concept rather than any semblance of final code
 
 
-public class cameraTest extends AppCompatActivity {
+public class cameraActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,4 +31,4 @@ public class cameraTest extends AppCompatActivity {
         ImageView imageview = (ImageView) findViewById(R.id.imageView);
         imageview.setImageBitmap(bitImage);
     }
-}*/
+}

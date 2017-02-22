@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
             decstr.setText(Integer.toString(dec));
 
             //Pass BeeTag info to next screen
-            Intent saveIntent= new Intent(MainActivity.this, cameraTest.class);
+            Intent saveIntent= new Intent(MainActivity.this, cameraActivity.class);
 
             //Bundle extras into a variable and pass onto saved Intent
             Bundle extras = new Bundle();
