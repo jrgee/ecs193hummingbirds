@@ -17,17 +17,17 @@ public class cameraActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+        TextView decStr = (TextView) findViewById(R.id.decText);
+        Intent intent = getIntent();
+        String decimalValue = intent.getStringExtra("decimal");
+        decStr.setText(decimalValue);
 
     }
 
     public void showInfo(){
-        TextView decStr = (TextView) findViewById(R.id.decText);
-
-        Intent intent = getIntent();
+        //Intent intent = getIntent()
         //Bundle extras = intent.getExtras();
-        String decimalValue = intent.getStringExtra("decimal");
         //Bitmap bitImage = extras.getParcelable("bitmap");
-        decStr.setText(decimalValue);
 
         //ImageView imageview = (ImageView) findViewById(R.id.imageView);
         //imageview.setImageBitmap(bitImage);
