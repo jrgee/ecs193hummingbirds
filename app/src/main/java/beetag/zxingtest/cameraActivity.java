@@ -14,6 +14,7 @@ import android.widget.TextView;
 public class cameraActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
@@ -23,12 +24,12 @@ public class cameraActivity extends AppCompatActivity {
         TextView decStr = (TextView) findViewById(R.id.decText);
 
         Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        String decimalValue = extras.getString("decimal");
-        Bitmap bitImage = extras.getParcelable("bitmap");
+        //Bundle extras = intent.getExtras();
+        String decimalValue = intent.getStringExtra("decimal");
+        //Bitmap bitImage = extras.getParcelable("bitmap");
         decStr.setText(decimalValue);
 
-        ImageView imageview = (ImageView) findViewById(R.id.imageView);
-        imageview.setImageBitmap(bitImage);
+        //ImageView imageview = (ImageView) findViewById(R.id.imageView);
+        //imageview.setImageBitmap(bitImage);
     }
 }

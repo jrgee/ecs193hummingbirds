@@ -154,10 +154,10 @@ public class MainActivity extends AppCompatActivity {
             Intent saveIntent= new Intent(MainActivity.this, cameraActivity.class);
 
             //Bundle extras into a variable and pass onto saved Intent
-            Bundle extras = new Bundle();
-            extras.putString("decimal", decString);
-            extras.putParcelable("bitmap", thumbMap);
-            saveIntent.putExtras(extras);
+            //Bundle extras = new Bundle();
+            saveIntent.putExtra("decimal", decString);
+            //extras.putParcelable("bitmap", thumbMap);
+            //saveIntent.putExtras(extras);
             startActivity(saveIntent);
         }
 
