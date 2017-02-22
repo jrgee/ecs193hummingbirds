@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             //get TextViews on main screen (temporary)
             //TextView param = (TextView) findViewById(R.id.param_string);
             //TextView results = (TextView) findViewById(R.id.results_string);
-            //TextView decstr = (TextView) findViewById(R.id.dec_string);
+            TextView decstr = (TextView) findViewById(R.id.dec_string);
 
             //use the following line instead of the "file" related lines to use thumbnail instead of full image
             //Bitmap bMap = (Bitmap) data.getExtras().get("data");
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
             //check parity for 4th column
             for(int j=0; j<5; j++){ //for each row
                 if((!bits.get(3, j) && par[j] == 0) || (bits.get(3, j) && par[j] == 1)){ //if failed parity check
-                    //decstr.setText("Error: Parity check 1 failed.");
+                    decstr.setText("Error: Parity check 1 failed.");
                     return;
                 }
             }
@@ -141,14 +141,14 @@ public class MainActivity extends AppCompatActivity {
             //check parity for 5th column (reverse of 4th column)
             for(int j=0; j<5; j++){ //for each row
                 if((!bits.get(4, j) && par[4-j] == 0) || (bits.get(4, j) && par[4-j] == 1)){ //if failed parity check
-                    //decstr.setText("Error: Parity check 2 failed.");
+                    decstr.setText("Error: Parity check 2 failed.");
                     return;
                 }
             }
 
             //all parity checks passed, display decimal representation
             decString = Integer.toString(dec);
-            //decstr.setText(Integer.toString(dec));
+            decstr.setText(Integer.toString(dec));
 
             //Pass BeeTag info to next screen
             Intent saveIntent= new Intent(MainActivity.this, cameraTest.class);
