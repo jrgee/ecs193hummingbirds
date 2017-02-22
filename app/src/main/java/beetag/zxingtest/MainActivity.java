@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             TextView decstr = (TextView) findViewById(R.id.dec_string);
 
             //use the following line instead of the "file" related lines to use thumbnail instead of full image
-            Bitmap thumbMap = (Bitmap) data.getExtras().get("data");
+            //Bitmap thumbMap = (Bitmap) data.getExtras().get("data");
 
             String decString = "Error";
 
