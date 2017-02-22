@@ -21,10 +21,11 @@ public class cameraTest extends AppCompatActivity {
 
     public void showInfo(){
         TextView decStr = (TextView) findViewById(R.id.decText);
-        Bitmap bitImage = getIntent().getParcelableExtra("bitmap");
 
         Intent intent = getIntent();
-        String decimalValue = intent.getStringExtra("decimal");
+        Bundle extras = intent.getExtras();
+        String decimalValue = extras.getString("decimal");
+        Bitmap bitImage = extras.getParcelable("bitmap");
         decStr.setText(decimalValue);
 
         ImageView imageview = (ImageView) findViewById(R.id.imageView);

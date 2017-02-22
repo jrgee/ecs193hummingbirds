@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             TextView decstr = (TextView) findViewById(R.id.dec_string);
 
             //use the following line instead of the "file" related lines to use thumbnail instead of full image
-            //Bitmap bMap = (Bitmap) data.getExtras().get("data");
+            Bitmap thumbMap = (Bitmap) data.getExtras().get("data");
 
             String decString = "Error";
 
@@ -152,8 +152,12 @@ public class MainActivity extends AppCompatActivity {
 
             //Pass BeeTag info to next screen
             Intent saveIntent= new Intent(MainActivity.this, cameraTest.class);
-            saveIntent.putExtra("decimal", decString);
-            saveIntent.putExtra("bitmap", bMap);
+
+            //Bundle extras into a variable and pass onto saved Intent
+            Bundle extras = new Bundle();
+            extras.putString("decimal", decString);
+            extras.putParcelable("bitmap", thumbMap);
+            saveIntent.putExtras(extras);
             startActivity(saveIntent);
         }
 
