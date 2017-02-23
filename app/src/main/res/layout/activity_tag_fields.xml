@@ -245,8 +245,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editText2"
-            android:layout_alignTop="@+id/textView25"
+            android:layout_alignBottom="@+id/textView25"
             android:layout_alignParentRight="true"
+            android:textSize="18sp"
             android:layout_alignParentEnd="true"
             android:layout_toEndOf="@+id/title"
             android:layout_toRightOf="@+id/title" />
@@ -267,11 +268,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editText3"
-            android:layout_alignTop="@+id/textView26"
+            android:layout_alignBottom="@+id/textView26"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/title"
-            android:layout_toRightOf="@+id/title" />
+            android:layout_alignLeft="@+id/editText2"
+            android:layout_alignStart="@+id/editText2" />
 
         <TextView
             android:text="Number - Decimal"
@@ -288,7 +289,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editText4"
-            android:layout_alignTop="@+id/textView27"
+            android:layout_alignBottom="@+id/textView27"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_toEndOf="@+id/title"
@@ -332,7 +333,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editText5"
-            android:layout_alignTop="@+id/textView29"
+            android:layout_alignBottom="@+id/textView29"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_toEndOf="@+id/title"
@@ -353,12 +354,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editText6"
-            android:layout_alignTop="@+id/textView30"
+            android:layout_alignBottom="@+id/textView30"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_toEndOf="@+id/title"
             android:layout_toRightOf="@+id/title" />
-
 
 
     </RelativeLayout>
