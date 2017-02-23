@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="markerType">
+        <item></item>
+        <item> - Not Recorded</item>
+        <item>RFID</item>
+        <item>BEEtag</item>
+        <item>Color Mark</item>
+        <item>Tail Feather Clipped</item>
+    </string-array>
+
+    <string-array name="markerStatus">
+        <item></item>
+        <item> - Not Recorded</item>
+        <item>RFID and Banded</item>
+        <item>RFID and Unbanded</item>
+        <item>RFID and BEETagged</item>
+        <item>RFID and Color Marked</item>
+        <item>BEETagged and Banded</item>
+        <item>BEETagged and Unbanded</item>
+        <item>Color Marked and Banded</item>
+        <item>Color Marked and Unbanded</item>
+    </string-array>
+
+    <string-array name="manufacturer">
+        <item></item>
+        <item> - Not Recorded</item>
+        <item>Biomark</item>
+        <item>Staples Waterproof Paper</item>
+        <item>Michaels Acrylic Paint</item>
+        <item>White Out (Eco Friendly)</item>
+    </string-array>
+
+    <string-array name="placementMethod">
+        <item></item>
+        <item> - Not Recorded</item>
+        <item>Subcutaneous</item>
+        <item>Glued to Back</item>
+    </string-array>
+
+    <string-array name="placementMaterial">
+        <item></item>
+        <item> - Not Recorded</item>
+        <item>Vet Bond Surgical Glue</item>
+        <item>PDS Absorbable Suture</item>
+        <item>Eyelash Glue</item>
+    </string-array>
+
+    <string-array name="closureMethod">
+        <item></item>
+        <item> - Not Recorded</item>
+        <item>Suture</item>
+        <item>Glue</item>
+    </string-array>
+
+    <string-array name="bodyLocation">
+        <item></item>
+        <item> - Not Recorded</item>
+        <item>Back - Proximal</item>
+        <item>Back - Middle</item>
+        <item>Back - Distal</item>
+        <item>Head - Right Side</item>
+        <item>Head - Left Side</item>
+        <item>Wing</item>
+        <item>Leg</item>
+    </string-array>
+
+    <string-array name="featherLocation">
+        <item></item>
+        <item> - Not Recorded</item>
+        <item>Right - R1</item>
+        <item>Right - R2</item>
+        <item>Right - R3</item>
+        <item>Right - R4</item>
+        <item>Right - R5</item>
+        <item>Left - R1</item>
+        <item>Left - R2</item>
+        <item>Left - R3</item>
+        <item>Left - R4</item>
+        <item>Left - R5</item>
+    </string-array>
+
+    <string-array name="beetagColor">
+        <item></item>
+        <item> - Not Recorded</item>
+        <item>White</item>
+        <item>Red</item>
+        <item>Yellow</item>
+        <item>Green</item>
+        <item>Blue</item>
+        <item>Purple</item>
+    </string-array>
+
+
+</resources>

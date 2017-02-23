@@ -29,15 +29,13 @@ public class MainActivity extends AppCompatActivity {
         Button scanButton = (Button) findViewById(R.id.scan_button);
         scanButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                Intent toy = new Intent(MainActivity.this, tagFields.class);
-                startActivity(toy);
                 //open built-in Android camera and save temporary image
-                /*File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "scan.jpg");
+                File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "scan.jpg");
                 Uri outputFileUri = Uri.fromFile(file);
 
                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-                startActivityForResult(cameraIntent, 1);*/
+                startActivityForResult(cameraIntent, 1);
             }
         });
     }
