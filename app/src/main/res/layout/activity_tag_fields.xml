@@ -233,6 +233,16 @@
             android:textSize="18sp"
             android:id="@+id/textView25" />
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText2"
+            android:layout_alignTop="@+id/textView25"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/title"
+            android:layout_toRightOf="@+id/title" />
+
 
         <TextView
             android:text="Number - Hexadecimal"
@@ -245,6 +255,16 @@
             android:textSize="18sp"
             android:id="@+id/textView26" />
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText3"
+            android:layout_alignTop="@+id/textView26"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/title"
+            android:layout_toRightOf="@+id/title" />
+
         <TextView
             android:text="Number - Decimal"
             android:layout_width="wrap_content"
@@ -255,6 +275,16 @@
             android:layout_marginTop="50dp"
             android:textSize="18sp"
             android:id="@+id/textView27" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText4"
+            android:layout_alignTop="@+id/textView27"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/title"
+            android:layout_toRightOf="@+id/title" />
 
 
         <TextView
@@ -289,6 +319,16 @@
             android:textSize="18sp"
             android:id="@+id/textView29" />
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText5"
+            android:layout_alignTop="@+id/textView29"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/title"
+            android:layout_toRightOf="@+id/title" />
+
         <TextView
             android:text="Barcode Number"
             android:layout_width="wrap_content"
@@ -299,6 +339,16 @@
             android:layout_marginTop="50dp"
             android:textSize="18sp"
             android:id="@+id/textView30" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText6"
+            android:layout_alignTop="@+id/textView30"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/title"
+            android:layout_toRightOf="@+id/title" />
 
 
 
