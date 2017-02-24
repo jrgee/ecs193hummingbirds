@@ -12,17 +12,16 @@ import android.view.View;
 import android.content.ClipboardManager;
 import android.content.ClipData;
 
-//everything in this file is hacked together from various sources on Stack Overflow
-//this is intended as a proof of concept rather than any semblance of final code
-
 
 public class cameraActivity extends AppCompatActivity {
     public Button listView, snapView;
     CharSequence decimalLabel;
+    Intent intent = getIntent();
+    final String decimalValue = intent.getStringExtra("decimal");
 
     public void init() {
 
-        // Receive data stored in previous activity and display data on screen
+        // Receive BEEtag data stored in previous activity
         Intent intent = getIntent();
         final String decimalValue = intent.getStringExtra("decimal");
 
@@ -37,16 +36,17 @@ public class cameraActivity extends AppCompatActivity {
             }
         });
 
-        // Copies the decimal value onto clipboard
-        snapView = (Button) findViewById(R.id.button3);
+        // Sets up Copy button process
+        /*snapView = (Button) findViewById(R.id.button3);
         snapView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Copies the decimal value onto clipboard
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText(decimalLabel, decimalValue);
                 clipboard.setPrimaryClip(clip);
             }
-        });
+        });*/
     }
 
     @Override
@@ -55,12 +55,21 @@ public class cameraActivity extends AppCompatActivity {
         setContentView(R.layout.activity_camera);
         TextView decStr = (TextView) findViewById(R.id.decText);
 
-        // Receive data stored in previous activity and display data on screen
+        // Receive BEEtag data stored in previous activity and display data on screen
         Intent intent = getIntent();
         final String decimalValue = intent.getStringExtra("decimal");
         decStr.setText(decimalValue);
     }
 
+    public void modelTextViewClick(View v){
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText(decimalLabel, decimalValue);
+        clipboard.setPrimaryClip(clip);
+    }
+
+    // Do not need to display thumbnail of image taken
+
+    /*
     public void showInfo(){
         //Intent intent = getIntent()
         //Bundle extras = intent.getExtras();
@@ -68,5 +77,5 @@ public class cameraActivity extends AppCompatActivity {
 
         //ImageView imageview = (ImageView) findViewById(R.id.imageView);
         //imageview.setImageBitmap(bitImage);
-    }
+    }*/
 }

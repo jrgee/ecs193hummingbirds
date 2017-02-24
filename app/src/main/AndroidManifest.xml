@@ -16,13 +16,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".cameraActivity"
-            android:label="@string/title_activity_camera"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".tagFields"
             android:label="@string/title_activity_tag_fields"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".cameraActivity"></activity>
     </application>
 
 </manifest>
