@@ -53,6 +53,60 @@
         <item>Glue</item>
     </string-array>
 
+    <string-array name="bandingLocation">
+        <item></item>
+        <item> - Not Recorded</item>
+        <item>ANT  Hollys Laramie Home</item>
+        <item>AP  Arastradero Preserve</item>
+        <item>Art-C  Art Craigmills Home</item>
+        <item>AT  Aptos</item>
+        <item>AVAL-1  Avalon, Catalina Isl, Dave and Marty Ashleigh, Avalon, CA 90704</item>
+        <item>AVAL-2  Avalon, Catalina Isl, Dave Smith and Donna Harris; Middle? Terrrace Road, Avalon, CA</item>
+        <item>BACG  Betty Anne Carlin Gardens</item>
+        <item>BC  Big Creek UC Nature Reserve at Big Sur Calif</item>
+        <item>BH  Beverley Hills Gottlieb Home</item>
+        <item>BISH-1  Bishop Denise Waterbury</item>
+        <item>CCAH  AnglinWinters Home</item>
+        <item>CF  Cypress Flower Farm</item>
+        <item>ER  Emily Renzel Marsh</item>
+        <item>FOX  Kevin McNeills home, 6 Brandt Lane, Fox Park, WY 82070</item>
+        <item>FR  Fell Ranch</item>
+        <item>HH  Hannahs House</item>
+        <item>HV  Hidden Villa</item>
+        <item>IP  Indian Peak Ranch</item>
+        <item>JH  Juanita Heinneman residence</item>
+        <item>KL  Kay Loughman House</item>
+        <item>KR  Kern River Preserve</item>
+        <item>KS  Kristen Shields House</item>
+        <item>LAG  Los Angeles Natural History Museum Gardens (LA Gardens)</item>
+        <item>LC  Lynn Cropper House</item>
+        <item>MD  Mount Diablo</item>
+        <item>MH  Morgan Hill</item>
+        <item>ML  Mammoth Lakes</item>
+        <item>NPS1  National Park Service</item>
+        <item>OLAN  Coso Jct, Vicki and Jeff Davis</item>
+        <item>PLAC  Placerville</item>
+        <item>PP  Pillar Point</item>
+        <item>RC  Home</item>
+        <item>SB  Stevenson Bridge</item>
+        <item>SC  UCSC Arboretum</item>
+        <item>SCI  Santa Cruz Island</item>
+        <item>SL  Stone Lakes USFWS Refuge</item>
+        <item>SMM  Santa Monica Mountains, Tom and Ren (Brenda) Smith; Santa Monica Mountains National Recreation Area, Topanga, CA</item>
+        <item>SP  Spirit Canyon Lodge</item>
+        <item>SV  Scotts Valley</item>
+        <item>TL  Telles Lane</item>
+        <item>VB  Victor Bravo House</item>
+        <item>VP  Victoria Place</item>
+
+
+
+
+
+
+
+    </string-array>
+
     <string-array name="bodyLocation">
         <item></item>
         <item> - Not Recorded</item>

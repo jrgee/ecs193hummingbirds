@@ -61,7 +61,8 @@ public class cameraActivity extends AppCompatActivity {
         decStr.setText(decimalValue);
     }
 
-    public void modelTextViewClick(View v){
+    // Click the decimal value to copy into Android clipboard
+    public void textViewClick(View v){
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText(decimalLabel, decimalValue);
         clipboard.setPrimaryClip(clip);
@@ -69,13 +70,4 @@ public class cameraActivity extends AppCompatActivity {
 
     // Do not need to display thumbnail of image taken
 
-    /*
-    public void showInfo(){
-        //Intent intent = getIntent()
-        //Bundle extras = intent.getExtras();
-        //Bitmap bitImage = extras.getParcelable("bitmap");
-
-        //ImageView imageview = (ImageView) findViewById(R.id.imageView);
-        //imageview.setImageBitmap(bitImage);
-    }*/
 }
