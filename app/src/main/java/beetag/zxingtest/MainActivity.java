@@ -20,7 +20,16 @@ import com.google.zxing.common.GridSampler;
 
 import java.io.File;
 
+/**
+ * The MainActivity class controls actions of the main screen class of the Hummingbird App
+ */
 public class MainActivity extends AppCompatActivity {
+    /**
+     * Sets up actions to be taken upon entering the main screen including button setup to
+     * transition to the camera screen
+     * @param savedInstanceState the data of the current screen
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,19 +38,24 @@ public class MainActivity extends AppCompatActivity {
         Button scanButton = (Button) findViewById(R.id.scan_button);
         scanButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                Intent toy = new Intent(MainActivity.this, tagFields.class);
-                startActivity(toy);
                 //open built-in Android camera and save temporary image
-                /*File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "scan.jpg");
+                File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "scan.jpg");
                 Uri outputFileUri = Uri.fromFile(file);
 
                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-                startActivityForResult(cameraIntent, 1);*/
+                startActivityForResult(cameraIntent, 1);
             }
         });
     }
 
+    /**
+     * Retrieves image data from the camera and decodes bit patterns into a corresponding number and
+     * passes the number to the next screen
+     * @param requestCode the requestCode passed to the function must be 1 in order to decode image
+     * @param resultCode the resultCode passed to the function must be void and successful
+     * @param data the image data taken by the camera
+     */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1 && resultCode == RESULT_OK){ //on picture successfully taken
             //get TextViews on main screen (temporary)

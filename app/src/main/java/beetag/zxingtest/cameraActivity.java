@@ -12,13 +12,19 @@ import android.view.View;
 import android.content.ClipboardManager;
 import android.content.ClipData;
 
-
+/**
+ * The cameraActivity class is used to display information passed from the previous camera screen
+ */
 public class cameraActivity extends AppCompatActivity {
     public Button listView, snapView;
     CharSequence decimalLabel;
     Intent intent = getIntent();
     final String decimalValue = intent.getStringExtra("decimal");
 
+    /**
+     ** Initalizes the activity and sets up a listener for the button press in order to move to the
+     * tag field screen
+     */
     public void init() {
 
         // Receive BEEtag data stored in previous activity
@@ -49,6 +55,11 @@ public class cameraActivity extends AppCompatActivity {
         });*/
     }
 
+    /**
+     * Sets up actions to be taken upon entering the cameraActivity screen including retrieving the
+     * the decimal value of the previous screen and displaying the number on the current screen
+     * @param savedInstanceState the data of the current screen
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +72,10 @@ public class cameraActivity extends AppCompatActivity {
         decStr.setText(decimalValue);
     }
 
-    // Click the decimal value to copy into Android clipboard
+    /**
+     * Clicking the decimal number will copy the data from the clipboard
+     * @param v the current screen view
+     */
     public void textViewClick(View v){
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText(decimalLabel, decimalValue);

@@ -7,8 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+/**
+ * The tagFields class controls the aspects of the Tag Field screen
+ */
 public class tagFields extends AppCompatActivity {
-
+    /**
+     * Displays the formatted tag fields onto the current screen
+     * @param savedInstanceState the data of the current screen
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
