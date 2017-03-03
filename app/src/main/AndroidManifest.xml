@@ -15,11 +15,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".tagFields"
             android:label="@string/title_activity_tag_fields"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".cameraActivity"></activity>
+        <activity
+            android:name=".cameraActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:label="@string/title_activity_camera"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

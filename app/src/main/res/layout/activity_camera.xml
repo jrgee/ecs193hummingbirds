@@ -27,34 +27,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView3"
         android:textSize="24sp"
+        android:layout_marginTop="52dp"
         android:layout_below="@+id/decText"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="12dp" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/editText"
-        android:layout_height="40dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-
-        android:layout_marginTop="12dp"
-        android:layout_below="@+id/textView3"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
-
-    <Button
-        android:text="Auxillary Markers"
-        android:layout_width="179dp"
-        android:id="@+id/button2"
-        android:layout_gravity="center"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="13dp" />
 
     <TextView
         android:layout_height="40dp"
@@ -69,5 +45,29 @@
         android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editText"
+        android:layout_height="40dp"
+        android:textAlignment="center"
+        android:textSize="20sp"
+
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Auxillary Markers"
+        android:layout_width="179dp"
+        android:id="@+id/button2"
+        android:layout_gravity="center"
+        android:layout_height="50dp"
+        android:layout_marginBottom="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
