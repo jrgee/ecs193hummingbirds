@@ -245,6 +245,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editText2"
+            android:maxLines="1"
+            android:inputType="number"
             android:layout_alignBottom="@+id/textView25"
             android:layout_alignParentRight="true"
             android:textSize="18sp"
@@ -271,6 +273,8 @@
             android:layout_alignBottom="@+id/textView26"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
+            android:maxLines="1"
+            android:inputType="text"
             android:layout_alignLeft="@+id/editText2"
             android:layout_alignStart="@+id/editText2" />
 
@@ -289,6 +293,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editText4"
+            android:inputType="number"
+            android:maxLines="1"
             android:layout_alignBottom="@+id/textView27"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
@@ -325,6 +331,8 @@
             android:layout_alignBottom="@+id/textView29"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
+            android:maxLines="1"
+            android:inputType="text"
             android:layout_toEndOf="@+id/title"
             android:layout_toRightOf="@+id/title" />
 
@@ -347,16 +355,20 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_toEndOf="@+id/title"
+            android:maxLines="1"
+            android:inputType="text"
             android:layout_toRightOf="@+id/title" />
 
         <Spinner
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/spinner26"
             android:entries="@array/beetagColor"
             android:layout_above="@+id/textView29"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:layout_width="400dp"
+            android:layout_alignLeft="@+id/editText5"
+            android:layout_alignStart="@+id/editText5" />
 
 
     </RelativeLayout>

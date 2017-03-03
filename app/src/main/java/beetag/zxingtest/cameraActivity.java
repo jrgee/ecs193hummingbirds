@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.view.View;
 import android.content.ClipboardManager;
 import android.content.ClipData;
+import android.os.Environment;
 
 import org.w3c.dom.Text;
 
@@ -34,8 +35,8 @@ public class cameraActivity extends AppCompatActivity {
 
         // Receive BEEtag data stored in previous activity
         Intent intent = getIntent();
-        final String decimalValue = intent.getStringExtra("decimal");
-        //decStr.setText(decimalValue);
+        final String decimal= intent.getStringExtra("decimal");
+
 
         // Opens next page with Auxillary Marker button press
         listView = (Button) findViewById(R.id.button2);
@@ -43,18 +44,18 @@ public class cameraActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Upon button press, go to Auxillary Markers page
-                Intent toy = new Intent(cameraActivity.this, tagFields.class);
-                startActivity(toy);
+                Intent saveValue = new Intent(cameraActivity.this, tagFields.class);
+                startActivity(saveValue);
             }
         });
     }
 
-        public void textViewClick(View v){
+    public void textViewClick(View v){
 
-             // Sets up Copy button process
-            snapView = (TextView) findViewById(R.id.decText);
-            final String decimalValue = snapView.getText().toString();
-            snapView.setOnClickListener(new View.OnClickListener() {
+        // Sets up Copy button process
+        snapView = (TextView) findViewById(R.id.decText);
+        final String decimalValue = snapView.getText().toString();
+        snapView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Copies the decimal value onto clipboard
@@ -65,6 +66,5 @@ public class cameraActivity extends AppCompatActivity {
         });
 
     }
-
 
 }
