@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.os.Environment;
+import android.support.v4.content.FileProvider;
 
 import com.google.zxing.common.*;
 import com.google.zxing.*;
@@ -41,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
 
                 //open built-in Android camera and save temporary image
                 File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "scan.jpg");
-                Uri outputFileUri = Uri.fromFile(file);
+                Uri outputFileUri = FileProvider.getUriForFile(MainActivity.this,
+                        BuildConfig.APPLICATION_ID + ".provider",
+                        file);
 
                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
