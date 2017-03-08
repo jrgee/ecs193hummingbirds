@@ -7,13 +7,21 @@ import com.google.zxing.common.GridSampler;
 import java.awt.image.BufferedImage;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javax.imageio.ImageIO;
+//import javax.swing.JFileChooser;
+
 
 public class BEEtag {
     public static void main(String[] args) {
-        if(args.length < 1){
-            System.err.println("Please specify a directory to process.");
+        
+        if(args.length < 2){
+            System.err.println("Please specify a directory to process and a file to output to.");
             return;
         }
         
@@ -23,11 +31,34 @@ public class BEEtag {
            return;
         }
         
+        FileWriter out;
+        
+        try{
+            out = new FileWriter(args[1]);
+        }
+        catch(IOException e){
+            System.err.println("Invalid output file.");
+            return;
+        }
+        
+        /*JFileChooser fc = new JFileChooser();
+        File dir;
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        if(fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
+            dir = fc.getSelectedFile();
+        else
+            return;*/
+        
+        //write header to CSV
+        writeCSV(out, new ArrayList<>(Arrays.asList("ID","Time")));
+        
         for(File imgFile : dir.listFiles()){
             BufferedImage img;
+            BasicFileAttributes attr;
             try{
                 //get image to buffered image
                 img = ImageIO.read(imgFile);
+                attr = Files.readAttributes(imgFile.toPath(), BasicFileAttributes.class);
             }
             catch(IOException e){
                 System.err.println("Invalid image file " + imgFile.getPath() + ".");
@@ -46,10 +77,6 @@ public class BEEtag {
                 WhiteRectangleDetector detector = new WhiteRectangleDetector(bitmap.getBlackMatrix());
                 ResultPoint[] corners = detector.detect();
 
-                //print corner locations to TextView (for debugging)
-                System.out.println(corners[0].toString() + " " + corners[2].toString() + " " +
-                        corners[3].toString() + " " + corners[1].toString());
-
                 //convert code into its binary representation stored in BitMatrix
                 GridSampler sampler = GridSampler.getInstance();
                 bits = sampler.sampleGrid(bitmap.getBlackMatrix(), 5, 5,
@@ -58,32 +85,46 @@ public class BEEtag {
                         corners[3].getX(), corners[3].getY(), corners[1].getX(), corners[1].getY());
 
                 //print converted BitMatrix (for debugging)
-                System.out.println(bits.toString());
+                //System.out.println(bits.toString());
             }
             catch(NotFoundException e){
                 //couldn't find code in image
                 System.err.println("Error: No valid code found.");
-                return;
+                continue;
             }
             
             //NOTE: "row" and "column" are used below referring to the original orientation of the tag
             //The BEEtag specification uses "column" to refer to rows in the original orientation when mentioning the parity format
             //Also note that BEEtag uses white for 1 and 0 for black while ZXing uses true for black and false for white.
-            int dec;
+            int dec = -1;
 
-            for (int i = 0; i < 4; i++){
+            for(int i = 0; i < 4; i++){
                 dec = decode(bits);
-                if(dec != -1) {
-                    System.out.println(Integer.toString(dec));
-                    return;
+                if(dec != -1) { //found valid tag orientation
+                    ArrayList<String> values = new ArrayList<>(); //list of strings to write to csv
+                    values.add(Integer.toString(dec)); //tag ID
+                    values.add(attr.creationTime().toString()); //file creation time (temp)
+                    writeCSV(out, values); //write record to CSV
+                    break;
                 }else{
                     bits = rotate(bits, 5);
                 }
             }
-
-            //all parity checks failed, display error message
-            System.err.println("Error: All orientations failed.");
+            
+            if(dec == -1){
+                //all parity checks failed, display error message
+                System.err.println("Error: All orientations failed.");
+            }
         } //for all files in directory
+        
+        try{
+            out.flush();
+            out.close();
+            System.out.println("Wrote to output file " + args[1] + ".");
+        }
+        catch(IOException e){
+            System.err.println("Failed to close CSV file.");
+        }
     } //main
 
     public static BitMatrix rotate(BitMatrix bits, int size){
@@ -149,5 +190,18 @@ public class BEEtag {
         }
         return dec;
     } //decode
-
+    
+    public static void writeCSV(FileWriter writer, ArrayList<String> record)
+    {
+        try{
+            writer.append(record.get(0));
+            for(int i=1; i<record.size(); i++){
+                writer.append("," + record.get(i));
+            }
+            writer.append("\n");
+        }
+        catch(IOException e){
+            System.err.println("Failed to write to CSV.");
+        }
+    } //writeCSV
 } //BEEtag class
