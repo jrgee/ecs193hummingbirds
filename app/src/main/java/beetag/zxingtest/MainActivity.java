@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
             //check parity for 4th column
             for(int j=0; j<5; j++){ //for each row
                 if((!bits.get(3, j) && par[j] == 0) || (bits.get(3, j) && par[j] == 1)){ //if failed parity check
-                    decstr.setText("Error: Parity check 1 failed.");
+                    //decstr.setText("Error: Parity check 1 failed.");
                     return;
                 }
             }
@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
             //check parity for 5th column (reverse of 4th column)
             for(int j=0; j<5; j++){ //for each row
                 if((!bits.get(4, j) && par[4-j] == 0) || (bits.get(4, j) && par[4-j] == 1)){ //if failed parity check
-                    decstr.setText("Error: Parity check 2 failed.");
+                    //decstr.setText("Error: Parity check 2 failed.");
                     return;
                 }
             }

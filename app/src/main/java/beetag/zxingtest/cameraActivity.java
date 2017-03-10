@@ -37,6 +37,7 @@ public class cameraActivity extends AppCompatActivity {
         Intent intent = getIntent();
         final String decimal= intent.getStringExtra("decimal");
 
+        decStr.setText(decimal);
 
         // Opens next page with Auxillary Marker button press
         listView = (Button) findViewById(R.id.button2);

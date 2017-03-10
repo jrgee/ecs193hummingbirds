@@ -29,23 +29,12 @@
         android:layout_centerHorizontal="true"
         android:layout_width="100dp" />
 
-    <TextView
-        android:text="Decimal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/dec_string"
-        android:layout_marginTop="87dp"
-        android:layout_below="@+id/scan_button"
-        android:layout_centerHorizontal="true" />
-
     <ImageView
         app:srcCompat="@mipmap/humm"
         android:id="@+id/imageView"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="22dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/dec_string"
-        android:layout_alignStart="@+id/dec_string" />
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

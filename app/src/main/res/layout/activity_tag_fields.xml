@@ -356,8 +356,8 @@
             android:layout_alignParentEnd="true"
             android:layout_toEndOf="@+id/title"
             android:maxLines="1"
-            android:inputType="text"
-            android:layout_toRightOf="@+id/title" />
+            android:layout_toRightOf="@+id/title"
+            android:inputType="number" />
 
         <Spinner
             android:layout_height="wrap_content"
