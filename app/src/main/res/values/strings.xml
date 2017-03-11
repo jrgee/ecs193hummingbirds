@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">ZXingTest</string>
+    <string name="app_name">BEETag for Hummingbird</string>
+    <string name="title_activity_camera">cameraActivity</string>
+    <string name="scan">SCAN</string>
+    <string name="hummingbirds">Hummingbirds</string>
+    <string name="decimal">Decimal</string>
+    <string name="title_activity_tag_fields">tagFields</string>
 </resources>

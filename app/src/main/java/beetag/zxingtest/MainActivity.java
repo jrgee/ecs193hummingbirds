@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.os.Environment;
+import android.support.v4.content.FileProvider;
 
 import com.google.zxing.common.*;
 import com.google.zxing.*;
@@ -21,7 +22,16 @@ import com.google.zxing.common.GridSampler;
 
 import java.io.File;
 
+/**
+ *Controls actions of the main screen class of the Hummingbird App
+ */
 public class MainActivity extends AppCompatActivity {
+    /**
+     * Sets up actions to be taken upon entering the main screen including button setup to
+     * transition to the camera screen
+     * @param savedInstanceState the data of the current screen
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,9 +40,12 @@ public class MainActivity extends AppCompatActivity {
         Button scanButton = (Button) findViewById(R.id.scan_button);
         scanButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
+
                 //open built-in Android camera and save temporary image
                 File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "scan.jpg");
-                Uri outputFileUri = Uri.fromFile(file);
+                Uri outputFileUri = FileProvider.getUriForFile(MainActivity.this,
+                        BuildConfig.APPLICATION_ID + ".provider",
+                        file);
 
                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
@@ -41,15 +54,24 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Retrieves image data from the camera and decodes bit patterns into a corresponding number and
+     * passes the number to the next screen
+     * @param requestCode the requestCode passed to the function must be 1 in order to decode image
+     * @param resultCode the resultCode passed to the function must be void and successful
+     * @param data the image data taken by the camera
+     */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1 && resultCode == RESULT_OK){ //on picture successfully taken
             //get TextViews on main screen (temporary)
-            TextView param = (TextView) findViewById(R.id.param_string);
-            TextView results = (TextView) findViewById(R.id.results_string);
+            //TextView param = (TextView) findViewById(R.id.param_string);
+            //TextView results = (TextView) findViewById(R.id.results_string);
             TextView decstr = (TextView) findViewById(R.id.dec_string);
 
             //use the following line instead of the "file" related lines to use thumbnail instead of full image
-            //Bitmap bMap = (Bitmap) data.getExtras().get("data");
+            //Bitmap thumbMap = (Bitmap) data.getExtras().get("data");
+
+            String decString = "Error";
 
             //get image to bitmap
             File imgFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "scan.jpg");
@@ -70,8 +92,8 @@ public class MainActivity extends AppCompatActivity {
                 ResultPoint[] corners = detector.detect();
 
                 //print corner locations to TextView (for debugging)
-                param.setText(corners[0].toString() + " " + corners[2].toString() + " " +
-                        corners[3].toString() + " " + corners[1].toString());
+                //param.setText(corners[0].toString() + " " + corners[2].toString() + " " +
+                //corners[3].toString() + " " + corners[1].toString());
 
                 //convert code into its binary representation stored in BitMatrix
                 GridSampler sampler = GridSampler.getInstance();
@@ -81,13 +103,13 @@ public class MainActivity extends AppCompatActivity {
                         corners[3].getX(), corners[3].getY(), corners[1].getX(), corners[1].getY());
 
                 //print converted BitMatrix (for debugging)
-                results.setText(bits.toString());
+                //results.setText(bits.toString());
             }
             catch(Exception e){
                 //couldn't find code in image
-                param.setText("Error: No valid code found.");
-                results.setText("");
-                decstr.setText("");
+                //param.setText("Error: No valid code found.");
+                //results.setText("");
+                //decstr.setText("");
                 e.printStackTrace();
                 return;
             }
@@ -157,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
+      
         //check parity for 4th column
         for(int j=0; j<5; j++){ //for each row
             if((!bits.get(3, j) && par[j] == 0) || (bits.get(3, j) && par[j] == 1)){ //if failed parity check
@@ -166,14 +188,20 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        //check parity for 5th column (reverse of 4th column)
         for(int j=0; j<5; j++){ //for each row
             if((!bits.get(4, j) && par[4-j] == 0) || (bits.get(4, j) && par[4-j] == 1)){ //if failed parity check
                 //decstr.setText("Error: Parity check 2 failed.");
                 return -1;
             }
         }
-        return dec;
+        //all parity checks passed, display decimal representation
+        decString = Integer.toString(dec);
+
+        //Pass BeeTag info to next screen
+        Intent saveIntent= new Intent(MainActivity.this, cameraActivity.class);
+        saveIntent.putExtra("decimal", decString);
+        startActivity(saveIntent);
+        }
     }
 
 }

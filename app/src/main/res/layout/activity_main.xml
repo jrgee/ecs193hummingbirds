@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -13,7 +14,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ZXing Test"
+        android:text="HummingBirds"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="27dp"
@@ -21,39 +22,19 @@
 
     <Button
         android:text="Scan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="129dp"
         android:id="@+id/scan_button"
-        android:textSize="14sp" />
-
-    <TextView
-        android:text="Decoded Tag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/scan_button"
+        android:textSize="14sp"
+        android:layout_height="60dp"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:id="@+id/results_string"
-        android:fontFamily="monospace" />
+        android:layout_width="100dp" />
 
-    <TextView
-        android:text="Parameters"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/scan_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="22dp"
-        android:id="@+id/param_string" />
-
-    <TextView
-        android:text="Decimal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        app:srcCompat="@mipmap/humm"
+        android:id="@+id/imageView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="61dp"
-        android:id="@+id/dec_string" />
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

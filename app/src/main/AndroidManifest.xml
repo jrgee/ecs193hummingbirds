@@ -15,6 +15,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".tagFields"
+            android:label="@string/title_activity_tag_fields"
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".cameraActivity"
+            android:label="@string/title_activity_camera"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
+
     </application>
 
 </manifest>
