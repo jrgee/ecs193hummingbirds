@@ -62,11 +62,10 @@ public class MainActivity extends AppCompatActivity {
      * @param data the image data taken by the camera
      */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1 && resultCode == RESULT_OK){ //on picture successfully taken
+        if (requestCode == 1 && resultCode == RESULT_OK) { //on picture successfully taken
             //get TextViews on main screen (temporary)
             //TextView param = (TextView) findViewById(R.id.param_string);
             //TextView results = (TextView) findViewById(R.id.results_string);
-            TextView decstr = (TextView) findViewById(R.id.dec_string);
 
             //use the following line instead of the "file" related lines to use thumbnail instead of full image
             //Bitmap thumbMap = (Bitmap) data.getExtras().get("data");
@@ -77,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
             File imgFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "scan.jpg");
             Bitmap bMap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 
-            int[] intArray = new int[bMap.getWidth()*bMap.getHeight()];
+            int[] intArray = new int[bMap.getWidth() * bMap.getHeight()];
             //copy pixel data from the Bitmap into the 'intArray' array
             bMap.getPixels(intArray, 0, bMap.getWidth(), 0, 0, bMap.getWidth(), bMap.getHeight());
 
@@ -86,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
             BitMatrix bits;
 
-            try{
+            try {
                 //find code in picture and return corner locations
                 WhiteRectangleDetector detector = new WhiteRectangleDetector(bitmap.getBlackMatrix());
                 ResultPoint[] corners = detector.detect();
@@ -98,14 +97,13 @@ public class MainActivity extends AppCompatActivity {
                 //convert code into its binary representation stored in BitMatrix
                 GridSampler sampler = GridSampler.getInstance();
                 bits = sampler.sampleGrid(bitmap.getBlackMatrix(), 5, 5,
-                        0.5f, 0.5f, 5-0.5f, 0.5f, 5-0.5f, 5-0.5f, 0.5f, 5-0.5f,
+                        0.5f, 0.5f, 5 - 0.5f, 0.5f, 5 - 0.5f, 5 - 0.5f, 0.5f, 5 - 0.5f,
                         corners[0].getX(), corners[0].getY(), corners[2].getX(), corners[2].getY(),
                         corners[3].getX(), corners[3].getY(), corners[1].getX(), corners[1].getY());
 
                 //print converted BitMatrix (for debugging)
                 //results.setText(bits.toString());
-            }
-            catch(Exception e){
+            } catch (Exception e) {
                 //couldn't find code in image
                 //param.setText("Error: No valid code found.");
                 //results.setText("");
@@ -118,19 +116,18 @@ public class MainActivity extends AppCompatActivity {
             //Also note that BEEtag uses white for 1 and 0 for black while ZXing uses true for black and false for white.
             int dec = 0;
             dec = decode(bits);
-            for (int i = 0; i < 4; i++){
+            for (int i = 0; i < 4; i++) {
                 dec = decode(bits);
-                if(dec != -1) {
-                    decstr.setText(Integer.toString(dec));
-                    return;
-                }else{
+                if (dec != -1) {
+                    //Pass BeeTag info to next screen
+                    Intent saveIntent= new Intent(MainActivity.this, cameraActivity.class);
+                    saveIntent.putExtra("decimal", Integer.toString(dec));
+                    startActivity(saveIntent);
+                } else {
                     bits = rotate(bits, 5);
                     Log.d("bits", bits.toString());
                 }
             }
-
-            //all parity checks failed, display error message
-            decstr.setText("Error: All orientations failed.");
         }
     }
 
@@ -194,14 +191,7 @@ public class MainActivity extends AppCompatActivity {
                 return -1;
             }
         }
-        //all parity checks passed, display decimal representation
-        decString = Integer.toString(dec);
 
-        //Pass BeeTag info to next screen
-        Intent saveIntent= new Intent(MainActivity.this, cameraActivity.class);
-        saveIntent.putExtra("decimal", decString);
-        startActivity(saveIntent);
+        return dec;
         }
-    }
-
 }

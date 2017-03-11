@@ -19,7 +19,7 @@ import org.w3c.dom.Text;
  * The cameraActivity class is used to display information passed from the previous activity
  */
 public class cameraActivity extends AppCompatActivity {
-    public Button listView;
+    public Button listView, copyView;
     public TextView snapView;
 
     /**
@@ -47,6 +47,17 @@ public class cameraActivity extends AppCompatActivity {
                 // Upon button press, go to Auxillary Markers page
                 Intent saveValue = new Intent(cameraActivity.this, tagFields.class);
                 startActivity(saveValue);
+            }
+        });
+
+        // Copies the decimal value onto clipboard
+        copyView = (Button) findViewById(R.id.button3);
+        copyView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("label", decimal);
+                clipboard.setPrimaryClip(clip);
             }
         });
     }
