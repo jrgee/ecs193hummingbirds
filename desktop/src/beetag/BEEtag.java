@@ -5,15 +5,11 @@
  */
 package beetag;
 
-import com.google.zxing.BinaryBitmap;
-import com.google.zxing.LuminanceSource;
-import com.google.zxing.NotFoundException;
-import com.google.zxing.RGBLuminanceSource;
-import com.google.zxing.ResultPoint;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.common.GridSampler;
-import com.google.zxing.common.HybridBinarizer;
+import com.google.zxing.*;
+import com.google.zxing.common.*;
 import com.google.zxing.common.detector.WhiteRectangleDetector;
+import java.awt.Component;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileWriter;
@@ -22,8 +18,11 @@ import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
-import javax.swing.JFileChooser;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 
 public class BEEtag extends javax.swing.JFrame {
@@ -44,6 +43,8 @@ public class BEEtag extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        RecordTable = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         FileMenu = new javax.swing.JMenu();
         Open = new javax.swing.JMenuItem();
@@ -51,6 +52,17 @@ public class BEEtag extends javax.swing.JFrame {
         EditMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        RecordTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        RecordTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(RecordTable);
 
         FileMenu.setText("File");
 
@@ -82,11 +94,11 @@ public class BEEtag extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
         );
 
         pack();
@@ -138,16 +150,35 @@ public class BEEtag extends javax.swing.JFrame {
         }
         //</editor-fold>
         
-        records = new ArrayList<>();
+        BEEtag bt = new BEEtag();
+        bt.records = new ArrayList<>();
+        bt.RecordTable.setRowHeight(bt.rowsize);
+        bt.RecordTable.setDefaultRenderer(String.class, new MultiLineCellRenderer());
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new BEEtag().setVisible(true);
+            bt.setVisible(true);
         });
     }
     
-    private static void convert(String inFile){
+    private void convert(String inFile){
         File dir = new File(inFile);
+        final String[] col = {"Image", "Decoded", "ID", "Time"};
+        DefaultTableModel mod = new DefaultTableModel(col, 0){
+            @Override
+            public Class getColumnClass(int columnIndex) {
+                if(columnIndex == 0)
+                    return Icon.class;
+                else
+                    return String.class;
+            }
+            
+            @Override
+            public boolean isCellEditable(int row, int column) {
+               //all cells false
+               return false;
+            }
+        };
         
         for(File imgFile : dir.listFiles()){
             BufferedImage img;
@@ -199,7 +230,24 @@ public class BEEtag extends javax.swing.JFrame {
                     values.add(bits.toString());
                     values.add(Integer.toString(dec)); //tag ID
                     values.add(attr.creationTime().toString()); //file creation time (temp)
-                    records.add(values);
+                    records.add(values); //save to records arraylist
+                    
+                    Object[] row = new Object[values.size()+1]; //leave space for thumbnail
+                
+                    //scale down image to thumbnail size
+                    BufferedImage thumb = new BufferedImage(rowsize, rowsize, BufferedImage.TYPE_INT_RGB);
+                    Graphics g = thumb.createGraphics();
+                    g.drawImage(img, 0, 0, rowsize, rowsize, null);
+                    g.dispose();
+
+                    //create icon from image and put in row
+                    ImageIcon icon = new ImageIcon(thumb);
+                    row[0] = icon;
+                    for(int j=0; j<values.size(); j++)
+                        row[j+1] = values.get(j);
+
+                    //add row to table
+                    mod.addRow(row);
                     break;
                 }else{
                     bits = rotate(bits, 5);
@@ -209,11 +257,35 @@ public class BEEtag extends javax.swing.JFrame {
             if(dec == -1){
                 //all parity checks failed, display error message
                 System.err.println("Error: All orientations failed for " + imgFile.getName() + ".");
+                
+                //show user failed read in table but don't write to csv
+                ArrayList<String> values = new ArrayList<>(); //list of strings to write to csv
+                values.add(bits.toString());
+                values.add("ERROR"); //tag ID
+                values.add(attr.creationTime().toString()); //file creation time (temp)
+
+                Object[] row = new Object[values.size()+1]; //leave space for thumbnail
+                
+                //scale down image to thumbnail size
+                BufferedImage thumb = new BufferedImage(rowsize, rowsize, BufferedImage.TYPE_INT_RGB);
+                Graphics g = thumb.createGraphics();
+                g.drawImage(img, 0, 0, rowsize, rowsize, null);
+                g.dispose();
+                
+                //create icon from image and put in row
+                ImageIcon icon = new ImageIcon(thumb);
+                row[0] = icon;
+                for(int j=0; j<values.size(); j++)
+                    row[j+1] = values.get(j);
+                
+                //add row to table
+                mod.addRow(row);
             }
         } //for all files in directory
+        RecordTable.setModel(mod);
     } //convert
 
-    private static BitMatrix rotate(BitMatrix bits, int size){
+    private BitMatrix rotate(BitMatrix bits, int size){
         BitMatrix x = new BitMatrix(size, size);
         for (int i = 0; i < size; ++i) {
             for (int j = 0; j < size; ++j) {
@@ -224,7 +296,7 @@ public class BEEtag extends javax.swing.JFrame {
         return x;
     } //rotate
 
-    private static int decode(BitMatrix bits){
+    private int decode(BitMatrix bits){
         int dec = 0; //stores decimal number of tag
         int[] par = new int[5]; //stores expected parity results
 
@@ -275,7 +347,7 @@ public class BEEtag extends javax.swing.JFrame {
         return dec;
     } //decode
     
-    private static void writeCSV(String outFile)
+    private void writeCSV(String outFile)
     {
         if(records.isEmpty()){
             System.err.println("Nothing to save.");
@@ -301,13 +373,43 @@ public class BEEtag extends javax.swing.JFrame {
         }
     } //writeCSV
 
-    private static ArrayList<ArrayList<String>> records;
+    private final int rowsize = 80;
+    private ArrayList<ArrayList<String>> records;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu EditMenu;
     private javax.swing.JMenu FileMenu;
     private javax.swing.JMenuItem Open;
+    private javax.swing.JTable RecordTable;
     private javax.swing.JMenuItem SaveAs;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+}
+
+
+class MultiLineCellRenderer extends JTextArea implements TableCellRenderer {
+  @Override
+  public Component getTableCellRendererComponent(JTable table, Object value,
+      boolean isSelected, boolean hasFocus, int row, int column) {
+    if (isSelected) {
+      setForeground(table.getSelectionForeground());
+      setBackground(table.getSelectionBackground());
+    } else {
+      setForeground(table.getForeground());
+      setBackground(table.getBackground());
+    }
+    setFont(table.getFont());
+    if (hasFocus) {
+      setBorder(UIManager.getBorder("Table.focusCellHighlightBorder"));
+      if (table.isCellEditable(row, column)) {
+        setForeground(UIManager.getColor("Table.focusCellForeground"));
+        setBackground(UIManager.getColor("Table.focusCellBackground"));
+      }
+    } else {
+      setBorder(new EmptyBorder(1, 2, 1, 2));
+    }
+    setText((value == null) ? "" : value.toString());
+    return this;
+  }
 }
