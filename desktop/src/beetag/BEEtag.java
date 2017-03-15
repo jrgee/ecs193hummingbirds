@@ -5,9 +5,9 @@
  */
 package beetag;
 
-import com.google.zxing.*;
 import com.google.zxing.common.*;
-import com.google.zxing.common.detector.WhiteRectangleDetector;
+import com.google.zxing.*;
+import com.google.zxing.common.GridSampler;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -198,19 +198,31 @@ public class BEEtag extends javax.swing.JFrame {
             //create LuminanceSource and run through Binarizer to get BinaryBitmap
             LuminanceSource source = new RGBLuminanceSource(img.getWidth(), img.getHeight(), intArray);
             BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
-            BitMatrix bits;
+            BitMatrix reader;
+            BitMatrix bits = new BitMatrix(5,5);
 
             try{
                 //find code in picture and return corner locations
-                WhiteRectangleDetector detector = new WhiteRectangleDetector(bitmap.getBlackMatrix());
+                ModDetector detector = new ModDetector(bitmap.getBlackMatrix());
                 ResultPoint[] corners = detector.detect();
 
                 //convert code into its binary representation stored in BitMatrix
                 GridSampler sampler = GridSampler.getInstance();
-                bits = sampler.sampleGrid(bitmap.getBlackMatrix(), 5, 5,
-                        0.5f, 0.5f, 5-0.5f, 0.5f, 5-0.5f, 5-0.5f, 0.5f, 5-0.5f,
+                int res = 7;
+                reader = sampler.sampleGrid(bitmap.getBlackMatrix(), res, res,
+                        0.5f, 0.5f, res - 0.5f, 0.5f, res - 0.5f, res - 0.5f, 0.5f, res - 0.5f,
                         corners[0].getX(), corners[0].getY(), corners[2].getX(), corners[2].getY(),
                         corners[3].getX(), corners[3].getY(), corners[1].getX(), corners[1].getY());
+                
+                //crop original image to only BEEtag
+                int w = (int) ((int)Math.max(corners[2].getX(), corners[3].getX()) - corners[0].getX());
+                int h = (int) ((int)Math.max(corners[1].getY(), corners[3].getY()) - corners[0].getY());
+                img = img.getSubimage((int)corners[0].getX(), (int)corners[0].getY(), w, h);
+                
+                for(int j = 1; j < 6; j++)
+                    for(int i = 1; i < 6; i++)
+                        if(reader.get(i,j))
+                            bits.set((i-1),(j-1));
             }
             catch(NotFoundException e){
                 //couldn't find code in image
@@ -235,9 +247,9 @@ public class BEEtag extends javax.swing.JFrame {
                     Object[] row = new Object[values.size()+1]; //leave space for thumbnail
                 
                     //scale down image to thumbnail size
-                    BufferedImage thumb = new BufferedImage(rowsize, rowsize, BufferedImage.TYPE_INT_RGB);
+                    BufferedImage thumb = new BufferedImage(rowsize-10, rowsize-10, BufferedImage.TYPE_INT_RGB);
                     Graphics g = thumb.createGraphics();
-                    g.drawImage(img, 0, 0, rowsize, rowsize, null);
+                    g.drawImage(img, 0, 0, rowsize-10, rowsize-10, null);
                     g.dispose();
 
                     //create icon from image and put in row
@@ -267,9 +279,9 @@ public class BEEtag extends javax.swing.JFrame {
                 Object[] row = new Object[values.size()+1]; //leave space for thumbnail
                 
                 //scale down image to thumbnail size
-                BufferedImage thumb = new BufferedImage(rowsize, rowsize, BufferedImage.TYPE_INT_RGB);
+                BufferedImage thumb = new BufferedImage(rowsize-10, rowsize-10, BufferedImage.TYPE_INT_RGB);
                 Graphics g = thumb.createGraphics();
-                g.drawImage(img, 0, 0, rowsize, rowsize, null);
+                g.drawImage(img, 0, 0, rowsize-10, rowsize-10, null);
                 g.dispose();
                 
                 //create icon from image and put in row
@@ -373,7 +385,272 @@ public class BEEtag extends javax.swing.JFrame {
         }
     } //writeCSV
 
-    private final int rowsize = 80;
+    public final class ModDetector {
+
+        private static final int INIT_SIZE = 10;
+        private static final int CORR = 1;
+
+        private final BitMatrix image;
+        private final int height;
+        private final int width;
+        private final int leftInit;
+        private final int rightInit;
+        private final int downInit;
+        private final int upInit;
+
+        public ModDetector(BitMatrix image) throws NotFoundException {
+            this(image, INIT_SIZE, image.getWidth() / 2, image.getHeight() / 2);
+        }
+
+        /**
+         * @param image barcode image to find a rectangle in
+         * @param initSize initial size of search area around center
+         * @param x x position of search center
+         * @param y y position of search center
+         * @throws NotFoundException if image is too small to accommodate {@code initSize}
+         */
+        public ModDetector(BitMatrix image, int initSize, int x, int y) throws NotFoundException {
+            this.image = image;
+            height = image.getHeight();
+            width = image.getWidth();
+            int halfsize = initSize / 2;
+            leftInit = x - halfsize;
+            rightInit = x + halfsize;
+            upInit = y - halfsize;
+            downInit = y + halfsize;
+            if (upInit < 0 || leftInit < 0 || downInit >= height || rightInit >= width) {
+                throw NotFoundException.getNotFoundInstance();
+            }
+        }
+
+        /**
+         * <p>
+         * Detects a candidate barcode-like rectangular region within an image. It
+         * starts around the center of the image, increases the size of the candidate
+         * region until it finds a white rectangular region.
+         * </p>
+         *
+         * @return {@link ResultPoint}[] describing the corners of the rectangular
+         *         region. The first and last points are opposed on the diagonal, as
+         *         are the second and third. The first point will be the topmost
+         *         point and the last, the bottommost. The second point will be
+         *         leftmost and the third, the rightmost
+         * @throws NotFoundException if no Data Matrix Code can be found
+         */
+        public ResultPoint[] detect() throws NotFoundException {
+
+            int left = leftInit;
+            int right = rightInit;
+            int up = upInit;
+            int down = downInit;
+            boolean sizeExceeded = false;
+            boolean aBlackPointFoundOnBorder = true;
+            boolean atLeastOneBlackPointFoundOnBorder = false;
+
+            boolean atLeastOneBlackPointFoundOnRight = false;
+            boolean atLeastOneBlackPointFoundOnBottom = false;
+            boolean atLeastOneBlackPointFoundOnLeft = false;
+            boolean atLeastOneBlackPointFoundOnTop = false;
+
+            while (aBlackPointFoundOnBorder) {
+
+                aBlackPointFoundOnBorder = false;
+
+                // .....
+                // .   |
+                // .....
+                boolean rightBorderNotWhite = true;
+                while ((rightBorderNotWhite || !atLeastOneBlackPointFoundOnRight) && right < width) {
+                    rightBorderNotWhite = containsBlackPoint(up, down, right, false);
+                    if (rightBorderNotWhite) {
+                        right++;
+                        aBlackPointFoundOnBorder = true;
+                        atLeastOneBlackPointFoundOnRight = true;
+                    } else if (!atLeastOneBlackPointFoundOnRight) {
+                        right++;
+                    }
+                }
+
+                if (right >= width) {
+                    sizeExceeded = true;
+                    break;
+                }
+
+                // .....
+                // .   .
+                // .___.
+                boolean bottomBorderNotWhite = true;
+                while ((bottomBorderNotWhite || !atLeastOneBlackPointFoundOnBottom) && down < height) {
+                    bottomBorderNotWhite = containsBlackPoint(left, right, down, true);
+                    if (bottomBorderNotWhite) {
+                        down++;
+                        aBlackPointFoundOnBorder = true;
+                        atLeastOneBlackPointFoundOnBottom = true;
+                    } else if (!atLeastOneBlackPointFoundOnBottom) {
+                        down++;
+                    }
+                }
+
+                if (down >= height) {
+                    sizeExceeded = true;
+                    break;
+                }
+
+                // .....
+                // |   .
+                // .....
+                boolean leftBorderNotWhite = true;
+                while ((leftBorderNotWhite || !atLeastOneBlackPointFoundOnLeft) && left >= 0) {
+                    leftBorderNotWhite = containsBlackPoint(up, down, left, false);
+                    if (leftBorderNotWhite) {
+                        left--;
+                        aBlackPointFoundOnBorder = true;
+                        atLeastOneBlackPointFoundOnLeft = true;
+                    } else if (!atLeastOneBlackPointFoundOnLeft) {
+                        left--;
+                    }
+                }
+
+                if (left < 0) {
+                    sizeExceeded = true;
+                    break;
+                }
+
+                // .___.
+                // .   .
+                // .....
+                boolean topBorderNotWhite = true;
+                while ((topBorderNotWhite  || !atLeastOneBlackPointFoundOnTop) && up >= 0) {
+                    topBorderNotWhite = containsBlackPoint(left, right, up, true);
+                    if (topBorderNotWhite) {
+                        up--;
+                        aBlackPointFoundOnBorder = true;
+                        atLeastOneBlackPointFoundOnTop = true;
+                    } else if (!atLeastOneBlackPointFoundOnTop) {
+                        up--;
+                    }
+                }
+
+                if (up < 0) {
+                    sizeExceeded = true;
+                    break;
+                }
+
+                if (aBlackPointFoundOnBorder) {
+                    atLeastOneBlackPointFoundOnBorder = true;
+                }
+
+            }//while
+
+            if (!sizeExceeded && atLeastOneBlackPointFoundOnBorder) {
+                ResultPoint z;
+                z = new ResultPoint(left-1, down+1);
+                if (z == null)
+                    throw NotFoundException.getNotFoundInstance();
+
+                ResultPoint t;
+                //go down right
+                t = new ResultPoint(left-1, up-1);
+                if (t == null)
+                    throw NotFoundException.getNotFoundInstance();
+
+                ResultPoint x;
+                //go down left
+                x = new ResultPoint(right+1 , up-1);
+                if (x == null)
+                    throw NotFoundException.getNotFoundInstance();
+
+                ResultPoint y;
+                //go up left
+                y = new ResultPoint(right+1 , down-1);
+                if (y == null)
+                    throw NotFoundException.getNotFoundInstance();
+
+                return centerEdges(y, z, x, t);
+
+            } else {
+                throw NotFoundException.getNotFoundInstance();
+            }
+        }
+
+        /**
+         * recenters the points of a constant distance towards the center
+         *
+         * @param y bottom most point
+         * @param z left most point
+         * @param x right most point
+         * @param t top most point
+         * @return {@link ResultPoint}[] describing the corners of the rectangular
+         *         region. The first and last points are opposed on the diagonal, as
+         *         are the second and third. The first point will be the topmost
+         *         point and the last, the bottommost. The second point will be
+         *         leftmost and the third, the rightmost
+         */
+        private ResultPoint[] centerEdges(ResultPoint y, ResultPoint z,
+                                          ResultPoint x, ResultPoint t) {
+
+            //
+            //       t            t
+            //  z                      x
+            //        x    OR    z
+            //   y                    y
+            //
+
+            float yi = y.getX();
+            float yj = y.getY();
+            float zi = z.getX();
+            float zj = z.getY();
+            float xi = x.getX();
+            float xj = x.getY();
+            float ti = t.getX();
+            float tj = t.getY();
+
+            if (yi < width / 2.0f) {
+                return new ResultPoint[]{
+                        new ResultPoint(ti - CORR, tj + CORR),
+                        new ResultPoint(zi + CORR, zj + CORR),
+                        new ResultPoint(xi - CORR, xj - CORR),
+                        new ResultPoint(yi + CORR, yj - CORR)};
+            } else {
+                return new ResultPoint[]{
+                        new ResultPoint(ti + CORR, tj + CORR),
+                        new ResultPoint(zi + CORR, zj - CORR),
+                        new ResultPoint(xi - CORR, xj + CORR),
+                        new ResultPoint(yi - CORR, yj - CORR)};
+            }
+        }
+
+        /**
+         * Determines whether a segment contains a black point
+         *
+         * @param a          min value of the scanned coordinate
+         * @param b          max value of the scanned coordinate
+         * @param fixed      value of fixed coordinate
+         * @param horizontal set to true if scan must be horizontal, false if vertical
+         * @return true if a black point has been found, else false.
+         */
+        private boolean containsBlackPoint(int a, int b, int fixed, boolean horizontal) {
+
+            if (horizontal) {
+                for (int x = a; x <= b; x++) {
+                    if (image.get(x, fixed)) {
+                        return true;
+                    }
+                }
+            } else {
+                for (int y = a; y <= b; y++) {
+                    if (image.get(fixed, y)) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+    }
+    
+    private final int rowsize = 90;
     private ArrayList<ArrayList<String>> records;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -386,6 +663,7 @@ public class BEEtag extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
+
 
 
 class MultiLineCellRenderer extends JTextArea implements TableCellRenderer {
