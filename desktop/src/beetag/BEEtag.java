@@ -53,6 +53,7 @@ public class BEEtag extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        RecordTable.setFont(new java.awt.Font("Courier New", 0, 12)); // NOI18N
         RecordTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
