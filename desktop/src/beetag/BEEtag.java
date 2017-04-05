@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -47,8 +48,11 @@ public class BEEtag extends javax.swing.JFrame {
         RecordTable = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         FileMenu = new javax.swing.JMenu();
-        Open = new javax.swing.JMenuItem();
+        New = new javax.swing.JMenuItem();
+        AddImg = new javax.swing.JMenuItem();
+        AddDir = new javax.swing.JMenuItem();
         SaveAs = new javax.swing.JMenuItem();
+        Close = new javax.swing.JMenuItem();
         EditMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -67,15 +71,35 @@ public class BEEtag extends javax.swing.JFrame {
 
         FileMenu.setText("File");
 
-        Open.setText("Open...");
-        Open.setToolTipText("");
-        Open.addActionListener(new java.awt.event.ActionListener() {
+        New.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+        New.setText("New Table");
+        New.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                OpenActionPerformed(evt);
+                NewActionPerformed(evt);
             }
         });
-        FileMenu.add(Open);
+        FileMenu.add(New);
 
+        AddImg.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        AddImg.setText("Add Image...");
+        AddImg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddImgActionPerformed(evt);
+            }
+        });
+        FileMenu.add(AddImg);
+
+        AddDir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        AddDir.setText("Add Directory...");
+        AddDir.setToolTipText("");
+        AddDir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddDirActionPerformed(evt);
+            }
+        });
+        FileMenu.add(AddDir);
+
+        SaveAs.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         SaveAs.setText("Save As...");
         SaveAs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -83,6 +107,15 @@ public class BEEtag extends javax.swing.JFrame {
             }
         });
         FileMenu.add(SaveAs);
+
+        Close.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
+        Close.setText("Close");
+        Close.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CloseActionPerformed(evt);
+            }
+        });
+        FileMenu.add(Close);
 
         jMenuBar1.add(FileMenu);
 
@@ -104,23 +137,52 @@ public class BEEtag extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+ 
+    private void NewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewActionPerformed
+        //clear table and records of existing entries
+        records.clear();
+        mod.setRowCount(0);
+    }//GEN-LAST:event_NewActionPerformed
+    
+    private void AddImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddImgActionPerformed
+        //add individual image files to current table
+        JFileChooser fc = new JFileChooser();
+        fc.setDialogTitle("Select Image(s)"); 
+        fc.setFileSelectionMode(JFileChooser.FILES_ONLY); //no directories
+        fc.setMultiSelectionEnabled(true); //allow multiple files to be selected
+        
+        //only show image files for selection
+        FileFilter imageFilter = new FileNameExtensionFilter("Image Files", ImageIO.getReaderFileSuffixes());
+        fc.setFileFilter(imageFilter);
+        
+        //open dialog and convert when Open selected
+        if(fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
+            File[] imgFiles = fc.getSelectedFiles();
+            convert(imgFiles);
+        }
+    }//GEN-LAST:event_AddImgActionPerformed
 
-    private void OpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenActionPerformed
+    private void AddDirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddDirActionPerformed
+        //add all image files in directory to current table
         JFileChooser fc = new JFileChooser();
         fc.setDialogTitle("Select Image Folder"); 
-        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); //no files
+        
+        //open dialog and convert when Open selected
         if(fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
             File dir = fc.getSelectedFile();
-            records.clear();
-            convert(dir.getPath());
+            convert(dir.listFiles());
         }
-    }//GEN-LAST:event_OpenActionPerformed
+    }//GEN-LAST:event_AddDirActionPerformed
 
     private void SaveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveAsActionPerformed
         JFileChooser fc = new JFileChooser();
         fc.setDialogTitle("Save CSV File");
+        
+        //show only csv files
         fc.setFileFilter(new FileNameExtensionFilter("csv file","csv"));
 
+        //open dialog and save when Save selected
         if(fc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             File out = fc.getSelectedFile();
             String path = out.getPath();
@@ -129,6 +191,11 @@ public class BEEtag extends javax.swing.JFrame {
             writeCSV(path);
         }
     }//GEN-LAST:event_SaveAsActionPerformed
+
+    private void CloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseActionPerformed
+        //close program
+        System.exit(0);
+    }//GEN-LAST:event_CloseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -155,23 +222,16 @@ public class BEEtag extends javax.swing.JFrame {
         bt.records = new ArrayList<>();
         bt.RecordTable.setRowHeight(bt.rowsize);
         bt.RecordTable.setDefaultRenderer(String.class, new MultiLineCellRenderer());
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            bt.setVisible(true);
-        });
-    }
-    
-    private void convert(String inFile){
-        File dir = new File(inFile);
-        final String[] col = {"Image", "Decoded", "ID", "Time"};
-        DefaultTableModel mod = new DefaultTableModel(col, 0){
+        
+        //set up table to display results
+        final String[] col = {"Image", "Decoded", "ID", "Time"}; //column headings
+        bt.mod = new DefaultTableModel(col, 0){
             @Override
             public Class getColumnClass(int columnIndex) {
                 if(columnIndex == 0)
-                    return Icon.class;
+                    return Icon.class; //first column is image icons
                 else
-                    return String.class;
+                    return String.class; //all other columns are strings
             }
             
             @Override
@@ -180,8 +240,15 @@ public class BEEtag extends javax.swing.JFrame {
                return false;
             }
         };
-        
-        for(File imgFile : dir.listFiles()){
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> {
+            bt.setVisible(true);
+        });
+    }
+    
+    private void convert(File[] inFiles){
+        for(File imgFile: inFiles){
             BufferedImage img;
             BasicFileAttributes attr;
             try{
@@ -651,13 +718,17 @@ public class BEEtag extends javax.swing.JFrame {
 
     }
     
-    private final int rowsize = 90;
-    private ArrayList<ArrayList<String>> records;
+    private final int rowsize = 90; //height of each row in pixels
+    private ArrayList<ArrayList<String>> records; //stores records to write to CSV
+    private DefaultTableModel mod; //stores contents of table to display
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem AddDir;
+    private javax.swing.JMenuItem AddImg;
+    private javax.swing.JMenuItem Close;
     private javax.swing.JMenu EditMenu;
     private javax.swing.JMenu FileMenu;
-    private javax.swing.JMenuItem Open;
+    private javax.swing.JMenuItem New;
     private javax.swing.JTable RecordTable;
     private javax.swing.JMenuItem SaveAs;
     private javax.swing.JMenuBar jMenuBar1;
