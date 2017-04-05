@@ -18,16 +18,29 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="27dp"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:id="@+id/textView2" />
 
     <Button
         android:text="Scan"
         android:id="@+id/scan_button"
         android:textSize="14sp"
         android:layout_height="60dp"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:layout_width="100dp" />
+        android:layout_width="100dp"
+        android:layout_marginTop="108dp"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/draw_button"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:text="Draw"
+        android:textSize="14sp"
+        android:layout_below="@+id/scan_button"
+        android:layout_alignLeft="@+id/scan_button"
+        android:layout_alignStart="@+id/scan_button"
+        android:layout_marginTop="30dp" />
 
     <ImageView
         app:srcCompat="@mipmap/humm"
