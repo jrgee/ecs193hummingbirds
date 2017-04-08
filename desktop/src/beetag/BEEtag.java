@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package beetag;
 
 import com.google.zxing.common.*;
@@ -15,10 +20,9 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
+import javax.swing.event.*;
+import javax.swing.filechooser.*;
+import javax.swing.table.*;
 
 
 public class BEEtag extends javax.swing.JFrame {
@@ -136,7 +140,8 @@ public class BEEtag extends javax.swing.JFrame {
     private void NewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewActionPerformed
         //clear table and records of existing entries
         records.clear();
-        mod.setRowCount(0);
+        while(mod.getRowCount() > 0)
+            mod.removeRow(0);
     }//GEN-LAST:event_NewActionPerformed
     
     private void AddImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddImgActionPerformed
@@ -217,6 +222,7 @@ public class BEEtag extends javax.swing.JFrame {
         bt.records = new ArrayList<>();
         bt.RecordTable.setRowHeight(bt.rowsize);
         bt.RecordTable.setDefaultRenderer(String.class, new MultiLineCellRenderer());
+        bt.RecordTable.setDefaultEditor(String.class, new MultiLineCellEditor());
         
         //set up table to display results
         final String[] col = {"Image", "Decoded", "ID", "Time"}; //column headings
@@ -231,10 +237,16 @@ public class BEEtag extends javax.swing.JFrame {
             
             @Override
             public boolean isCellEditable(int row, int column) {
-               //all cells false
-               return false;
+                return column == 1; //only allow detected tag to be edited
             }
         };
+        
+        TableModelListener listen = (TableModelEvent e) -> {
+            if(e.getColumn() == 1 && e.getType() == TableModelEvent.UPDATE){
+                bt.updateDec(e.getFirstRow());
+            }
+        };
+        bt.mod.addTableModelListener(listen);
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
@@ -242,7 +254,8 @@ public class BEEtag extends javax.swing.JFrame {
         });
     }
     
-    private void convert(File[] inFiles){
+    private void convert(File[] inFiles)
+    {
         for(File imgFile: inFiles){
             BufferedImage img;
             BasicFileAttributes attr;
@@ -292,7 +305,6 @@ public class BEEtag extends javax.swing.JFrame {
                 System.err.println("Error: No valid code found in " + imgFile.getName() + ".");
                 continue;
             }
-            
             //NOTE: "row" and "column" are used below referring to the original orientation of the tag
             //The BEEtag specification uses "column" to refer to rows in the original orientation when mentioning the parity format
             //Also note that BEEtag uses white for 1 and 0 for black while ZXing uses true for black and false for white.
@@ -301,14 +313,14 @@ public class BEEtag extends javax.swing.JFrame {
             for(int i = 0; i < 4; i++){
                 dec = decode(bits);
                 if(dec != -1) { //found valid tag orientation
-                    ArrayList<String> values = new ArrayList<>(); //list of strings to write to csv
+                    ArrayList<String> values = new ArrayList<>(); //list of strings to put to table
                     values.add(bits.toString());
                     values.add(Integer.toString(dec)); //tag ID
                     values.add(attr.creationTime().toString()); //file creation time (temp)
                     records.add(values); //save to records arraylist
-                    
+
                     Object[] row = new Object[values.size()+1]; //leave space for thumbnail
-                
+
                     //scale down image to thumbnail size
                     BufferedImage thumb = new BufferedImage(rowsize-10, rowsize-10, BufferedImage.TYPE_INT_RGB);
                     Graphics g = thumb.createGraphics();
@@ -328,39 +340,39 @@ public class BEEtag extends javax.swing.JFrame {
                     bits = rotate(bits, 5);
                 }
             }
-            
+
             if(dec == -1){
-                //all parity checks failed, display error message
-                System.err.println("Error: All orientations failed for " + imgFile.getName() + ".");
-                
+                //all parity checks failed
                 //show user failed read in table but don't write to csv
-                ArrayList<String> values = new ArrayList<>(); //list of strings to write to csv
+                ArrayList<String> values = new ArrayList<>(); //list of strings to put to table
                 values.add(bits.toString());
                 values.add("ERROR"); //tag ID
                 values.add(attr.creationTime().toString()); //file creation time (temp)
 
                 Object[] row = new Object[values.size()+1]; //leave space for thumbnail
-                
+
                 //scale down image to thumbnail size
                 BufferedImage thumb = new BufferedImage(rowsize-10, rowsize-10, BufferedImage.TYPE_INT_RGB);
                 Graphics g = thumb.createGraphics();
                 g.drawImage(img, 0, 0, rowsize-10, rowsize-10, null);
                 g.dispose();
-                
+
                 //create icon from image and put in row
                 ImageIcon icon = new ImageIcon(thumb);
                 row[0] = icon;
                 for(int j=0; j<values.size(); j++)
                     row[j+1] = values.get(j);
-                
+
                 //add row to table
                 mod.addRow(row);
             }
+
         } //for all files in directory
         RecordTable.setModel(mod);
     } //convert
 
-    private BitMatrix rotate(BitMatrix bits, int size){
+    private BitMatrix rotate(BitMatrix bits, int size)
+    {
         BitMatrix x = new BitMatrix(size, size);
         for (int i = 0; i < size; ++i) {
             for (int j = 0; j < size; ++j) {
@@ -371,7 +383,8 @@ public class BEEtag extends javax.swing.JFrame {
         return x;
     } //rotate
 
-    private int decode(BitMatrix bits){
+    private int decode(BitMatrix bits)
+    {
         int dec = 0; //stores decimal number of tag
         int[] par = new int[5]; //stores expected parity results
 
@@ -422,6 +435,53 @@ public class BEEtag extends javax.swing.JFrame {
         return dec;
     } //decode
     
+    private void updateDec(int row)
+    {
+        //update table based on newly edited BitMatrix
+        String bitStr = (String)mod.getValueAt(row, 1);
+        BitMatrix bits;
+        int dec = -1;
+        
+        //decode BitMatrix from new string
+        try{
+            bits = BitMatrix.parse(bitStr, "X ", "  ");
+        }
+        catch(IllegalArgumentException e){
+            //not a valid BitMatrix string, reset to all black
+            System.err.println("Invalid BEEtag shape. Resetting to all black.");
+            String defStr = "X X X X X \n"
+                          + "X X X X X \n"
+                          + "X X X X X \n"
+                          + "X X X X X \n"
+                          + "X X X X X \n";
+            mod.setValueAt(defStr, row, 1);
+            mod.setValueAt("ERROR", row, 2); //invalid barcode
+            return;
+        }
+
+        for(int i = 0; i < 4; i++){
+            dec = decode(bits);
+            if(dec != -1) { //found valid tag orientation
+                mod.setValueAt(Integer.toString(dec), row, 2); //update decimal in table
+                
+                //add values from table to arraylist to write to CSV
+                ArrayList<String> values = new ArrayList<>();
+                for(int j = 1; j < 4; j++){
+                    values.add((String)mod.getValueAt(row, j));
+                }
+                
+                records.add(values); //save to records arraylist
+                return;
+            }
+            else{
+                bits = rotate(bits, 5);
+            }
+        }
+        
+        if(dec == -1)
+            mod.setValueAt("ERROR", row, 2); //invalid barcode
+    } //updateDec
+    
     private void writeCSV(String outFile)
     {
         if(records.isEmpty()){
@@ -467,7 +527,8 @@ public class BEEtag extends javax.swing.JFrame {
 }
 
 
-
+//CellRenderer and CellEditor for supporting multiple lines in one cell
+//Needed in order to display BitMatrix in a readable manner
 class MultiLineCellRenderer extends JTextArea implements TableCellRenderer {
   @Override
   public Component getTableCellRendererComponent(JTable table, Object value,
@@ -492,4 +553,23 @@ class MultiLineCellRenderer extends JTextArea implements TableCellRenderer {
     setText((value == null) ? "" : value.toString());
     return this;
   }
+}
+
+class MultiLineCellEditor extends AbstractCellEditor implements TableCellEditor {
+
+    JComponent component = new JTextArea();
+
+    @Override
+    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected,
+        int rowIndex, int vColIndex) {
+
+        ((JTextArea) component).setText((String) value);
+
+        return component;
+    }
+
+    @Override
+    public Object getCellEditorValue() {
+        return ((JTextArea) component).getText();
+    }
 }
