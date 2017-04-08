@@ -345,6 +345,7 @@ public class BEEtag extends javax.swing.JFrame {
                 //all parity checks failed
                 //show user failed read in table but don't write to csv
                 ArrayList<String> values = new ArrayList<>(); //list of strings to put to table
+                records.add(values); //add empty placeholder to records
                 values.add(bits.toString());
                 values.add("ERROR"); //tag ID
                 values.add(attr.creationTime().toString()); //file creation time (temp)
@@ -470,7 +471,7 @@ public class BEEtag extends javax.swing.JFrame {
                     values.add((String)mod.getValueAt(row, j));
                 }
                 
-                records.add(values); //save to records arraylist
+                records.set(row, values); //save to records arraylist
                 return;
             }
             else{
@@ -493,6 +494,8 @@ public class BEEtag extends javax.swing.JFrame {
             writer.append("ID,Time\n"); //write header
 
             for(ArrayList<String> record : records){ //for each record
+                if(record.isEmpty())
+                    continue; //skip empty records
                 writer.append(record.get(1)); //start at 1 to skip bit matrix
                 for(int i=2; i<record.size(); i++){ //for each element in record
                     writer.append("," + record.get(i));
