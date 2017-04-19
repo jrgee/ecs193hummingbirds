@@ -14,6 +14,7 @@ import android.widget.Button;
 //import android.widget.TextView;
 import android.os.Environment;
 import android.support.v4.content.FileProvider;
+import android.widget.TextView;
 
 import com.google.zxing.common.*;
 import com.google.zxing.*;
@@ -35,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        TextView debug_info = (TextView) findViewById(R.id.debug_info);
+        Intent intent = getIntent();
+        final String info= intent.getStringExtra("debugInfo");
+        debug_info.setText(info);
 
         Button scanButton = (Button) findViewById(R.id.scan_button);
         scanButton.setOnClickListener(new View.OnClickListener(){
@@ -69,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
      * @param data the image data taken by the camera
      */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        TextView debugInfo = (TextView) findViewById(R.id.debug_info);
+        int tag_found = 0, INIT_SIZE = 10, x = 0, y = 0;
         if (requestCode == 1 && resultCode == RESULT_OK) { //on picture successfully taken
             //use the following line instead of the "file" related lines to use thumbnail instead of full image
             //Bitmap thumbMap = (Bitmap) data.getExtras().get("data");
@@ -89,7 +96,9 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 //find code in picture and return corner locations
-                ModDetector detector = new ModDetector(bitmap.getBlackMatrix());
+                x = bitmap.getBlackMatrix().getWidth()/2;
+                y = bitmap.getBlackMatrix().getHeight()/2;
+                ModDetector detector = new ModDetector(bitmap.getBlackMatrix(), INIT_SIZE, x ,y);
                 ResultPoint[] corners = detector.detect();
 
                 //print corner locations to TextView (for debugging)
@@ -107,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
                 //print converted BitMatrix (for debugging)
                 //results.setText(bits.toString());
                 //Log.d("Full bits", reader.toString());
+                Log.d("First Pass", x + ", " + y);
                 for(int j = 1; j < 6; j++){
                     for(int i = 1; i < 6; i++){
                         if(reader.get(i,j)){
@@ -118,29 +128,35 @@ public class MainActivity extends AppCompatActivity {
                 //Log.d("Partial bits", bits.toString());
             } catch (Exception e) {
                 //couldn't find code in image
-                //param.setText("Error: No valid code found.");
-                //results.setText("");
-                //decstr.setText("");
-                Log.d("no code found", "x");
+                Log.d("no code found", x + ", " + y);
                 e.printStackTrace();
+                tag_found = -1;
+                //return;
+            }
+            if (tag_found == -1) {
+                debugInfo.setText("No BEEtag found");
                 return;
             }
             //NOTE: "row" and "column" are used below referring to the original orientation of the tag
             //The BEEtag specification uses "column" to refer to rows in the original orientation when mentioning the parity format
             //Also note that BEEtag uses white for 1 and 0 for black while ZXing uses true for black and false for white.
-            int dec;
+            int dec = -1;
             for (int i = 0; i < 4; i++) {
                 dec = decode(bits);
                 if (dec != -1) {
                     //Pass BeeTag info to next screen
+                    debugInfo.setText("");
                     Intent saveIntent= new Intent(MainActivity.this, cameraActivity.class);
                     saveIntent.putExtra("decimal", Integer.toString(dec));
                     startActivity(saveIntent);
+                    debugInfo.setText("");
                 } else {
                     bits = rotate(bits, 5);
                     //Log.d("bits", bits.toString());
                 }
             }
+            if (dec == -1)
+                debugInfo.setText("BEEtag invalid");
         }
     }
 
@@ -154,6 +170,8 @@ public class MainActivity extends AppCompatActivity {
         }
         return x;
     }
+
+
 
     int decode(BitMatrix bits){
         int dec = 0; //stores decimal number of tag

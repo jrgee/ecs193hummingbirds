@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,20 +11,229 @@
         android:layout_height="wrap_content"
         android:columnCount="5"
         android:rowCount="5"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_gravity="center_horizontal"
         tools:layout_constraintLeft_creator="1"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="8dp">
+        android:layout_marginTop="8dp"
+        android:id="@+id/gridLayout">
 
         <ToggleButton
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/button0"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:drawableTop="@drawable/black"
             android:checked="false"
-            android:textOff=" "
+            android:textOff = " "
             android:textOn=" " />
+        <ToggleButton
+            android:id="@+id/button1"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:drawableTop="@drawable/black"
+            android:checked="false"
+            android:textOff = " "
+            android:textOn=" " />
+        <ToggleButton
+            android:id="@+id/button2"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:drawableTop="@drawable/black"
+            android:checked="false"
+            android:textOff = " "
+            android:textOn=" " />
+        <ToggleButton
+            android:id="@+id/button3"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:drawableTop="@drawable/black"
+            android:checked="false"
+            android:textOff = " "
+            android:textOn=" " />
+        <ToggleButton
+            android:id="@+id/button4"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:drawableTop="@drawable/black"
+            android:checked="false"
+            android:textOff = " "
+            android:textOn=" " />
+        <ToggleButton
+            android:id="@+id/button5"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:drawableTop="@drawable/black"
+            android:checked="false"
+            android:textOff = " "
+            android:textOn=" " />
+        <ToggleButton
+            android:id="@+id/button6"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:drawableTop="@drawable/black"
+            android:checked="false"
+            android:textOff = " "
+            android:textOn=" " />
+        <ToggleButton
+            android:id="@+id/button7"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:drawableTop="@drawable/black"
+            android:checked="false"
+            android:textOff = " "
+            android:textOn=" " />
+        <ToggleButton
+            android:id="@+id/button8"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:drawableTop="@drawable/black"
+            android:checked="false"
+            android:textOff = " "
+            android:textOn=" " />
+        <ToggleButton
+            android:id="@+id/button9"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:drawableTop="@drawable/black"
+            android:checked="false"
+            android:textOff = " "
+            android:textOn=" " />
+        <ToggleButton
+        android:id="@+id/button10"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:drawableTop="@drawable/black"
+        android:checked="false"
+        android:textOff = " "
+        android:textOn=" " />
+        <ToggleButton
+            android:id="@+id/button11"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:drawableTop="@drawable/black"
+            android:checked="false"
+            android:textOff = " "
+            android:textOn=" " />
+        <ToggleButton
+            android:id="@+id/button12"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:drawableTop="@drawable/black"
+            android:checked="false"
+            android:textOff = " "
+            android:textOn=" " />
+        <ToggleButton
+            android:id="@+id/button13"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:drawableTop="@drawable/black"
+            android:checked="false"
+            android:textOff = " "
+            android:textOn=" " />
+        <ToggleButton
+            android:id="@+id/button14"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:drawableTop="@drawable/black"
+            android:checked="false"
+            android:textOff = " "
+            android:textOn=" " />
+        <ToggleButton
+            android:id="@+id/button15"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:drawableTop="@drawable/black"
+            android:checked="false"
+            android:textOff = " "
+            android:textOn=" " />
+        <ToggleButton
+            android:id="@+id/button16"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:drawableTop="@drawable/black"
+            android:checked="false"
+            android:textOff = " "
+            android:textOn=" " />
+        <ToggleButton
+            android:id="@+id/button17"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:drawableTop="@drawable/black"
+            android:checked="false"
+            android:textOff = " "
+            android:textOn=" " />
+        <ToggleButton
+            android:id="@+id/button18"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:drawableTop="@drawable/black"
+            android:checked="false"
+            android:textOff = " "
+            android:textOn=" " />
+        <ToggleButton
+            android:id="@+id/button19"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:drawableTop="@drawable/black"
+            android:checked="false"
+            android:textOff = " "
+            android:textOn=" " />
+        <ToggleButton
+            android:id="@+id/button20"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:drawableTop="@drawable/black"
+            android:checked="false"
+            android:textOff = " "
+            android:textOn=" " />
+        <ToggleButton
+            android:id="@+id/button21"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:drawableTop="@drawable/black"
+            android:checked="false"
+            android:textOff = " "
+            android:textOn=" " />
+        <ToggleButton
+            android:id="@+id/button22"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:drawableTop="@drawable/black"
+            android:checked="false"
+            android:textOff = " "
+            android:textOn=" " />
+        <ToggleButton
+            android:id="@+id/button23"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:drawableTop="@drawable/black"
+            android:checked="false"
+            android:textOff = " "
+            android:textOn=" " />
+        <ToggleButton
+            android:id="@+id/button24"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:drawableTop="@drawable/black"
+            android:checked="false"
+            android:textOff = " "
+            android:textOn=" " />
+
+
     </GridLayout>
-</android.support.constraint.ConstraintLayout>
+
+    <Button
+        android:id="@+id/scan_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Scan"
+        tools:layout_editor_absoluteX="139dp"
+        tools:layout_editor_absoluteY="395dp"
+        android:layout_below="@+id/gridLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="49dp" />
+
+</RelativeLayout>

@@ -30,7 +30,7 @@ final class ModDetector {
      * @param y y position of search center
      * @throws NotFoundException if image is too small to accommodate {@code initSize}
      */
-    private ModDetector(BitMatrix image, int initSize, int x, int y) throws NotFoundException {
+    ModDetector(BitMatrix image, int initSize, int x, int y) throws NotFoundException {
         this.image = image;
         height = image.getHeight();
         width = image.getWidth();
