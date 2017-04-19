@@ -225,7 +225,7 @@ public class BEEtag extends javax.swing.JFrame {
         bt.RecordTable.setDefaultEditor(String.class, new MultiLineCellEditor());
         
         //set up table to display results
-        final String[] col = {"Image", "Decoded", "ID", "Time"}; //column headings
+        final String[] col = {"Image", "Decoded", "ID", "DateRead", "TagCode", "TagHex", "TagDecimal", "LocationID", "Latitude", "Longitude"}; //column headings
         bt.mod = new DefaultTableModel(col, 0){
             @Override
             public Class getColumnClass(int columnIndex) {
@@ -315,8 +315,18 @@ public class BEEtag extends javax.swing.JFrame {
                 if(dec != -1) { //found valid tag orientation
                     ArrayList<String> values = new ArrayList<>(); //list of strings to put to table
                     values.add(bits.toString());
-                    values.add(Integer.toString(dec)); //tag ID
+                    //TODO: figure out if this is different from tag ID
+                    values.add(Integer.toString(dec)); //id
                     values.add(attr.creationTime().toString()); //file creation time (temp)
+                    //TODO: figure out what tag code is
+                    values.add(Integer.toString(dec)); //tag code 
+                    values.add(Integer.toHexString(dec)); //tag ID (hex)
+                    values.add(Integer.toString(dec)); //tag ID (decimal)
+                    //TODO: see if we can get actual values for these 3
+                    values.add("NULL"); //location ID
+                    values.add("NULL"); //latitude
+                    values.add("NULL"); //longitude
+                    
                     records.add(values); //save to records arraylist
 
                     Object[] row = new Object[values.size()+1]; //leave space for thumbnail
@@ -467,7 +477,7 @@ public class BEEtag extends javax.swing.JFrame {
                 
                 //add values from table to arraylist to write to CSV
                 ArrayList<String> values = new ArrayList<>();
-                for(int j = 1; j < 4; j++){
+                for(int j = 1; j < mod.getColumnCount(); j++){
                     values.add((String)mod.getValueAt(row, j));
                 }
                 
@@ -491,7 +501,7 @@ public class BEEtag extends javax.swing.JFrame {
         }
         
         try(FileWriter writer = new FileWriter(outFile)) {
-            writer.append("ID,Time\n"); //write header
+            writer.append("id,DateRead,TagCode,TagHex,TagDecimal,LocationID,Latitude,Longitude\n"); //write header
 
             for(ArrayList<String> record : records){ //for each record
                 if(record.isEmpty())
