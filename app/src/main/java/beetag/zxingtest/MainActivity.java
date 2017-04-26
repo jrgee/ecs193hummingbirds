@@ -147,9 +147,11 @@ public class MainActivity extends AppCompatActivity {
                     //Pass BeeTag info to next screen
                     debugInfo.setText("");
                     Intent saveIntent= new Intent(MainActivity.this, cameraActivity.class);
+                    saveIntent.putExtra("binary", matToBinString(bits));
                     saveIntent.putExtra("decimal", Integer.toString(dec));
                     startActivity(saveIntent);
                     debugInfo.setText("");
+                    break;
                 } else {
                     bits = rotate(bits, 5);
                     //Log.d("bits", bits.toString());
@@ -160,7 +162,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    BitMatrix rotate(BitMatrix bits, int size){
+
+    /**
+     * Returns a copy of the provided BitMatrix rotated counter-clockwise by 90 degrees
+     * @param bits the BitMatrix to rotate
+     * @param size the size of the BitMatrix (always 5)
+     */
+    static BitMatrix rotate(BitMatrix bits, int size){
         BitMatrix x = new BitMatrix(size, size);
         for (int i = 0; i < size; ++i) {
             for (int j = 0; j < size; ++j) {
@@ -171,9 +179,11 @@ public class MainActivity extends AppCompatActivity {
         return x;
     }
 
-
-
-    int decode(BitMatrix bits){
+    /**
+     * Returns the decimal value of the provided BitMatrix or -1 if it is invalid
+     * @param bits the BitMatrix to decode
+     */
+    static int decode(BitMatrix bits){
         int dec = 0; //stores decimal number of tag
         int[] par = new int[5]; //stores expected parity results
 
@@ -226,4 +236,19 @@ public class MainActivity extends AppCompatActivity {
         return dec;
     }
 
+    /**
+     * Returns the binary value of the provided BitMatrix as a string
+     * @param bits the BitMatrix to rotate
+     */
+    static String matToBinString(BitMatrix bits){
+        String str = "";
+        for(int i=0; i<5; i++)
+            for(int j=0; j<5; j++)
+                if(bits.get(j,i))
+                    str += "0";
+                else
+                    str += "1";
+
+        return str;
+    }
 }

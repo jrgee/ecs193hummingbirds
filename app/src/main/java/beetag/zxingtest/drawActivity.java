@@ -3,7 +3,6 @@ package beetag.zxingtest;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,23 +28,23 @@ public class drawActivity extends AppCompatActivity {
         final BitMatrix bits = new BitMatrix(5,5);
         bits.setRegion(0,0,5,5);
 
-
-
         Button drawButton = (Button) findViewById(R.id.scan_button);
         drawButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
                 BitMatrix reader = bits;
                 int dec = -1;
                 for (int i = 0; i < 4; i++) {
-                    dec = decode(reader);
+                    dec = MainActivity.decode(reader);
                     if (dec != -1) {
                         //Pass BeeTag info to next screen
                         //debugInfo.setText("");
                         Intent saveIntent= new Intent(drawActivity.this, cameraActivity.class);
+                        saveIntent.putExtra("binary", MainActivity.matToBinString(reader));
                         saveIntent.putExtra("decimal", Integer.toString(dec));
                         startActivity(saveIntent);
+                        break;
                     } else {
-                        reader = rotate(reader, 5);
+                        reader = MainActivity.rotate(reader, 5);
                         //Log.d("bits", bits.toString());
                     }
                 }
@@ -91,7 +90,7 @@ public class drawActivity extends AppCompatActivity {
         });
 
         ToggleButton toggle2 = (ToggleButton) findViewById(R.id.button2);
-        toggle1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        toggle2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     buttonView.setCompoundDrawablesWithIntrinsicBounds(null, white, null, null);
@@ -437,73 +436,6 @@ public class drawActivity extends AppCompatActivity {
 
 
     }
-
-    BitMatrix rotate(BitMatrix bits, int size){
-        BitMatrix x = new BitMatrix(size, size);
-        for (int i = 0; i < size; ++i) {
-            for (int j = 0; j < size; ++j) {
-                if(bits.get(size - j - 1, i))
-                    x.set(i, j);
-            }
-        }
-        return x;
-    }
-
-
-
-    int decode(BitMatrix bits){
-        int dec = 0; //stores decimal number of tag
-        int[] par = new int[5]; //stores expected parity results
-
-        //convert BitMatrix into decimal representation and set column parity bits
-        for(int i=0; i<3; i++){ //for first 3 columns
-            par[i] = 0; //initialize to even (0)
-
-            for(int j=0; j<5; j++){ //for each row
-                if(!bits.get(i, j)) { //if white square (representing 1)
-                    dec += Math.pow(2, 14 - 5 * i - j);
-                    par[i] = 1 - par[i]; //flip parity for each white
-                }
-            }
-        }
-
-        //set last two parity bits
-        par[3] = 0; //initialize to even (0)
-        for(int j=0; j<3; j++){ //for first 3 rows
-            for(int i=0; i<3; i++){ //for first 3 columns
-                if(!bits.get(i, j)) { //if white square (representing 1)
-                    par[3] = 1 - par[3]; //flip parity for each white
-                }
-            }
-        }
-
-        par[4] = 0; //initialize to even (0)
-        for(int j=3; j<5; j++){ //for last 2 rows
-            for(int i=0; i<3; i++){ //for first 3 columns
-                if(!bits.get(i, j)) { //if white square (representing 1)
-                    par[4] = 1 - par[4]; //flip parity for each white
-                }
-            }
-        }
-
-        //check parity for 4th column
-        for(int j=0; j<5; j++){ //for each row
-            if((!bits.get(3, j) && par[j] == 0) || (bits.get(3, j) && par[j] == 1)){ //if failed parity check
-                //decstr.setText("Error: Parity check 1 failed.");
-                return -1;
-            }
-        }
-
-        for(int j=0; j<5; j++){ //for each row
-            if((!bits.get(4, j) && par[4-j] == 0) || (bits.get(4, j) && par[4-j] == 1)){ //if failed parity check
-                //decstr.setText("Error: Parity check 2 failed.");
-                return -1;
-            }
-        }
-
-        return dec;
-    }
-
 }
 
 
