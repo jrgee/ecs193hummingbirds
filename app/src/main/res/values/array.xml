@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="markerType">
+    <string-array name="RecorderId">
         <item></item>
         <item> - Not Recorded</item>
         <item>RFID</item>
@@ -31,19 +31,48 @@
         <item>White Out (Eco Friendly)</item>
     </string-array>
 
-    <string-array name="placementMethod">
+    <string-array name="tailBaseColor">
         <item></item>
         <item> - Not Recorded</item>
-        <item>Subcutaneous</item>
-        <item>Glued to Back</item>
+        <item>G  Green</item>
+        <item>O  Orange</item>
     </string-array>
 
-    <string-array name="placementMaterial">
+    <string-array name="bandCode">
         <item></item>
-        <item> - Not Recorded</item>
-        <item>Vet Bond Surgical Glue</item>
-        <item>PDS Absorbable Suture</item>
-        <item>Eyelash Glue</item>
+        <item>0  Unbanded</item>
+        <item>1  New</item>
+        <item>2  Recaptured</item>
+        <item>4  Destroyed Band</item>
+        <item>5  Changed Band</item>
+        <item>7  Same Day Recap</item>
+        <item>8  Lost Band</item>
+    </string-array>
+
+    <string-array name="ageCode">
+        <item></item>
+        <item>U  Unknown</item>
+        <item>AHY  After Hatch Year</item>
+        <item>HY  Hatch Year</item>
+        <item>SY  Second Year</item>
+    </string-array>
+
+    <string-array name="Boolean">
+        <item></item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
+    <string-array name="shortBandLetter">
+        <item></item>
+        <item>P</item>
+        <item>Y</item>
+        <item>H</item>
+        <item>R</item>
+        <item>L</item>
+        <item>N</item>
+        <item>J</item>
+        <item>C</item>
     </string-array>
 
     <string-array name="closureMethod">

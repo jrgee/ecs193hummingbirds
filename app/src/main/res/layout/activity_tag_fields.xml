@@ -33,21 +33,20 @@
             android:layout_alignParentLeft="true" />
 
         <TextView
-            android:text="Marker Type"
+            android:text="Bird Life Status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:textSize="18sp"
+            android:id="@+id/textView16"
             android:layout_below="@+id/title"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="50dp"
-            android:textSize="18sp"
-            android:id="@+id/textView16" />
+            android:layout_alignParentStart="true" />
 
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/spinner14"
-            android:entries="@array/markerType"
             android:layout_alignTop="@+id/textView16"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
@@ -55,7 +54,7 @@
             android:layout_toRightOf="@+id/title" />
 
         <TextView
-            android:text="Marker Status"
+            android:text="Capture Method"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView16"
@@ -77,7 +76,7 @@
             android:layout_toRightOf="@+id/title" />
 
         <TextView
-            android:text="Manufacturer"
+            android:text="Date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView17"
@@ -99,7 +98,7 @@
             android:layout_toRightOf="@+id/title" />
 
         <TextView
-            android:text="Placement Method"
+            android:text="Time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView18"
@@ -114,14 +113,13 @@
             android:layout_height="wrap_content"
             android:id="@+id/spinner17"
             android:layout_alignTop="@+id/textView19"
-            android:entries="@array/placementMethod"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_toEndOf="@+id/title"
             android:layout_toRightOf="@+id/title" />
 
         <TextView
-            android:text="Placement Material"
+            android:text="Tail Base Color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView19"
@@ -135,7 +133,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/spinner18"
-            android:entries="@array/placementMaterial"
+            android:entries="@array/tailBaseColor"
             android:layout_alignTop="@+id/textView20"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
@@ -143,7 +141,7 @@
             android:layout_toRightOf="@+id/title" />
 
         <TextView
-            android:text="Closure Method"
+            android:text="Band Code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView20"
@@ -157,7 +155,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/spinner19"
-            android:entries="@array/closureMethod"
+            android:entries="@array/bandCode"
             android:layout_alignTop="@+id/textView21"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
@@ -165,7 +163,7 @@
             android:layout_toRightOf="@+id/title" />
 
         <TextView
-            android:text="Banding Location"
+            android:text="Short Band Letter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView21"
@@ -187,7 +185,7 @@
             android:layout_toRightOf="@+id/title" />
 
         <TextView
-            android:text="Body Location Marker"
+            android:text="Short Band Number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView22"
@@ -197,19 +195,8 @@
             android:textSize="18sp"
             android:id="@+id/textView23" />
 
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/spinner21"
-            android:entries="@array/bodyLocation"
-            android:layout_alignTop="@+id/textView23"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/title"
-            android:layout_toRightOf="@+id/title" />
-
         <TextView
-            android:text="Feather Location Marker"
+            android:text="Band Number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView23"
@@ -219,19 +206,8 @@
             android:textSize="18sp"
             android:id="@+id/textView24" />
 
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/spinner22"
-            android:entries="@array/featherLocation"
-            android:layout_alignTop="@+id/textView24"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/title"
-            android:layout_toRightOf="@+id/title" />
-
         <TextView
-            android:text="Number - Binary"
+            android:text="Bee Tag Number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView24"
@@ -256,7 +232,7 @@
 
 
         <TextView
-            android:text="Number - Hexadecimal"
+            android:text="RFID Number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView25"
@@ -279,7 +255,7 @@
             android:layout_alignStart="@+id/editText2" />
 
         <TextView
-            android:text="Number - Decimal"
+            android:text="Age Code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView26"
@@ -289,21 +265,9 @@
             android:textSize="18sp"
             android:id="@+id/textView27" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText4"
-            android:inputType="number"
-            android:maxLines="1"
-            android:layout_alignBottom="@+id/textView27"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/title"
-            android:layout_toRightOf="@+id/title" />
-
 
         <TextView
-            android:text="BEEtag Color"
+            android:text="Sex Code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView27"
@@ -314,7 +278,7 @@
             android:id="@+id/textView28" />
 
         <TextView
-            android:text="Color + Decimal Number"
+            android:text="Species ID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView28"
@@ -324,20 +288,8 @@
             android:textSize="18sp"
             android:id="@+id/textView29" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText5"
-            android:layout_alignBottom="@+id/textView29"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:maxLines="1"
-            android:inputType="text"
-            android:layout_toEndOf="@+id/title"
-            android:layout_toRightOf="@+id/title" />
-
         <TextView
-            android:text="Barcode Number"
+            android:text="Pox Lesions 2015"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView29"
@@ -347,18 +299,6 @@
             android:textSize="18sp"
             android:id="@+id/textView30" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText6"
-            android:layout_alignBottom="@+id/textView30"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/title"
-            android:maxLines="1"
-            android:layout_toRightOf="@+id/title"
-            android:inputType="number" />
-
         <Spinner
             android:layout_height="wrap_content"
             android:id="@+id/spinner26"
@@ -367,8 +307,63 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_width="400dp"
-            android:layout_alignLeft="@+id/editText5"
-            android:layout_alignStart="@+id/editText5" />
+            android:layout_alignLeft="@+id/spinner"
+            android:layout_alignStart="@+id/spinner" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:entries="@array/ageCode"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/textView27"
+            android:layout_alignLeft="@+id/editText3"
+            android:layout_alignStart="@+id/editText3" />
+
+        <Spinner
+            android:id="@+id/spinner2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/textView29"
+            android:layout_alignLeft="@+id/spinner3"
+            android:layout_alignStart="@+id/spinner3" />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/textView25"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:layout_alignLeft="@+id/editText2"
+            android:layout_alignStart="@+id/editText2" />
+
+        <Spinner
+            android:id="@+id/spinner3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/Boolean"
+            android:layout_alignTop="@+id/textView30"
+            android:layout_alignLeft="@+id/editText3"
+            android:layout_alignStart="@+id/editText3" />
+
+        <EditText
+            android:id="@+id/editText7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/editText"
+            android:layout_alignLeft="@+id/editText"
+            android:layout_alignStart="@+id/editText"
+            android:layout_marginBottom="18dp"
+            android:layout_toEndOf="@+id/textView30"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:layout_toRightOf="@+id/textView30" />
 
 
     </RelativeLayout>

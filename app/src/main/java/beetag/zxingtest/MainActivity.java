@@ -41,6 +41,16 @@ public class MainActivity extends AppCompatActivity {
         final String info= intent.getStringExtra("debugInfo");
         debug_info.setText(info);
 
+        //Send to Recapture page
+        Button recapButton = (Button) findViewById(R.id.button);
+        recapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent saveValue = new Intent(MainActivity.this, tagFields.class);
+                startActivity(saveValue);
+            }
+        });
+
         Button scanButton = (Button) findViewById(R.id.scan_button);
         scanButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
