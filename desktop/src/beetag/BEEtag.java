@@ -14,15 +14,15 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.*;
 import javax.swing.filechooser.*;
 import javax.swing.table.*;
+import javaxt.io.Image;
 
 
 public class BEEtag extends javax.swing.JFrame {
@@ -65,6 +65,7 @@ public class BEEtag extends javax.swing.JFrame {
 
             }
         ));
+        RecordTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         RecordTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(RecordTable);
 
@@ -159,6 +160,8 @@ public class BEEtag extends javax.swing.JFrame {
         if(fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
             File[] imgFiles = fc.getSelectedFiles();
             convert(imgFiles);
+            TableColumnAdjuster tca = new TableColumnAdjuster(RecordTable);
+            tca.adjustColumns();
         }
     }//GEN-LAST:event_AddImgActionPerformed
 
@@ -172,6 +175,8 @@ public class BEEtag extends javax.swing.JFrame {
         if(fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
             File dir = fc.getSelectedFile();
             convert(dir.listFiles());
+            TableColumnAdjuster tca = new TableColumnAdjuster(RecordTable);
+            tca.adjustColumns();
         }
     }//GEN-LAST:event_AddDirActionPerformed
 
@@ -256,18 +261,9 @@ public class BEEtag extends javax.swing.JFrame {
     
     private void convert(File[] inFiles)
     {
-        for(File imgFile: inFiles){
-            BufferedImage img;
-            BasicFileAttributes attr;
-            try{
-                //get image to buffered image
-                img = ImageIO.read(imgFile);
-                attr = Files.readAttributes(imgFile.toPath(), BasicFileAttributes.class);
-            }
-            catch(IOException e){
-                System.err.println("Invalid image file " + imgFile.getPath() + ".");
-                continue;
-            }
+        for(File imgFile: inFiles){    
+            Image xtImage = new Image(imgFile);
+            BufferedImage img = xtImage.getBufferedImage(); //get image to buffered image
 
             int[] intArray = img.getRGB(0, 0, img.getWidth(), img.getHeight(), null, 0, img.getWidth());
 
@@ -314,18 +310,7 @@ public class BEEtag extends javax.swing.JFrame {
                 dec = decode(bits);
                 if(dec != -1) { //found valid tag orientation
                     ArrayList<String> values = new ArrayList<>(); //list of strings to put to table
-                    values.add(bits.toString());
-                    //TODO: figure out if this is different from tag ID
-                    values.add(Integer.toString(dec)); //id
-                    values.add(attr.creationTime().toString()); //file creation time (temp)
-                    //TODO: figure out what tag code is
-                    values.add(Integer.toString(dec)); //tag code 
-                    values.add(Integer.toHexString(dec)); //tag ID (hex)
-                    values.add(Integer.toString(dec)); //tag ID (decimal)
-                    //TODO: see if we can get actual values for these 3
-                    values.add("NULL"); //location ID
-                    values.add("NULL"); //latitude
-                    values.add("NULL"); //longitude
+                    fillValues(values, bits, dec, xtImage);
                     
                     records.add(values); //save to records arraylist
 
@@ -356,9 +341,7 @@ public class BEEtag extends javax.swing.JFrame {
                 //show user failed read in table but don't write to csv
                 ArrayList<String> values = new ArrayList<>(); //list of strings to put to table
                 records.add(values); //add empty placeholder to records
-                values.add(bits.toString());
-                values.add("ERROR"); //tag ID
-                values.add(attr.creationTime().toString()); //file creation time (temp)
+                fillValues(values, bits, dec, xtImage);
 
                 Object[] row = new Object[values.size()+1]; //leave space for thumbnail
 
@@ -446,6 +429,42 @@ public class BEEtag extends javax.swing.JFrame {
         return dec;
     } //decode
     
+    void fillValues(ArrayList<String> values, BitMatrix bits, int dec, Image xtImage)
+    {
+        HashMap<Integer, Object> exif = xtImage.getExifTags(); //get EXIF info of image
+        double[] gps = xtImage.getGPSCoordinate(); //get 
+        
+        values.add(bits.toString());
+        //TODO: figure out if this is different from tag ID
+        if(dec == -1)
+            values.add("NONE");
+        else
+            values.add(Integer.toString(dec)); //id
+        
+        values.add(exif.get(0x9003).toString()); //image creation time
+        
+        if(dec == -1){
+            values.add("NONE"); //tag code 
+            values.add("NONE"); //tag ID (hex)
+            values.add("NONE"); //tag ID (decimal)
+        }   
+        else{
+            values.add(matToBinString(bits)); //tag code 
+            values.add(Integer.toHexString(dec)); //tag ID (hex)
+            values.add(Integer.toString(dec)); //tag ID (decimal)
+        }
+        
+        values.add("NULL"); //location ID
+        if(gps != null){
+            values.add(Double.toString(gps[1])); //latitude
+            values.add(Double.toString(gps[0])); //longitude
+        }
+        else{
+            values.add("NULL"); //latitude
+            values.add("NULL"); //longitude
+        }
+    }
+    
     private void updateDec(int row)
     {
         //update table based on newly edited BitMatrix
@@ -492,6 +511,18 @@ public class BEEtag extends javax.swing.JFrame {
         if(dec == -1)
             mod.setValueAt("ERROR", row, 2); //invalid barcode
     } //updateDec
+    
+    String matToBinString(BitMatrix bits){
+        String str = "";
+        for(int i=0; i<5; i++)
+            for(int j=0; j<5; j++)
+                if(bits.get(j,i))
+                    str += "0";
+                else
+                    str += "1";
+
+        return str;
+    }
     
     private void writeCSV(String outFile)
     {
