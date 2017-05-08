@@ -1,5 +1,7 @@
 package beetag.zxingtest;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,9 +12,15 @@ import android.util.Log;
 import android.view.View;
 import android.app.Application;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import java.text.SimpleDateFormat;
+import android.view.View.OnClickListener;
+import android.widget.TimePicker;
 
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.logging.LoggingPermission;
 
 /**
@@ -34,6 +42,30 @@ public class tagFields extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tag_fields);
 
+        // Datepicker popup
+        MyEditTextDatePicker fromDate = new MyEditTextDatePicker(this, R.id.editText10);
+
+        // Timepicker popup
+        final EditText timePop = (EditText) findViewById(R.id.editText11);
+        timePop.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Calendar mcurrentTime = Calendar.getInstance();
+                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mcurrentTime.get(Calendar.MINUTE);
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(tagFields.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        timePop.setText( selectedHour + ":" + selectedMinute);
+                    }
+                }, hour, minute, true);//Yes 24 hour time
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
+
+            }
+        });
         //Send to Table page
         Button tableButton = (Button) findViewById(R.id.button26);
         tableButton.setOnClickListener(new View.OnClickListener() {
@@ -53,27 +85,23 @@ public class tagFields extends AppCompatActivity {
                 Spinner sexSpin = (Spinner) findViewById(R.id.spinner26);
                 String sexValue = sexSpin.getSelectedItem().toString();
 
-                updateArray [i][0] =  bandEValue;
-                updateArray [i][1] = beeEValue;
-                updateArray [i][2] = rfidValue;
-                updateArray [i][3] = ageValue;
-                updateArray [i][4] = sexValue;
+                EditText dateSpin = (EditText) findViewById(R.id.editText10);
+                String dateValue = dateSpin.getText().toString();
 
-                /*stringArray [i][0] =  bandEValue;
-                stringArray [i][1] = beeEValue;
-                stringArray [i][2] = rfidValue;
-                stringArray [i][3] = ageValue;
-                stringArray [i][4] = sexValue;*/
+                EditText timeSpin = (EditText) findViewById(R.id.editText11);
+                String timeValue = timeSpin.getText().toString();
 
-                //((MyApplication)getApplicationContext()).setArray(updateArray);
+                updateArray [i][0] = dateValue;
+                updateArray [i][1] = timeValue;
+                updateArray [i][2] =  bandEValue;
+                updateArray [i][3] = beeEValue;
+                updateArray [i][4] = rfidValue;
+
+
 
                 Bundle mBundle = new Bundle();
                 mBundle.putSerializable("keyArray", updateArray);
                 saveValue.putExtras(mBundle);
-                //saveValue.putExtra("bandText",bandEValue);
-                //saveValue.putExtra("beeText",beeEValue);
-                /*saveValue.putExtra("beeArray",stringArray);*/
-                //saveValue.putExtra("value",i);
                 startActivity(saveValue);
             }
         });

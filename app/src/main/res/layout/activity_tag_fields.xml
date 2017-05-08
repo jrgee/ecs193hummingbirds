@@ -86,17 +86,6 @@
             android:textSize="18sp"
             android:id="@+id/textView18" />
 
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/spinner16"
-            android:entries="@array/manufacturer"
-            android:layout_alignTop="@+id/textView18"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/title"
-            android:layout_toRightOf="@+id/title" />
-
         <TextView
             android:text="Time"
             android:layout_width="wrap_content"
@@ -107,16 +96,6 @@
             android:layout_marginTop="50dp"
             android:textSize="18sp"
             android:id="@+id/textView19" />
-
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/spinner17"
-            android:layout_alignTop="@+id/textView19"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/title"
-            android:layout_toRightOf="@+id/title" />
 
         <TextView
             android:text="Tail Base Color"
@@ -383,6 +362,32 @@
             android:layout_marginBottom="18dp"
             android:layout_marginTop="18dp"
             android:text="Scan" />
+
+        <EditText
+            android:id="@+id/editText10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/textView19"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:ems="10"
+            android:focusable="false"
+            android:inputType="textPersonName"
+            android:layout_alignLeft="@+id/button26"
+            android:layout_alignStart="@+id/button26" />
+
+        <EditText
+            android:id="@+id/editText11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/textView20"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:focusable="false"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:layout_alignLeft="@+id/editText10"
+            android:layout_alignStart="@+id/editText10" />
 
 
     </RelativeLayout>
