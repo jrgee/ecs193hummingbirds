@@ -4,6 +4,7 @@
 
     <application
         android:allowBackup="true"
+        android:name=".MyApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -35,7 +36,8 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".drawActivity"></activity>
+        <activity android:name=".drawActivity" />
+        <activity android:name=".tableActivity"></activity>
     </application>
 
 </manifest>

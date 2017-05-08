@@ -365,6 +365,25 @@
             android:inputType="textPersonName"
             android:layout_toRightOf="@+id/textView30" />
 
+        <Button
+            android:id="@+id/button26"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Table View"
+            android:layout_alignBaseline="@+id/button27"
+            android:layout_alignBottom="@+id/button27"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <Button
+            android:id="@+id/button27"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView30"
+            android:layout_marginBottom="18dp"
+            android:layout_marginTop="18dp"
+            android:text="Scan" />
+
 
     </RelativeLayout>
 
