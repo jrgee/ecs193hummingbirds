@@ -58,7 +58,12 @@ public class tagFields extends AppCompatActivity {
                 mTimePicker = new TimePickerDialog(tagFields.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        timePop.setText( selectedHour + ":" + selectedMinute);
+                        if ( selectedMinute <= 9 ){
+                            timePop.setText( selectedHour + ":0" + selectedMinute);
+                        }
+                        else {
+                            timePop.setText(selectedHour + ":" + selectedMinute);
+                        }
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");
@@ -97,7 +102,9 @@ public class tagFields extends AppCompatActivity {
                 updateArray [i][3] = beeEValue;
                 updateArray [i][4] = rfidValue;
 
-
+                ((MyApplication)getApplicationContext()).setArray(updateArray);
+                int j = i + 1;
+                ((MyApplication)getApplicationContext()).setCounter(j);
 
                 Bundle mBundle = new Bundle();
                 mBundle.putSerializable("keyArray", updateArray);
@@ -118,17 +125,17 @@ public class tagFields extends AppCompatActivity {
                 EditText rfidText = (EditText) findViewById(R.id.editText3);
                 String rfidValue = rfidText.getText().toString();
 
-                Spinner ageSpin = (Spinner) findViewById(R.id.spinner);
-                String ageValue = ageSpin.getSelectedItem().toString();
+                EditText dateSpin = (EditText) findViewById(R.id.editText10);
+                String dateValue = dateSpin.getText().toString();
 
-                Spinner sexSpin = (Spinner) findViewById(R.id.spinner26);
-                String sexValue = sexSpin.getSelectedItem().toString();
+                EditText timeSpin = (EditText) findViewById(R.id.editText11);
+                String timeValue = timeSpin.getText().toString();
 
-                updateArray [i][0] =  bandEValue;
-                updateArray [i][1] = beeEValue;
-                updateArray [i][2] = rfidValue;
-                updateArray [i][3] = ageValue;
-                updateArray [i][4] = sexValue;
+                updateArray [i][0] = dateValue;
+                updateArray [i][1] = timeValue;
+                updateArray [i][2] =  bandEValue;
+                updateArray [i][3] = beeEValue;
+                updateArray [i][4] = rfidValue;
 
                 ((MyApplication)getApplicationContext()).setArray(updateArray);
                 int j = i + 1;

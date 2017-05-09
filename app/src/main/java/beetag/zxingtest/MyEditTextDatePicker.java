@@ -10,9 +10,6 @@ import android.widget.EditText;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-/**
- * Created by giheok on 5/7/17.
- */
 
 public class MyEditTextDatePicker  implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
     EditText _editText;
