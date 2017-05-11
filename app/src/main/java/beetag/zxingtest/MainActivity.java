@@ -22,6 +22,8 @@ import com.google.zxing.common.GridSampler;
 
 import java.io.File;
 
+import beetag.zxingtest.ocrreader.OcrCaptureActivity;
+
 /**
  *Controls actions of the main screen class of the Hummingbird App
  */
@@ -72,6 +74,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent drawIntent = new Intent(MainActivity.this, drawActivity.class);
                 startActivity(drawIntent);
+            }
+        });
+
+        Button ocrButton = (Button) findViewById(R.id.ocr_button);
+        ocrButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                Intent OcrCaptureActivity = new Intent(MainActivity.this, OcrCaptureActivity.class);
+                startActivity(OcrCaptureActivity);
             }
         });
     }

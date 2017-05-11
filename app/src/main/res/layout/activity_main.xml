@@ -22,7 +22,7 @@
         android:id="@+id/textView2" />
 
     <Button
-        android:text="Scan"
+        android:text="Scan Beetag"
         android:id="@+id/scan_button"
         android:textSize="14sp"
         android:layout_height="60dp"
@@ -67,5 +67,16 @@
         android:text="Recapture"
         android:layout_below="@+id/draw_button"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/ocr_button"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:text="Scan RFID"
+        android:layout_alignBaseline="@+id/scan_button"
+        android:layout_alignBottom="@+id/scan_button"
+        android:layout_toRightOf="@+id/scan_button"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp" />
 
 </RelativeLayout>
