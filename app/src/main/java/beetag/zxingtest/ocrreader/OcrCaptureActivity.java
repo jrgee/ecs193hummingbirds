@@ -60,7 +60,9 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.CommonStatusCodes;
 
+import beetag.zxingtest.MainActivity;
 import beetag.zxingtest.R;
+import beetag.zxingtest.cameraActivity;
 import beetag.zxingtest.ocrreader.ui.camera.*;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
@@ -362,7 +364,13 @@ public class OcrCaptureActivity extends AppCompatActivity {
         if (graphic != null) {
             text = graphic.getTextBlock();
             if (text != null && text.getValue() != null) {
-                Log.d(TAG, "text data is being spoken! " + text.getValue());
+                Log.d(TAG, "captured: " + text.getValue());
+                Intent saveIntent= new Intent(OcrCaptureActivity.this, cameraActivityRfid.class);
+                saveIntent.putExtra("rfid", text.getValue());
+                startActivity(saveIntent);
+                Log.d(TAG, "after new intent");
+                //debugInfo.setText("");
+                //Log.d(TAG, "text data is being spoken! " + text.getValue());
                 // Speak the string.
                 //tts.speak(text.getValue(), TextToSpeech.QUEUE_ADD, null, "DEFAULT");
             }

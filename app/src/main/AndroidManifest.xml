@@ -38,8 +38,8 @@
         </provider>
 
         <activity android:name=".drawActivity" />
-        <activity android:name=".ocrreader.OcrCaptureActivity">
-        </activity>
+        <activity android:name=".ocrreader.OcrCaptureActivity" />
+        <activity android:name=".ocrreader.cameraActivityRfid" />
 
         <activity android:name=".tableActivity"></activity>
     </application>
