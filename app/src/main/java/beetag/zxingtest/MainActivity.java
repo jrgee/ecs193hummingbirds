@@ -76,14 +76,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(drawIntent);
             }
         });
-
-        Button ocrButton = (Button) findViewById(R.id.ocr_button);
-        ocrButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v) {
-                Intent OcrCaptureActivity = new Intent(MainActivity.this, OcrCaptureActivity.class);
-                startActivity(OcrCaptureActivity);
-            }
-        });
     }
 
     /**

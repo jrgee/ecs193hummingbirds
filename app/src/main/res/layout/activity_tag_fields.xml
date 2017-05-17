@@ -44,11 +44,12 @@
             android:layout_alignParentStart="true" />
 
         <Spinner
-            android:id="@+id/spinner14"
+            android:id="@+id/lifeSpin"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/textView16"
-            android:layout_toRightOf="@+id/title" />
+            android:layout_alignRight="@+id/tableButton"
+            android:layout_alignEnd="@+id/tableButton" />
 
         <TextView
             android:text="Capture Method"
@@ -62,14 +63,13 @@
             android:id="@+id/textView17" />
 
         <Spinner
-            android:layout_width="match_parent"
+            android:id="@+id/methodSpin"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:id="@+id/spinner15"
+            android:layout_alignEnd="@+id/tableButton"
+            android:layout_alignRight="@+id/tableButton"
             android:layout_alignTop="@+id/textView17"
-            android:entries="@array/markerStatus"
-            android:layout_toRightOf="@+id/title"
-            android:layout_alignRight="@+id/spinner14"
-            android:layout_alignEnd="@+id/spinner14" />
+            android:entries="@array/markerStatus" />
 
         <TextView
             android:text="Date"
@@ -105,14 +105,13 @@
             android:id="@+id/textView20" />
 
         <Spinner
-            android:layout_width="match_parent"
+            android:id="@+id/tailSpin"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:id="@+id/spinner18"
-            android:entries="@array/tailBaseColor"
+            android:layout_alignEnd="@+id/tableButton"
+            android:layout_alignRight="@+id/tableButton"
             android:layout_alignTop="@+id/textView20"
-            android:layout_toRightOf="@+id/title"
-            android:layout_alignRight="@+id/editText7"
-            android:layout_alignEnd="@+id/editText7" />
+            android:entries="@array/tailBaseColor" />
 
         <TextView
             android:text="Band Code"
@@ -126,14 +125,13 @@
             android:id="@+id/textView21" />
 
         <Spinner
-            android:layout_width="match_parent"
+            android:id="@+id/bandSpin"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:id="@+id/spinner19"
-            android:entries="@array/bandCode"
+            android:layout_alignEnd="@+id/tableButton"
+            android:layout_alignRight="@+id/tableButton"
             android:layout_alignTop="@+id/textView21"
-            android:layout_toRightOf="@+id/title"
-            android:layout_alignRight="@+id/spinner18"
-            android:layout_alignEnd="@+id/spinner18" />
+            android:entries="@array/bandCode" />
 
         <TextView
             android:text="Short Band Letter"
@@ -147,14 +145,13 @@
             android:id="@+id/textView22" />
 
         <Spinner
-            android:layout_width="match_parent"
+            android:id="@+id/shortBandLet"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:id="@+id/spinner20"
-            android:entries="@array/bandingLocation"
+            android:layout_alignEnd="@+id/tableButton"
+            android:layout_alignRight="@+id/tableButton"
             android:layout_alignTop="@+id/textView22"
-            android:layout_toRightOf="@+id/title"
-            android:layout_alignRight="@+id/editText7"
-            android:layout_alignEnd="@+id/editText7" />
+            android:entries="@array/bandingLocation" />
 
         <TextView
             android:text="Short Band Number"
@@ -179,7 +176,7 @@
             android:id="@+id/textView24" />
 
         <TextView
-            android:text="Bee Tag Number"
+            android:text="BEEtag Number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView24"
@@ -190,11 +187,12 @@
             android:id="@+id/textView25" />
 
         <EditText
-            android:id="@+id/editText2"
-            android:layout_width="200dp"
+            android:id="@+id/beeText"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/textView25"
-            android:layout_toRightOf="@+id/title"
+            android:layout_alignEnd="@+id/tableButton"
+            android:layout_alignRight="@+id/tableButton"
             android:inputType="number"
             android:maxLines="1"
             android:textSize="18sp" />
@@ -211,17 +209,24 @@
             android:textSize="18sp"
             android:id="@+id/textView26" />
 
+        <Button
+            android:id="@+id/ocr_button"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_alignBottom="@+id/textView26"
+            android:layout_alignEnd="@+id/beeText"
+            android:layout_alignRight="@+id/beeText"
+            android:text="Scan"
+            android:textSize="14sp" />
+
         <EditText
-            android:id="@+id/editText3"
-            android:layout_width="200dp"
+            android:id="@+id/rfidText"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/textView26"
-            android:layout_alignLeft="@+id/editText2"
-            android:layout_alignStart="@+id/editText2"
+            android:layout_toStartOf="@+id/ocr_button"
             android:inputType="number"
-            android:maxLines="1"
-            android:layout_alignRight="@+id/editText2"
-            android:layout_alignEnd="@+id/editText2" />
+            android:maxLines="1" />
 
         <TextView
             android:text="Age Code"
@@ -269,112 +274,102 @@
             android:id="@+id/textView30" />
 
         <Spinner
-            android:id="@+id/spinner26"
-            android:layout_width="200dp"
+            android:id="@+id/sexSpin"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_above="@+id/textView29"
-            android:layout_alignLeft="@+id/spinner"
-            android:layout_alignStart="@+id/spinner"
-            android:entries="@array/beetagColor"
-            android:layout_alignRight="@+id/spinner"
-            android:layout_alignEnd="@+id/spinner" />
+            android:layout_alignEnd="@+id/tableButton"
+            android:layout_alignRight="@+id/tableButton"
+            android:entries="@array/beetagColor" />
 
         <Spinner
-            android:id="@+id/spinner"
+            android:id="@+id/ageSpin"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/editText3"
-            android:layout_alignStart="@+id/editText3"
-            android:layout_alignTop="@+id/textView27"
             android:entries="@array/ageCode"
-            android:layout_alignRight="@+id/editText3"
-            android:layout_alignEnd="@+id/editText3" />
+            android:layout_alignBottom="@+id/textView27"
+            android:layout_alignRight="@+id/tableButton"
+            android:layout_alignEnd="@+id/tableButton" />
 
         <Spinner
-            android:id="@+id/spinner2"
+            android:id="@+id/speciesSpin"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/spinner3"
-            android:layout_alignStart="@+id/spinner3"
             android:layout_alignTop="@+id/textView29"
-            android:layout_alignRight="@+id/spinner26"
-            android:layout_alignEnd="@+id/spinner26" />
+            android:layout_alignRight="@+id/tableButton"
+            android:layout_alignEnd="@+id/tableButton" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/bandNum"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_above="@+id/textView25"
-            android:layout_alignLeft="@+id/editText2"
-            android:layout_alignStart="@+id/editText2"
+            android:layout_alignRight="@+id/tableButton"
+            android:layout_alignEnd="@+id/tableButton"
             android:ems="10"
             android:inputType="number" />
 
         <Spinner
-            android:id="@+id/spinner3"
-            android:layout_width="wrap_content"
+            android:id="@+id/poxSpin"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/editText3"
-            android:layout_alignStart="@+id/editText3"
+            android:layout_alignEnd="@+id/tableButton"
+            android:layout_alignRight="@+id/tableButton"
             android:layout_alignTop="@+id/textView30"
-            android:entries="@array/Boolean"
-            android:layout_alignRight="@+id/spinner26"
-            android:layout_alignEnd="@+id/spinner26" />
+            android:entries="@array/Boolean" />
 
         <EditText
-            android:id="@+id/editText7"
-            android:layout_width="200dp"
+            android:id="@+id/shortBandNum"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/editText"
-            android:layout_alignLeft="@+id/editText"
-            android:layout_alignStart="@+id/editText"
+            android:layout_above="@+id/bandNum"
+            android:layout_alignEnd="@+id/tableButton"
+            android:layout_alignRight="@+id/tableButton"
             android:layout_marginBottom="18dp"
-            android:layout_toEndOf="@+id/textView30"
-            android:layout_toRightOf="@+id/textView30"
             android:ems="10"
             android:inputType="textPersonName" />
 
         <Button
-            android:id="@+id/button26"
+            android:id="@+id/tableButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Table View"
-            android:layout_alignBaseline="@+id/button27"
-            android:layout_alignBottom="@+id/button27"
+            android:layout_alignBaseline="@+id/homeButton"
+            android:layout_alignBottom="@+id/homeButton"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:text="Table View" />
 
         <Button
-            android:id="@+id/button27"
+            android:id="@+id/homeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView30"
             android:layout_marginBottom="18dp"
             android:layout_marginTop="18dp"
-            android:text="Scan" />
+            android:text="Home" />
 
         <EditText
-            android:id="@+id/editText10"
-            android:layout_width="100dp"
+            android:id="@+id/dateText"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:focusable="false"
-            android:inputType="textPersonName"
             android:layout_alignBottom="@+id/textView18"
-            android:layout_alignLeft="@+id/spinner15"
-            android:layout_alignStart="@+id/spinner15" />
-
-        <EditText
-            android:id="@+id/editText11"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/tableButton"
+            android:layout_alignRight="@+id/tableButton"
             android:ems="10"
             android:focusable="false"
-            android:inputType="textPersonName"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/timeText"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/textView19"
             android:layout_alignBottom="@+id/textView19"
-            android:layout_alignLeft="@+id/spinner18"
-            android:layout_alignStart="@+id/spinner18" />
+            android:layout_alignRight="@+id/tableButton"
+            android:layout_alignEnd="@+id/tableButton"
+            android:ems="10"
+            android:focusable="false"
+            android:inputType="textPersonName" />
 
 
     </RelativeLayout>

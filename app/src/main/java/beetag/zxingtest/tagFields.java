@@ -1,34 +1,25 @@
 package beetag.zxingtest;
 
-import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.app.Application;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import java.text.SimpleDateFormat;
 import android.view.View.OnClickListener;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
-import java.util.Locale;
-import java.util.logging.LoggingPermission;
 
 /**
  * The tagFields class controls the aspects of the Tag Field screen
  */
 public class tagFields extends AppCompatActivity {
 
-    String[][] stringArray = new String[4][5];
+    //String[][] stringArray = new String[4][5];
     String[][] updateArray;
     /**
      * Displays the formatted tag fields onto the current screen
@@ -42,11 +33,20 @@ public class tagFields extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tag_fields);
 
+        // OCR button
+        Button ocrButton = (Button) findViewById(R.id.ocr_button);
+        ocrButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                Intent OcrCaptureActivity = new Intent(tagFields.this, beetag.zxingtest.ocrreader.OcrCaptureActivity.class);
+                startActivityForResult(OcrCaptureActivity, 2);
+            }
+        });
+
         // Datepicker popup
-        MyEditTextDatePicker fromDate = new MyEditTextDatePicker(this, R.id.editText10);
+        MyEditTextDatePicker fromDate = new MyEditTextDatePicker(this, R.id.dateText);
 
         // Timepicker popup
-        final EditText timePop = (EditText) findViewById(R.id.editText11);
+        final EditText timePop = (EditText) findViewById(R.id.timeText);
         timePop.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -72,29 +72,29 @@ public class tagFields extends AppCompatActivity {
             }
         });
         //Send to Table page
-        Button tableButton = (Button) findViewById(R.id.button26);
+        Button tableButton = (Button) findViewById(R.id.tableButton);
         tableButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent saveValue = new Intent(tagFields.this, tableActivity.class);
-                EditText bandText = (EditText) findViewById(R.id.editText);
+                EditText bandText = (EditText) findViewById(R.id.bandNum);
                 String bandEValue = bandText.getText().toString();
-                EditText beeText = (EditText) findViewById(R.id.editText2);
+                EditText beeText = (EditText) findViewById(R.id.beeText);
                 String beeEValue = beeText.getText().toString();
-                EditText rfidText = (EditText) findViewById(R.id.editText3);
+                EditText rfidText = (EditText) findViewById(R.id.rfidText);
                 String rfidValue = rfidText.getText().toString();
 
-                Spinner ageSpin = (Spinner) findViewById(R.id.spinner);
+                Spinner ageSpin = (Spinner) findViewById(R.id.ageSpin);
                 String ageValue = ageSpin.getSelectedItem().toString();
 
-                Spinner sexSpin = (Spinner) findViewById(R.id.spinner26);
+                Spinner sexSpin = (Spinner) findViewById(R.id.sexSpin);
                 String sexValue = sexSpin.getSelectedItem().toString();
 
-                EditText dateSpin = (EditText) findViewById(R.id.editText10);
-                String dateValue = dateSpin.getText().toString();
+                EditText dateText = (EditText) findViewById(R.id.dateText);
+                String dateValue = dateText.getText().toString();
 
-                EditText timeSpin = (EditText) findViewById(R.id.editText11);
-                String timeValue = timeSpin.getText().toString();
+                EditText timeText = (EditText) findViewById(R.id.timeText);
+                String timeValue = timeText.getText().toString();
 
                 updateArray [i][0] = dateValue;
                 updateArray [i][1] = timeValue;
@@ -113,22 +113,22 @@ public class tagFields extends AppCompatActivity {
             }
         });
 
-        Button mainButton = (Button) findViewById(R.id.button27);
+        Button mainButton = (Button) findViewById(R.id.homeButton);
         mainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent saveValue = new Intent(tagFields.this, MainActivity.class);
-                EditText bandText = (EditText) findViewById(R.id.editText);
+                EditText bandText = (EditText) findViewById(R.id.bandNum);
                 String bandEValue = bandText.getText().toString();
-                EditText beeText = (EditText) findViewById(R.id.editText2);
+                EditText beeText = (EditText) findViewById(R.id.beeText);
                 String beeEValue = beeText.getText().toString();
-                EditText rfidText = (EditText) findViewById(R.id.editText3);
+                EditText rfidText = (EditText) findViewById(R.id.rfidText);
                 String rfidValue = rfidText.getText().toString();
 
-                EditText dateSpin = (EditText) findViewById(R.id.editText10);
+                EditText dateSpin = (EditText) findViewById(R.id.dateText);
                 String dateValue = dateSpin.getText().toString();
 
-                EditText timeSpin = (EditText) findViewById(R.id.editText11);
+                EditText timeSpin = (EditText) findViewById(R.id.timeText);
                 String timeValue = timeSpin.getText().toString();
 
                 updateArray [i][0] = dateValue;
@@ -144,6 +144,17 @@ public class tagFields extends AppCompatActivity {
             }
         });
 
-
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 2) {
+            if(resultCode == RESULT_OK){
+                String result = data.getStringExtra("result");
+                EditText rfidText = (EditText) findViewById(R.id.rfidText);
+
+                rfidText.setText(result);
+            }
+        }
+    }//onActivityResult
 }

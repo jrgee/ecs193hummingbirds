@@ -29,6 +29,7 @@ import android.widget.Button;
 //import android.widget.TextView;
 import android.os.Environment;
 import android.support.v4.content.FileProvider;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import android.Manifest;
@@ -44,7 +45,6 @@ import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -97,9 +97,6 @@ public class OcrCaptureActivity extends AppCompatActivity {
     private ScaleGestureDetector scaleGestureDetector;
     private GestureDetector gestureDetector;
 
-    // A TextToSpeech engine for speaking a String value.
-    private TextToSpeech tts;
-
     /**
      * Initializes the UI and creates the detector pipeline.
      */
@@ -127,24 +124,9 @@ public class OcrCaptureActivity extends AppCompatActivity {
         gestureDetector = new GestureDetector(this, new CaptureGestureListener());
         scaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
 
-        Snackbar.make(mGraphicOverlay, "Tap to Speak. Pinch/Stretch to zoom",
+        Snackbar.make(mGraphicOverlay, "Pinch/Stretch to zoom",
                 Snackbar.LENGTH_LONG)
                 .show();
-
-        // Set up the Text To Speech engine.
-        TextToSpeech.OnInitListener listener =
-                new TextToSpeech.OnInitListener() {
-                    @Override
-                    public void onInit(final int status) {
-                        if (status == TextToSpeech.SUCCESS) {
-                            Log.d("OnInitListener", "Text to speech engine started successfully.");
-                            tts.setLanguage(Locale.US);
-                        } else {
-                            Log.d("OnInitListener", "Error starting the text to speech engine.");
-                        }
-                    }
-                };
-        tts = new TextToSpeech(this.getApplicationContext(), listener);
     }
 
     /**
@@ -367,12 +349,8 @@ public class OcrCaptureActivity extends AppCompatActivity {
                 Log.d(TAG, "captured: " + text.getValue());
                 Intent saveIntent= new Intent(OcrCaptureActivity.this, cameraActivityRfid.class);
                 saveIntent.putExtra("rfid", text.getValue());
-                startActivity(saveIntent);
+                startActivityForResult(saveIntent, 3);
                 Log.d(TAG, "after new intent");
-                //debugInfo.setText("");
-                //Log.d(TAG, "text data is being spoken! " + text.getValue());
-                // Speak the string.
-                //tts.speak(text.getValue(), TextToSpeech.QUEUE_ADD, null, "DEFAULT");
             }
             else {
                 Log.d(TAG, "text data is null");
@@ -447,4 +425,18 @@ public class OcrCaptureActivity extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 3) {
+            if(resultCode == RESULT_OK){
+                String result = data.getStringExtra("result");
+
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("result", result);
+                setResult(RESULT_OK, returnIntent);
+                finish();
+            }
+        }
+    }//onActivityResult
 }
