@@ -230,8 +230,11 @@ public class tableActivity extends AppCompatActivity {
         recapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String[][] sendArray = ((MyApplication)getApplicationContext()).getArray();
-                new NetworkOp().execute(sendArray);
+                int counter = ((MyApplication)getApplicationContext()).getCounter();
+                String[][] sendArray = ((MyApplication) getApplicationContext()).getArray();
+                for ( int currRow = 0; currRow < counter; currRow ++) {
+                    new NetworkOp().execute(sendArray[currRow]);
+                }
             }
         });
     }

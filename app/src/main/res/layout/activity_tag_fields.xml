@@ -33,13 +33,53 @@
             android:layout_alignParentLeft="true" />
 
         <TextView
+            android:text="Recorder ID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="50dp"
+            android:layout_below="@+id/title"
+            android:textSize="18sp"
+            android:id="@+id/textView200" />
+
+        <Spinner
+            android:id="@+id/recorderSpin"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/textView200"
+            android:layout_alignRight="@+id/tableButton"
+            android:layout_alignEnd="@+id/tableButton"
+            android:entries="@array/recorder"/>
+
+        <TextView
+            android:text="Location ID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView200"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="50dp"
+            android:textSize="18sp"
+            android:id="@+id/textView201" />
+
+        <Spinner
+            android:id="@+id/locationSpin"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/textView201"
+            android:layout_alignRight="@+id/tableButton"
+            android:layout_alignEnd="@+id/tableButton"
+            android:entries="@array/bandingLocation"/>
+
+        <TextView
             android:text="Bird Life Status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
             android:textSize="18sp"
             android:id="@+id/textView16"
-            android:layout_below="@+id/title"
+            android:layout_below="@+id/textView201"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
@@ -47,6 +87,7 @@
             android:id="@+id/lifeSpin"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:entries="@array/birdLife"
             android:layout_alignTop="@+id/textView16"
             android:layout_alignRight="@+id/tableButton"
             android:layout_alignEnd="@+id/tableButton" />
@@ -69,7 +110,7 @@
             android:layout_alignEnd="@+id/tableButton"
             android:layout_alignRight="@+id/tableButton"
             android:layout_alignTop="@+id/textView17"
-            android:entries="@array/markerStatus" />
+            android:entries="@array/capture" />
 
         <TextView
             android:text="Date"
@@ -151,7 +192,7 @@
             android:layout_alignEnd="@+id/tableButton"
             android:layout_alignRight="@+id/tableButton"
             android:layout_alignTop="@+id/textView22"
-            android:entries="@array/bandingLocation" />
+            android:entries="@array/shortBandLetter" />
 
         <TextView
             android:text="Short Band Number"
@@ -225,8 +266,9 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/textView26"
             android:layout_toStartOf="@+id/ocr_button"
-            android:inputType="number"
-            android:maxLines="1" />
+            android:inputType="text"
+            android:maxLines="1"
+            android:layout_toLeftOf="@+id/ocr_button" />
 
         <TextView
             android:text="Age Code"
@@ -280,7 +322,7 @@
             android:layout_above="@+id/textView29"
             android:layout_alignEnd="@+id/tableButton"
             android:layout_alignRight="@+id/tableButton"
-            android:entries="@array/beetagColor" />
+            android:entries="@array/sexCode" />
 
         <Spinner
             android:id="@+id/ageSpin"
@@ -295,6 +337,7 @@
             android:id="@+id/speciesSpin"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:entries="@array/speciesCode"
             android:layout_alignTop="@+id/textView29"
             android:layout_alignRight="@+id/tableButton"
             android:layout_alignEnd="@+id/tableButton" />
