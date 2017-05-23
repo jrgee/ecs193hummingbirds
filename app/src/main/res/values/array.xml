@@ -68,20 +68,20 @@
 
     <string-array name="tailBaseColor">
         <item></item>
-        <item> - Not Recorded</item>
+        <item>-Not Recorded</item>
         <item>G  Green</item>
         <item>O  Orange</item>
     </string-array>
 
     <string-array name="bandCode">
         <item></item>
-        <item>0  Unbanded</item>
-        <item>1  New</item>
-        <item>2  Recaptured</item>
-        <item>4  Destroyed Band</item>
-        <item>5  Changed Band</item>
-        <item>7  Same Day Recap</item>
-        <item>8  Lost Band</item>
+        <item>0 Unbanded</item>
+        <item>1 New</item>
+        <item>2 Recaptured</item>
+        <item>3 Destroyed Band</item>
+        <item>4 Changed Band</item>
+        <item>5 Same Day Recap</item>
+        <item>6 Lost Band</item>
     </string-array>
 
     <string-array name="ageCode">
@@ -94,9 +94,9 @@
 
     <string-array name="sexCode">
         <item></item>
-        <item>1  F  Female</item>
-        <item>2  M  Male</item>
-        <item>3  U  Unknown</item>
+        <item>F  Female</item>
+        <item>M  Male</item>
+        <item>U  Unknown</item>
     </string-array>
 
     <string-array name="speciesCode">
@@ -139,7 +139,7 @@
 
     <string-array name="bandingLocation">
         <item></item>
-        <item> - Not Recorded</item>
+        <item>-Not Recorded</item>
         <item>ANT  Hollys Laramie Home</item>
         <item>AP  Arastradero Preserve</item>
         <item>Art-C  Art Craigmills Home</item>

@@ -25,21 +25,32 @@ class NetworkOp extends AsyncTask<String, String, String[]> {
     }
 
     protected void onPostExecute(String[] arrayReceived) {
-        String sendDate = arrayReceived[0];
-        String sendTime = arrayReceived[1];
-        String sendBand = arrayReceived[2];
-        String sendBee = arrayReceived[3];
-        String sendRFID = arrayReceived[4];
-        String sendBandCode = arrayReceived[5];
-        String sendShortLetter = arrayReceived[6];
-        String sendShortBand = arrayReceived[7];
-        String sendSpecies = arrayReceived[8];
-        String sendPox = arrayReceived[9];
-        String sendTailColor = arrayReceived[10];
-        String sendAge = arrayReceived[11];
-        String sendSex = arrayReceived[12];
-        String sendCapture = arrayReceived[13];
-        String sendLifeStatus = arrayReceived[14];
+
+        String sendRecorder = arrayReceived[0];
+        String sendLocation = arrayReceived[1];
+        String sendLifeStatus = arrayReceived[2];
+        String sendCapture = arrayReceived[3];
+        String sendDate = arrayReceived[4];
+        String sendTime = arrayReceived[5];
+        String sendTailColor = arrayReceived[6];
+        String sendBandCode = arrayReceived[7];
+        String sendShortLetter = arrayReceived[8];
+        String sendShortBand = arrayReceived[9];
+        String sendBand = arrayReceived[10];
+        String sendBee = arrayReceived[11];
+        String sendRFID = arrayReceived[12];
+        String sendAge = arrayReceived[13];
+        String sendSex = arrayReceived[14];
+        String sendSpecies = arrayReceived[15];
+        String sendPox = arrayReceived[16];
+
+        String[] recorderSplit = sendRecorder.split(" ");
+        String[] speciesSplit = sendSpecies.split(" ");
+        String[] locationSplit = sendLocation.split(" ");
+        String[] ageSplit = sendAge.split(" ");
+        String[] sexSplit = sendSex.split(" ");
+        String[] tailSplit = sendTailColor.split(" ");
+
 
         URL url = null;
         try {
@@ -54,24 +65,27 @@ class NetworkOp extends AsyncTask<String, String, String[]> {
             conn.setDoOutput(true);
 
             Uri.Builder builder = new Uri.Builder()
+                    .appendQueryParameter("Recorder", recorderSplit[0])
+                    .appendQueryParameter("Location", locationSplit[0])
+                    .appendQueryParameter("LifeStatus", sendLifeStatus)
+                    .appendQueryParameter("CaptureMethod", sendCapture)
                     .appendQueryParameter("Date", sendDate)
                     .appendQueryParameter("Time", sendTime)
-                    .appendQueryParameter("BandNumber", sendBand)
-                    .appendQueryParameter("BEETagNumber", sendBee)
-                    .appendQueryParameter("RFIDNumber", sendRFID)
+                    .appendQueryParameter("TailBaseColor", tailSplit[0])
                     .appendQueryParameter("BandCode", sendBandCode)
                     .appendQueryParameter("ShortBandLetter", sendShortLetter)
                     .appendQueryParameter("ShortBandNumber", sendShortBand)
-                    .appendQueryParameter("SpeciesID", sendSpecies)
-                    .appendQueryParameter("PoxLesions2015", sendPox)
-                    .appendQueryParameter("TailBaseColor", sendTailColor)
-                    .appendQueryParameter("AgeCode", sendAge)
-                    .appendQueryParameter("SexCode", sendSex)
-                    .appendQueryParameter("CaptureMethod", sendCapture)
-                    .appendQueryParameter("LifeStatus", sendLifeStatus);
+                    .appendQueryParameter("BandNumber", sendBand)
+                    .appendQueryParameter("BEETagNumber", sendBee)
+                    .appendQueryParameter("RFIDNumber", sendRFID)
+                    .appendQueryParameter("AgeCode", ageSplit[0])
+                    .appendQueryParameter("SexCode", sexSplit[0])
+                    .appendQueryParameter("SpeciesID", speciesSplit[0])
+                    .appendQueryParameter("PoxLesions2015", sendPox);
+
             String query = builder.build().getEncodedQuery();
 
-            // Log.d("OUTPUT QUERY", query);
+            Log.d("OUTPUT QUERY", query);
             OutputStream os = null;
             os = conn.getOutputStream();
             BufferedWriter writer = null;

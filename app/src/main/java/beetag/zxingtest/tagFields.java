@@ -79,8 +79,10 @@ public class tagFields extends AppCompatActivity {
                 Intent saveValue = new Intent(tagFields.this, tableActivity.class);
                 EditText bandText = (EditText) findViewById(R.id.bandNum);
                 String bandEValue = bandText.getText().toString();
+
                 EditText beeText = (EditText) findViewById(R.id.beeText);
                 String beeEValue = beeText.getText().toString();
+
                 EditText rfidText = (EditText) findViewById(R.id.rfidText);
                 String rfidValue = rfidText.getText().toString();
 
@@ -90,17 +92,59 @@ public class tagFields extends AppCompatActivity {
                 Spinner sexSpin = (Spinner) findViewById(R.id.sexSpin);
                 String sexValue = sexSpin.getSelectedItem().toString();
 
+                Spinner recorderSpin = (Spinner) findViewById(R.id.recorderSpin);
+                String recorder = recorderSpin.getSelectedItem().toString();
+
+                Spinner locationSpin = (Spinner) findViewById(R.id.locationSpin);
+                String location = locationSpin.getSelectedItem().toString();
+
+                Spinner lifeSpin = (Spinner) findViewById(R.id.lifeSpin);
+                String lifeValue = lifeSpin.getSelectedItem().toString();
+
+                Spinner methodSpin = (Spinner) findViewById(R.id.methodSpin);
+                String method = methodSpin.getSelectedItem().toString();
+
+                Spinner tailSpin = (Spinner) findViewById(R.id.tailSpin);
+                String tailBase = tailSpin.getSelectedItem().toString();
+
+                Spinner bandSpin = (Spinner) findViewById(R.id.bandSpin);
+                String bandCode = bandSpin.getSelectedItem().toString();
+
+                Spinner shortSpin = (Spinner) findViewById(R.id.shortBandLet);
+                String shortBL = shortSpin.getSelectedItem().toString();
+
+                Spinner speciesSpin = (Spinner) findViewById(R.id.speciesSpin);
+                String species = speciesSpin.getSelectedItem().toString();
+
+                Spinner poxSpin = (Spinner) findViewById(R.id.poxSpin);
+                String pox = poxSpin.getSelectedItem().toString();
+
+                EditText shortNumSpin = (EditText) findViewById(R.id.shortBandNum);
+                String shortBN = shortNumSpin.getText().toString();
+
                 EditText dateText = (EditText) findViewById(R.id.dateText);
                 String dateValue = dateText.getText().toString();
 
                 EditText timeText = (EditText) findViewById(R.id.timeText);
                 String timeValue = timeText.getText().toString();
 
-                updateArray [i][0] = dateValue;
-                updateArray [i][1] = timeValue;
-                updateArray [i][2] =  bandEValue;
-                updateArray [i][3] = beeEValue;
-                updateArray [i][4] = rfidValue;
+                updateArray [i][0] = recorder;
+                updateArray [i][1] = location;
+                updateArray [i][2] =  lifeValue;
+                updateArray [i][3] = method;
+                updateArray [i][4] = dateValue;
+                updateArray [i][5] = timeValue;
+                updateArray [i][6] = tailBase;
+                updateArray [i][7] =  bandCode;
+                updateArray [i][8] = shortBL;
+                updateArray [i][9] = shortBN;
+                updateArray [i][10] = bandEValue;
+                updateArray [i][11] = beeEValue;
+                updateArray [i][12] = rfidValue;
+                updateArray [i][13] =  ageValue;
+                updateArray [i][14] = sexValue;
+                updateArray [i][15] = species;
+                updateArray [i][16] = pox;
 
                 ((MyApplication)getApplicationContext()).setArray(updateArray);
                 int j = i + 1;
@@ -120,22 +164,72 @@ public class tagFields extends AppCompatActivity {
                 Intent saveValue = new Intent(tagFields.this, MainActivity.class);
                 EditText bandText = (EditText) findViewById(R.id.bandNum);
                 String bandEValue = bandText.getText().toString();
+
                 EditText beeText = (EditText) findViewById(R.id.beeText);
                 String beeEValue = beeText.getText().toString();
+
                 EditText rfidText = (EditText) findViewById(R.id.rfidText);
                 String rfidValue = rfidText.getText().toString();
 
-                EditText dateSpin = (EditText) findViewById(R.id.dateText);
-                String dateValue = dateSpin.getText().toString();
+                Spinner ageSpin = (Spinner) findViewById(R.id.ageSpin);
+                String ageValue = ageSpin.getSelectedItem().toString();
 
-                EditText timeSpin = (EditText) findViewById(R.id.timeText);
-                String timeValue = timeSpin.getText().toString();
+                Spinner sexSpin = (Spinner) findViewById(R.id.sexSpin);
+                String sexValue = sexSpin.getSelectedItem().toString();
 
-                updateArray [i][0] = dateValue;
-                updateArray [i][1] = timeValue;
-                updateArray [i][2] =  bandEValue;
-                updateArray [i][3] = beeEValue;
-                updateArray [i][4] = rfidValue;
+                Spinner recorderSpin = (Spinner) findViewById(R.id.recorderSpin);
+                String recorder = recorderSpin.getSelectedItem().toString();
+
+                Spinner locationSpin = (Spinner) findViewById(R.id.locationSpin);
+                String location = locationSpin.getSelectedItem().toString();
+
+                Spinner lifeSpin = (Spinner) findViewById(R.id.lifeSpin);
+                String lifeValue = lifeSpin.getSelectedItem().toString();
+
+                Spinner methodSpin = (Spinner) findViewById(R.id.methodSpin);
+                String method = methodSpin.getSelectedItem().toString();
+
+                Spinner tailSpin = (Spinner) findViewById(R.id.tailSpin);
+                String tailBase = tailSpin.getSelectedItem().toString();
+
+                Spinner bandSpin = (Spinner) findViewById(R.id.bandSpin);
+                String bandCode = bandSpin.getSelectedItem().toString();
+
+                Spinner shortSpin = (Spinner) findViewById(R.id.shortBandLet);
+                String shortBL = shortSpin.getSelectedItem().toString();
+
+                Spinner speciesSpin = (Spinner) findViewById(R.id.speciesSpin);
+                String species = speciesSpin.getSelectedItem().toString();
+
+                Spinner poxSpin = (Spinner) findViewById(R.id.poxSpin);
+                String pox = poxSpin.getSelectedItem().toString();
+
+                EditText shortNumSpin = (EditText) findViewById(R.id.shortBandNum);
+                String shortBN = shortNumSpin.getText().toString();
+
+                EditText dateText = (EditText) findViewById(R.id.dateText);
+                String dateValue = dateText.getText().toString();
+
+                EditText timeText = (EditText) findViewById(R.id.timeText);
+                String timeValue = timeText.getText().toString();
+
+                updateArray [i][0] = recorder;
+                updateArray [i][1] = location;
+                updateArray [i][2] =  lifeValue;
+                updateArray [i][3] = method;
+                updateArray [i][4] = dateValue;
+                updateArray [i][5] = timeValue;
+                updateArray [i][6] = tailBase;
+                updateArray [i][7] =  bandCode;
+                updateArray [i][8] = shortBL;
+                updateArray [i][9] = shortBN;
+                updateArray [i][10] = bandEValue;
+                updateArray [i][11] = beeEValue;
+                updateArray [i][12] = rfidValue;
+                updateArray [i][13] =  ageValue;
+                updateArray [i][14] = sexValue;
+                updateArray [i][15] = species;
+                updateArray [i][16] = pox;
 
                 ((MyApplication)getApplicationContext()).setArray(updateArray);
                 int j = i + 1;

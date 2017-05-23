@@ -6,7 +6,7 @@ import android.app.Application;
 public class MyApplication extends Application {
 
     private Integer counter = 0;
-    private String[][] globalString = new String [30][5];
+    private String[][] globalString = new String [30][20];
 
     public Integer getCounter() {
         return counter;

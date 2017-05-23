@@ -119,15 +119,12 @@ public class tableActivity extends AppCompatActivity {
 */
         // Add recapture data onto Table
         for (int counter = 0; counter < row; counter ++) {
-            String dateString = arrayReceived[counter][0];
-            String timeString = arrayReceived[counter][1];
-            String bandString = arrayReceived[counter][2];
-            String beeString = arrayReceived[counter][3];
-            String rfidString = arrayReceived[counter][4];
+            String dateString = arrayReceived[counter][4];
+            String timeString = arrayReceived[counter][5];
+            String bandString = arrayReceived[counter][10];
+            String beeString = arrayReceived[counter][11];
+            String rfidString = arrayReceived[counter][12];
 
-            String bandSpace = "  " + bandString;
-            String beeSpace = "  " + beeString;
-            String rfidSpace = "  " + rfidString;
             //String[] ageSplit = ageString.split(" ");
             TableRow tbrow1 = new TableRow(this);
             /*TextView t0v = new TextView(this);
