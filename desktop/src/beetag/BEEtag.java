@@ -160,8 +160,14 @@ public class BEEtag extends javax.swing.JFrame {
         if(fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
             File[] imgFiles = fc.getSelectedFiles();
             convert(imgFiles);
+            
+            //resize columns to fit contents
             TableColumnAdjuster tca = new TableColumnAdjuster(RecordTable);
             tca.adjustColumns();
+            
+            //resize window to fit contents
+            this.setPreferredSize(new java.awt.Dimension(920, 400));
+            this.pack();
         }
     }//GEN-LAST:event_AddImgActionPerformed
 
@@ -175,8 +181,14 @@ public class BEEtag extends javax.swing.JFrame {
         if(fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
             File dir = fc.getSelectedFile();
             convert(dir.listFiles());
+            
+            //resize columns to fit contents
             TableColumnAdjuster tca = new TableColumnAdjuster(RecordTable);
             tca.adjustColumns();
+            
+            //resize window to fit contents
+            this.setPreferredSize(new java.awt.Dimension(920, 400));
+            this.pack();
         }
     }//GEN-LAST:event_AddDirActionPerformed
 
@@ -261,7 +273,7 @@ public class BEEtag extends javax.swing.JFrame {
     
     private void convert(File[] inFiles)
     {
-        for(File imgFile: inFiles){    
+        for(File imgFile: inFiles){
             Image xtImage = new Image(imgFile);
             BufferedImage img = xtImage.getBufferedImage(); //get image to buffered image
 
@@ -310,7 +322,7 @@ public class BEEtag extends javax.swing.JFrame {
                 dec = decode(bits);
                 if(dec != -1) { //found valid tag orientation
                     ArrayList<String> values = new ArrayList<>(); //list of strings to put to table
-                    fillValues(values, bits, dec, xtImage);
+                    fillValues(values, bits, dec, imgFile.getParentFile().getName(), xtImage);
                     
                     records.add(values); //save to records arraylist
 
@@ -341,7 +353,7 @@ public class BEEtag extends javax.swing.JFrame {
                 //show user failed read in table but don't write to csv
                 ArrayList<String> values = new ArrayList<>(); //list of strings to put to table
                 records.add(values); //add empty placeholder to records
-                fillValues(values, bits, dec, xtImage);
+                fillValues(values, bits, dec, imgFile.getParentFile().getName(), xtImage);
 
                 Object[] row = new Object[values.size()+1]; //leave space for thumbnail
 
@@ -429,19 +441,22 @@ public class BEEtag extends javax.swing.JFrame {
         return dec;
     } //decode
     
-    void fillValues(ArrayList<String> values, BitMatrix bits, int dec, Image xtImage)
+    void fillValues(ArrayList<String> values, BitMatrix bits, int dec, String loc, Image xtImage)
     {
         HashMap<Integer, Object> exif = xtImage.getExifTags(); //get EXIF info of image
         double[] gps = xtImage.getGPSCoordinate(); //get 
         
         values.add(bits.toString());
-        //TODO: figure out if this is different from tag ID
+
         if(dec == -1)
             values.add("NONE");
         else
             values.add(Integer.toString(dec)); //id
         
-        values.add(exif.get(0x9003).toString()); //image creation time
+        if(exif.get(0x9003) != null)
+            values.add(exif.get(0x9003).toString()); //image creation time
+        else
+            values.add("NULL");
         
         if(dec == -1){
             values.add("NONE"); //tag code 
@@ -454,7 +469,7 @@ public class BEEtag extends javax.swing.JFrame {
             values.add(Integer.toString(dec)); //tag ID (decimal)
         }
         
-        values.add("NULL"); //location ID
+        values.add(loc); //location ID
         if(gps != null){
             values.add(Double.toString(gps[1])); //latitude
             values.add(Double.toString(gps[0])); //longitude
