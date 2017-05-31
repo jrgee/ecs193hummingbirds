@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.os.StrictMode;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -120,6 +121,7 @@ public class tableActivity extends AppCompatActivity {
         // Add recapture data onto Table
         for (int counter = 0; counter < row; counter ++) {
             String dateString = arrayReceived[counter][4];
+            Log.d("date sent", dateString);
             String timeString = arrayReceived[counter][5];
             String bandString = arrayReceived[counter][10];
             String beeString = arrayReceived[counter][11];
@@ -219,6 +221,10 @@ public class tableActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_table);
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
 
         init();
 
@@ -231,8 +237,20 @@ public class tableActivity extends AppCompatActivity {
                 String[][] sendArray = ((MyApplication) getApplicationContext()).getArray();
                 for ( int currRow = 0; currRow < counter; currRow ++) {
                     new NetworkOp().execute(sendArray[currRow]);
+
                 }
             }
         });
+
+        //Go back to home page
+        Button homeButton = (Button) findViewById(R.id.table_home);
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent saveValue = new Intent(tableActivity.this, MainActivity.class);
+                startActivity(saveValue);
+            }
+        });
+
     }
 }

@@ -69,6 +69,7 @@ public class cameraActivity extends AppCompatActivity {
                 // Upon button press, go to Auxiliary Markers page
                 // TODO: send tag number to proper fields in markers page
                 Intent saveValue = new Intent(cameraActivity.this, tagFields.class);
+                saveValue.putExtra("beetag", decimal);
                 startActivity(saveValue);
             }
         });

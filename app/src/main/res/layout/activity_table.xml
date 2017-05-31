@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    tools:context="beetag.zxingtest.tableActivity">
+<ScrollView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     android:id="@+id/scrollView1"
 
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentLeft="true"
-    android:background="#3d455b"
-    tools:context="beetag.zxingtest.tableActivity">
+    android:background="#3d455b">
+
 
     <HorizontalScrollView
         android:id="@+id/hscrll1"
@@ -33,4 +39,14 @@
 
         </RelativeLayout>
     </HorizontalScrollView>
+
 </ScrollView>
+    <Button
+        android:id="@+id/table_home"
+        android:layout_width="110dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="28dp"
+        android:text="Home"
+        android:layout_below="@+id/scrollView1"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

@@ -1,11 +1,16 @@
 package beetag.zxingtest;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,9 +38,21 @@ public class MainActivity extends AppCompatActivity {
      * transition to the camera screen
      * @param savedInstanceState the data of the current screen
      */
+    private static final int RC_HANDLE_CAMERA_PERM = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Get camera permissions
+        int rc = ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+        if (rc == PackageManager.PERMISSION_GRANTED) {
+            //createCameraSource(autoFocus, useFlash);
+        } else {
+            requestCameraPermission();
+        }
+
+        //Get intrn permissions
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         TextView debug_info = (TextView) findViewById(R.id.debug_info);
@@ -43,15 +60,6 @@ public class MainActivity extends AppCompatActivity {
         final String info= intent.getStringExtra("debugInfo");
         debug_info.setText(info);
 
-        //Send to Recapture page
-        Button recapButton = (Button) findViewById(R.id.button);
-        recapButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent saveValue = new Intent(MainActivity.this, tagFields.class);
-                startActivity(saveValue);
-            }
-        });
 
         Button scanButton = (Button) findViewById(R.id.scan_button);
         scanButton.setOnClickListener(new View.OnClickListener(){
@@ -69,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //draw tag
         Button drawButton = (Button) findViewById(R.id.draw_button);
         drawButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
@@ -76,6 +85,30 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(drawIntent);
             }
         });
+
+        //Send to Recapture page
+        Button recapButton = (Button) findViewById(R.id.recapture_button);
+        recapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent saveValue = new Intent(MainActivity.this, tagFields.class);
+                startActivity(saveValue);
+            }
+        });
+
+        //Send to Recapture page
+        Button tableButton = (Button) findViewById(R.id.table_button);
+        tableButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent tableIntent = new Intent(MainActivity.this, tableActivity.class);
+                Bundle mBundle = new Bundle();
+                mBundle.putSerializable("keyArray", null);
+                tableIntent.putExtras(mBundle);
+                startActivity(tableIntent);
+            }
+        });
+
     }
 
     /**
@@ -262,5 +295,33 @@ public class MainActivity extends AppCompatActivity {
                     str += "1";
 
         return str;
+    }
+
+    private void requestCameraPermission() {
+        Log.w("Main", "Camera permission is not granted. Requesting permission");
+
+        final String[] permissions = new String[]{Manifest.permission.CAMERA};
+
+        if (!ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.CAMERA)) {
+            ActivityCompat.requestPermissions(this, permissions, RC_HANDLE_CAMERA_PERM);
+            return;
+        }
+
+        final Activity thisActivity = this;
+
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ActivityCompat.requestPermissions(thisActivity, permissions,
+                        RC_HANDLE_CAMERA_PERM);
+            }
+        };
+
+       /* Snackbar.make(mGraphicOverlay, R.string.permission_camera_rationale,
+                Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.ok, listener)
+                .show();
+                */
     }
 }

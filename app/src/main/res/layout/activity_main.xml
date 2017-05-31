@@ -14,12 +14,22 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="HummingBirds"
+        android:text="Hummingirds"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="15dp"
         android:textSize="30sp"
         android:id="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/debug_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text="" />
+
 
     <Button
         android:text="Scan Beetag"
@@ -27,7 +37,7 @@
         android:textSize="14sp"
         android:layout_height="60dp"
         android:layout_width="100dp"
-        android:layout_marginTop="108dp"
+        android:layout_marginTop="50dp"
         android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true" />
 
@@ -35,7 +45,7 @@
         android:id="@+id/draw_button"
         android:layout_width="100dp"
         android:layout_height="60dp"
-        android:text="Draw"
+        android:text="Draw Beetag"
         android:textSize="14sp"
         android:layout_below="@+id/scan_button"
         android:layout_alignLeft="@+id/scan_button"
@@ -50,22 +60,23 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:id="@+id/debug_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="38dp"
-        android:text="" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/recapture_button"
         android:layout_width="110dp"
         android:layout_height="60dp"
         android:layout_marginTop="28dp"
         android:text="Recapture"
         android:layout_below="@+id/draw_button"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/table_button"
+        android:layout_width="110dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="28dp"
+        android:text="View Table"
+        android:layout_below="@+id/recapture_button"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

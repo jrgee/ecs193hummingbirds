@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BEETag for Hummingbird</string>
+    <string name="app_name">BEETag for Hummingbirds</string>
     <string name="title_activity_camera">cameraActivity</string>
     <string name="scan">SCAN</string>
     <string name="hummingbirds">Hummingbirds</string>

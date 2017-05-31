@@ -334,7 +334,6 @@ public class OcrCaptureActivity extends AppCompatActivity {
     }
 
     /**
-     * onTap is called to speak the tapped TextBlock, if any, out loud.
      *
      * @param rawX - the raw position of the tap
      * @param rawY - the raw position of the tap.

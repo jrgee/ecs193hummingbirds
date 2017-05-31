@@ -33,6 +33,11 @@ public class tagFields extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tag_fields);
 
+        Intent intent = getIntent();
+        final String beetag= intent.getStringExtra("beetag");
+        EditText beeText = (EditText) findViewById(R.id.beeText);
+        beeText.setText(beetag);
+
         // OCR button
         Button ocrButton = (Button) findViewById(R.id.ocr_button);
         ocrButton.setOnClickListener(new View.OnClickListener(){

@@ -380,7 +380,7 @@
             android:layout_alignBottom="@+id/homeButton"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:text="Table View" />
+            android:text="Add To Table" />
 
         <Button
             android:id="@+id/homeButton"

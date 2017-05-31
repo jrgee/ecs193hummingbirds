@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -23,6 +24,8 @@ class NetworkOp extends AsyncTask<String, String, String[]> {
 
         return arrayReceived;
     }
+
+
 
     protected void onPostExecute(String[] arrayReceived) {
 
@@ -53,10 +56,10 @@ class NetworkOp extends AsyncTask<String, String, String[]> {
 
 
         URL url = null;
+        HttpURLConnection conn = null;
         try {
-            url = new URL("http://data.hummingbirdhealth.org/transfer.aspx");
+            url = new URL("http://data.hummingbirdhealth.org/transfer.aspx/");
 
-            HttpURLConnection conn = null;
             conn = (HttpURLConnection) url.openConnection();
             conn.setReadTimeout(10000);
             conn.setConnectTimeout(15000);
@@ -102,6 +105,8 @@ class NetworkOp extends AsyncTask<String, String, String[]> {
 
         } catch (Exception e){
             e.printStackTrace();
+        }finally {
+            conn.disconnect();
         }
     }
 
