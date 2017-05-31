@@ -67,9 +67,10 @@ public class cameraActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Upon button press, go to Auxiliary Markers page
-                // TODO: send tag number to proper fields in markers page
                 Intent saveValue = new Intent(cameraActivity.this, tagFields.class);
+                //CONFLICT RESOLVED
                 saveValue.putExtra("beetag", decimal);
+
                 startActivity(saveValue);
             }
         });
@@ -99,22 +100,4 @@ public class cameraActivity extends AppCompatActivity {
             }
         });
     }
-/*
-    public void textViewClick(View v){
-
-        // Sets up Copy button process
-        snapView = (TextView) findViewById(R.id.decText);
-        final String decimalValue = snapView.getText().toString();
-        snapView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Copies the decimal value onto clipboard
-                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("label", decimalValue);
-                clipboard.setPrimaryClip(clip);
-            }
-        });
-
-    }
-*/
 }

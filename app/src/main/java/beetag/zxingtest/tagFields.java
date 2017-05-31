@@ -34,9 +34,11 @@ public class tagFields extends AppCompatActivity {
         setContentView(R.layout.activity_tag_fields);
 
         Intent intent = getIntent();
+        //RESOLVED
         final String beetag= intent.getStringExtra("beetag");
         EditText beeText = (EditText) findViewById(R.id.beeText);
         beeText.setText(beetag);
+
 
         // OCR button
         Button ocrButton = (Button) findViewById(R.id.ocr_button);
@@ -76,6 +78,7 @@ public class tagFields extends AppCompatActivity {
 
             }
         });
+
         //Send to Table page
         Button tableButton = (Button) findViewById(R.id.tableButton);
         tableButton.setOnClickListener(new View.OnClickListener() {

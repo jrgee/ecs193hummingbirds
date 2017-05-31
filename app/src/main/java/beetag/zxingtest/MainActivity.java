@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         final String info= intent.getStringExtra("debugInfo");
         debug_info.setText(info);
 
+        //GOT RID OF IT
 
         Button scanButton = (Button) findViewById(R.id.scan_button);
         scanButton.setOnClickListener(new View.OnClickListener(){
