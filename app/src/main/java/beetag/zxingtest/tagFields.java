@@ -33,6 +33,13 @@ public class tagFields extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tag_fields);
 
+        Intent intent = getIntent();
+        final String dec = intent.getStringExtra("tagnum"); //BEEtag decimal from previous page
+        if(!dec.equals("-1")){
+            EditText beeText = (EditText) findViewById(R.id.beeText);
+            beeText.setText(dec);
+        }
+
         // OCR button
         Button ocrButton = (Button) findViewById(R.id.ocr_button);
         ocrButton.setOnClickListener(new View.OnClickListener(){
@@ -71,6 +78,7 @@ public class tagFields extends AppCompatActivity {
 
             }
         });
+
         //Send to Table page
         Button tableButton = (Button) findViewById(R.id.tableButton);
         tableButton.setOnClickListener(new View.OnClickListener() {

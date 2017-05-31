@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent saveValue = new Intent(MainActivity.this, tagFields.class);
+                saveValue.putExtra("tagnum", "-1");
                 startActivity(saveValue);
             }
         });
