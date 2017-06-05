@@ -200,6 +200,8 @@ public class OcrCaptureActivity extends AppCompatActivity {
             // available.  The detectors will automatically become operational once the library
             // downloads complete on device.
             Log.w(TAG, "Detector dependencies are not yet available.");
+            Toast toast = Toast.makeText(this, "OCR not yet available, connect device to internet", Toast.LENGTH_LONG);
+            toast.show();
 
             // Check for low storage.  If there is low storage, the native library will not be
             // downloaded, so detection will not become operational.

@@ -18,6 +18,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.os.StrictMode;
+import android.widget.Toast;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -33,13 +34,19 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class tableActivity extends AppCompatActivity {
 
+
     //int row = ((MyApplication)getApplicationContext()).getCounter();
 
     public void init() {
 
         int row = ((MyApplication)getApplicationContext()).getCounter();
+
+        Intent intent = getIntent();
+        final String fromMain= intent.getStringExtra("fromMain");
+
         String[][] arrayReceived=null;
-        Object[] objectArray = (Object[]) getIntent().getExtras().getSerializable("keyArray");
+        //Object[] objectArray = (Object[]) getIntent().getExtras().getSerializable("keyArray");
+        Object[] objectArray = ((MyApplication)getApplicationContext()).getArray();
         if(objectArray!=null){
             arrayReceived = new String[objectArray.length][];
             for(int i=0;i<objectArray.length;i++){
@@ -119,48 +126,50 @@ public class tableActivity extends AppCompatActivity {
 
 */
         // Add recapture data onto Table
-        for (int counter = 0; counter < row; counter ++) {
-            String dateString = arrayReceived[counter][4];
-            Log.d("date sent", dateString);
-            String timeString = arrayReceived[counter][5];
-            String bandString = arrayReceived[counter][10];
-            String beeString = arrayReceived[counter][11];
-            String rfidString = arrayReceived[counter][12];
+        if(arrayReceived!=null) {
+            for (int counter = 0; counter < row; counter++) {
+                String dateString = arrayReceived[counter][4];
+                Log.d("date sent", dateString);
+                String timeString = arrayReceived[counter][5];
+                String bandString = arrayReceived[counter][10];
+                String beeString = arrayReceived[counter][11];
+                String rfidString = arrayReceived[counter][12];
 
-            //String[] ageSplit = ageString.split(" ");
-            TableRow tbrow1 = new TableRow(this);
+                //String[] ageSplit = ageString.split(" ");
+                TableRow tbrow1 = new TableRow(this);
             /*TextView t0v = new TextView(this);
             int realCount = counter + 1;
             t0v.setText(""+realCount);
             t0v.setTextColor(Color.WHITE);
             t0v.setGravity(Gravity.CENTER);
             tbrow.addView(t0v);*/
-            TextView t1v = new TextView(this);
-            t1v.setText(dateString);
-            t1v.setTextColor(Color.WHITE);
-            t1v.setGravity(Gravity.CENTER);
-            tbrow1.addView(t1v);
-            TextView t2v = new TextView(this);
-            t2v.setText(timeString);
-            t2v.setTextColor(Color.WHITE);
-            t2v.setGravity(Gravity.CENTER);
-            tbrow1.addView(t2v);
-            TextView t3v = new TextView(this);
-            t3v.setText(bandString);
-            t3v.setTextColor(Color.WHITE);
-            t3v.setGravity(Gravity.CENTER);
-            tbrow1.addView(t3v);
-            TextView t4v = new TextView(this);
-            t4v.setText(beeString);
-            t4v.setTextColor(Color.WHITE);
-            t4v.setGravity(Gravity.CENTER);
-            tbrow1.addView(t4v);
-            TextView t5v = new TextView(this);
-            t5v.setText(rfidString);
-            t5v.setTextColor(Color.WHITE);
-            t5v.setGravity(Gravity.CENTER);
-            tbrow1.addView(t5v);
-            stk.addView(tbrow1);
+                TextView t1v = new TextView(this);
+                t1v.setText(dateString);
+                t1v.setTextColor(Color.WHITE);
+                t1v.setGravity(Gravity.CENTER);
+                tbrow1.addView(t1v);
+                TextView t2v = new TextView(this);
+                t2v.setText(timeString);
+                t2v.setTextColor(Color.WHITE);
+                t2v.setGravity(Gravity.CENTER);
+                tbrow1.addView(t2v);
+                TextView t3v = new TextView(this);
+                t3v.setText(bandString);
+                t3v.setTextColor(Color.WHITE);
+                t3v.setGravity(Gravity.CENTER);
+                tbrow1.addView(t3v);
+                TextView t4v = new TextView(this);
+                t4v.setText(beeString);
+                t4v.setTextColor(Color.WHITE);
+                t4v.setGravity(Gravity.CENTER);
+                tbrow1.addView(t4v);
+                TextView t5v = new TextView(this);
+                t5v.setText(rfidString);
+                t5v.setTextColor(Color.WHITE);
+                t5v.setGravity(Gravity.CENTER);
+                tbrow1.addView(t5v);
+                stk.addView(tbrow1);
+            }
         }
 
         // Create spacing between last row and button
@@ -214,6 +223,7 @@ public class tableActivity extends AppCompatActivity {
         stk.addView(tbrow2);
 
 
+
     }
 
     @Override
@@ -236,9 +246,11 @@ public class tableActivity extends AppCompatActivity {
                 int counter = ((MyApplication)getApplicationContext()).getCounter();
                 String[][] sendArray = ((MyApplication) getApplicationContext()).getArray();
                 for ( int currRow = 0; currRow < counter; currRow ++) {
-                    new NetworkOp().execute(sendArray[currRow]);
-
+                    sendArray[currRow][19] = Integer.toString(currRow + 1);
+                    new NetworkOp(getApplicationContext()).execute(sendArray[currRow]);
                 }
+
+
             }
         });
 

@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Send to Recapture page
+        //Send to table view
         Button tableButton = (Button) findViewById(R.id.table_button);
         tableButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 Bundle mBundle = new Bundle();
                 mBundle.putSerializable("keyArray", null);
                 tableIntent.putExtras(mBundle);
+                tableIntent.putExtra("fromMain", 1);
                 startActivity(tableIntent);
             }
         });

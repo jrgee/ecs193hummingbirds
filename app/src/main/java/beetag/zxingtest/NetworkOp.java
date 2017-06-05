@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
+import android.support.v7.app.AppCompatActivity;
+import android.content.Context;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -16,9 +18,13 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
-class NetworkOp extends AsyncTask<String, String, String[]> {
+public class NetworkOp extends AsyncTask<String, String, String[]> {
     //int row = ((MyApplication)getApplicationContext()).getCounter();
     private Exception exception;
+    private Context context;
+
+    public NetworkOp(Context context) { this.context = context; }
+
 
     protected String[] doInBackground(String[] arrayReceived) {
 
@@ -105,8 +111,22 @@ class NetworkOp extends AsyncTask<String, String, String[]> {
 
         } catch (Exception e){
             e.printStackTrace();
+            Log.d("Close connection", "fail");
         }finally {
             conn.disconnect();
+            Log.d("Close connection", "success");
+            Toast toast = Toast.makeText(context , "Line " + arrayReceived[19] + " sent", Toast.LENGTH_SHORT);
+            toast.show();
+            Log.d("full rows", ((MyApplication)context).getCounter().toString());
+            if(Integer.parseInt(arrayReceived[19]) == ((MyApplication)context).getCounter()){
+                toast = Toast.makeText(context , "All Data sent to server", Toast.LENGTH_SHORT);
+                toast.show();
+                ((MyApplication)context).setCounter(0);
+                ((MyApplication)context).setSendCounter(0);
+                ((MyApplication)context).resetArray();
+            }
+
+
         }
     }
 

@@ -161,6 +161,7 @@ public class tagFields extends AppCompatActivity {
                 Bundle mBundle = new Bundle();
                 mBundle.putSerializable("keyArray", updateArray);
                 saveValue.putExtras(mBundle);
+                saveValue.putExtra("fromMain", 0);
                 startActivity(saveValue);
             }
         });
