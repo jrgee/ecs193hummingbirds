@@ -76,8 +76,8 @@ public class drawActivity extends AppCompatActivity {
     }
 
     private CompoundButton.OnCheckedChangeListener SetOnChecked(final int i){
-        final int row = i / 5;
-        final int col = i % 5;
+        final int row = i % 5;
+        final int col = i / 5;
 
         CompoundButton.OnCheckedChangeListener listen = new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
