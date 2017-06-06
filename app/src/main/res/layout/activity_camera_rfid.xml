@@ -35,12 +35,12 @@
         <EditText
             android:id="@+id/codetext"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1.02"
             android:ems="10"
             android:gravity="top"
             android:inputType="textMultiLine"
-            android:maxLines="20"
+            android:maxLines="15"
             android:singleLine="false"
             android:text="0"
             android:textSize="36sp" />
