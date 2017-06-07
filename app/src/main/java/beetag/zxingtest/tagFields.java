@@ -145,6 +145,9 @@ public class tagFields extends AppCompatActivity {
                 EditText timeText = (EditText) findViewById(R.id.timeText);
                 String timeValue = timeText.getText().toString();
 
+                Spinner colorSpin = (Spinner) findViewById(R.id.colorSpin);
+                String beeColor = colorSpin.getSelectedItem().toString();
+
                 updateArray [i][0] = recorder;
                 updateArray [i][1] = location;
                 updateArray [i][2] =  lifeValue;
@@ -162,6 +165,8 @@ public class tagFields extends AppCompatActivity {
                 updateArray [i][14] = sexValue;
                 updateArray [i][15] = species;
                 updateArray [i][16] = pox;
+                updateArray [i][17] = beeColor;
+
 
                 ((MyApplication)getApplicationContext()).setArray(updateArray);
                 int j = i + 1;

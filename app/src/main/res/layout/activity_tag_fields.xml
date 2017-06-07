@@ -315,6 +315,42 @@
             android:textSize="18sp"
             android:id="@+id/textView30" />
 
+        <TextView
+            android:text="BEETag Color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView30"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="50dp"
+            android:textSize="18sp"
+            android:id="@+id/textView31" />
+
+        <TextView
+            android:text="Notes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView31"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="50dp"
+            android:textSize="18sp"
+            android:id="@+id/textView32" />
+
+        <EditText
+            android:id="@+id/noteText"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/textView32"
+            android:layout_alignEnd="@+id/tableButton"
+            android:layout_alignRight="@+id/tableButton"
+            android:ems="10"
+            android:focusable="false"
+            android:inputType="textMultiLine"
+            android:lines="8"
+            android:gravity="top|left"/>
+
+
         <Spinner
             android:id="@+id/sexSpin"
             android:layout_width="150dp"
@@ -361,6 +397,15 @@
             android:layout_alignTop="@+id/textView30"
             android:entries="@array/Boolean" />
 
+        <Spinner
+            android:id="@+id/colorSpin"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/poxSpin"
+            android:layout_alignRight="@+id/poxSpin"
+            android:layout_alignTop="@+id/textView31"
+            android:entries="@array/beeColor" />
+
         <EditText
             android:id="@+id/shortBandNum"
             android:layout_width="150dp"
@@ -376,8 +421,7 @@
             android:id="@+id/tableButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/homeButton"
-            android:layout_alignBottom="@+id/homeButton"
+            android:layout_below="@+id/noteText"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:text="Add To Table" />
@@ -386,7 +430,8 @@
             android:id="@+id/homeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView30"
+            android:layout_alignBottom="@+id/tableButton"
+            android:layout_alignBaseline="@+id/tableButton"
             android:layout_marginBottom="18dp"
             android:layout_marginTop="18dp"
             android:text="Home" />

@@ -84,12 +84,22 @@
         <item>6 Lost Band</item>
     </string-array>
 
+    <string-array name="beeColor">
+        <item></item>
+        <item>W  White</item>
+        <item>R  Red</item>
+        <item>Y  Yellow</item>
+        <item>G  Green</item>
+        <item>B  Blue</item>
+        <item>P  Purple</item>
+    </string-array>
+
     <string-array name="ageCode">
         <item></item>
-        <item>U  Unknown</item>
-        <item>AHY  After Hatch Year</item>
-        <item>HY  Hatch Year</item>
-        <item>SY  Second Year</item>
+        <item>0  U  Unknown</item>
+        <item>1  AHY  After Hatch Year</item>
+        <item>2  HY  Hatch Year</item>
+        <item>5  SY  Second Year</item>
     </string-array>
 
     <string-array name="sexCode">

@@ -53,6 +53,8 @@ public class NetworkOp extends AsyncTask<String, String, String[]> {
         String sendSex = arrayReceived[14];
         String sendSpecies = arrayReceived[15];
         String sendPox = arrayReceived[16];
+        String sendColor = arrayReceived[17];
+
 
         String[] recorderSplit = sendRecorder.split(" ");
         String[] speciesSplit = sendSpecies.split(" ");
@@ -60,6 +62,8 @@ public class NetworkOp extends AsyncTask<String, String, String[]> {
         String[] ageSplit = sendAge.split(" ");
         String[] sexSplit = sendSex.split(" ");
         String[] tailSplit = sendTailColor.split(" ");
+        String[] colorSplit = sendColor.split(" ");
+
 
 
         URL url = null;
@@ -85,9 +89,11 @@ public class NetworkOp extends AsyncTask<String, String, String[]> {
                     .appendQueryParameter("BandCode", sendBandCode)
                     .appendQueryParameter("ShortBandLetter", sendShortLetter)
                     .appendQueryParameter("ShortBandNumber", sendShortBand)
-                    .appendQueryParameter("BandNumber", sendBand)
+                    //.appendQueryParameter("BandNumber", sendBand)
                     .appendQueryParameter("BEETagNumber", sendBee)
                     .appendQueryParameter("RFIDNumber", sendRFID)
+                    .appendQueryParameter("BEETagColor", colorSplit[0])
+
                     .appendQueryParameter("AgeCode", ageSplit[0])
                     .appendQueryParameter("SexCode", sexSplit[0])
                     .appendQueryParameter("SpeciesID", speciesSplit[0])
