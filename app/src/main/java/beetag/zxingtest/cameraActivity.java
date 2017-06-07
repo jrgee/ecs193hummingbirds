@@ -3,6 +3,7 @@ package beetag.zxingtest;
 import android.content.Context;
 import android.content.Intent;
 //import android.graphics.Bitmap;
+import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -37,6 +38,8 @@ public class cameraActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         TextView decStr = (TextView) findViewById(R.id.decText);
 
         // Receive BEEtag data stored in previous activity

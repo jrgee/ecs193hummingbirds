@@ -3,7 +3,9 @@ package beetag.zxingtest;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.design.widget.TabLayout;
 import android.util.Log;
+import android.widget.TableLayout;
 import android.widget.Toast;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Context;
@@ -22,8 +24,12 @@ public class NetworkOp extends AsyncTask<String, String, String[]> {
     //int row = ((MyApplication)getApplicationContext()).getCounter();
     private Exception exception;
     private Context context;
+    private TableLayout stk;
 
-    public NetworkOp(Context context) { this.context = context; }
+    public NetworkOp(Context context, TableLayout stk) {
+        this.context = context;
+        this.stk = stk;
+    }
 
 
     protected String[] doInBackground(String[] arrayReceived) {
@@ -34,7 +40,7 @@ public class NetworkOp extends AsyncTask<String, String, String[]> {
 
 
     protected void onPostExecute(String[] arrayReceived) {
-
+        Toast toast = Toast.makeText(context, "Sending line " + arrayReceived[19], Toast.LENGTH_LONG);
         int success = 0;
         String sendRecorder = arrayReceived[0];
         String sendLocation = arrayReceived[1];
@@ -119,7 +125,8 @@ public class NetworkOp extends AsyncTask<String, String, String[]> {
         } catch (Exception e){
             //e.printStackTrace();
             //Log.d("Close connection", "fail");
-            Toast toast = Toast.makeText(context , "Connection failed", Toast.LENGTH_SHORT);
+            toast.cancel();
+            toast = Toast.makeText(context , "Connection failed", Toast.LENGTH_SHORT);
             toast.show();
         }finally {
             conn.disconnect();
@@ -127,16 +134,21 @@ public class NetworkOp extends AsyncTask<String, String, String[]> {
         }
 
         if(success == 1){
-            Toast toast = Toast.makeText(context , "Line " + arrayReceived[19] + " sent", Toast.LENGTH_SHORT);
+            toast.cancel();
+            toast = Toast.makeText(context , "Line " + arrayReceived[19] + " sent", Toast.LENGTH_SHORT);
             toast.show();
+            int row = Integer.parseInt(arrayReceived[19]);
+            ((MyApplication)context).deleteRow(row-1); //remove from global array
+            stk.removeViewAt(row); //remove from table
 
             //Log.d("full rows", ((MyApplication)context).getCounter().toString());
-            if(Integer.parseInt(arrayReceived[19]) == ((MyApplication)context).getCounter()){
+            if(Integer.parseInt(arrayReceived[19]) == 1){ //if top row sent
+                toast.cancel();
                 toast = Toast.makeText(context , "All data sent to server", Toast.LENGTH_SHORT);
                 toast.show();
                 ((MyApplication)context).setCounter(0);
                 ((MyApplication)context).setSendCounter(0);
-                ((MyApplication)context).resetArray();
+                //((MyApplication)context).resetArray();
             }
 
         }

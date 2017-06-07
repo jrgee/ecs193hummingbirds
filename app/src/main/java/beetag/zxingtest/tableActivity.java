@@ -2,6 +2,7 @@ package beetag.zxingtest;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,7 +22,6 @@ import android.widget.Toast;
 public class tableActivity extends AppCompatActivity {
 
     public void init() {
-
         int row = ((MyApplication)getApplicationContext()).getCounter();
 
         //Intent intent = getIntent();
@@ -41,11 +41,12 @@ public class tableActivity extends AppCompatActivity {
         TableLayout stk = (TableLayout) findViewById(R.id.table_main);
         TableRow tbrow0 = new TableRow(this);
 
-        String headAr[] = {"     Date     ", "     Time     ", "     Band     ", "     BEETag     ", "     RFID     "};
-        int lengthAr[] = new int[5];
-        for(int i=0; i<5; i++) {
+        String headAr[] = {" Delete ", "     Date     ", "     Time     ", "     Band     ", "     BEETag     ", "     RFID     "};
+        int lengthAr[] = new int[6];
+        for(int i=0; i<6; i++) {
             TextView tv0 = new TextView(this);
             tv0.setText(headAr[i]);
+            tv0.setTextSize(18);
             tv0.setTextColor(Color.WHITE);
             tbrow0.addView(tv0);
             lengthAr[i] = tv0.getWidth();
@@ -63,9 +64,22 @@ public class tableActivity extends AppCompatActivity {
                 String rowAr[] = {dateString, timeString, bandString, beeString, rfidString};
 
                 TableRow tbrow1 = new TableRow(this);
-                for(int i=0; i<5; i++){
+
+                Button btn = new Button(this);
+                btn.setText("Delete");
+                btn.setId(counter+1);
+                btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        deleteRow(v.getId()-1);
+                    }
+                });
+                tbrow1.addView(btn);
+
+                for(int i=1; i<6; i++){
                     TextView t1v = new TextView(this);
-                    t1v.setText(rowAr[i]);
+                    t1v.setText(rowAr[i-1]);
+                    t1v.setTextSize(16);
                     t1v.setTextColor(Color.WHITE);
                     t1v.setGravity(Gravity.CENTER);
 
@@ -113,6 +127,8 @@ public class tableActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_table);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -126,19 +142,20 @@ public class tableActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
             Context context = getApplicationContext();
-            Toast toast = Toast.makeText(context, "Sending data...", Toast.LENGTH_LONG);
-            toast.show();
+            TableLayout stk = (TableLayout) findViewById(R.id.table_main);
             int counter = ((MyApplication)context).getCounter();
             if(counter > 0) {
                 String[][] sendArray = ((MyApplication) context).getArray();
-                for (int currRow = 0; currRow < counter; currRow++) {
+
+                //send in reverse order (bottom to top)
+                for (int currRow = counter-1; currRow >= 0; currRow--) {
                     sendArray[currRow][19] = Integer.toString(currRow + 1);
-                    new NetworkOp(context).execute(sendArray[currRow]);
+                    new NetworkOp(context, stk).execute(sendArray[currRow]);
                 }
             }
             else
             {
-                toast = Toast.makeText(context, "No data to send", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(context, "No data to send", Toast.LENGTH_SHORT);
                 toast.show();
             }
             }
@@ -155,5 +172,12 @@ public class tableActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void deleteRow(int row)
+    {
+        ((MyApplication)getApplicationContext()).deleteRow(row);
+        TableLayout stk = (TableLayout) findViewById(R.id.table_main);
+        stk.removeViewAt(row + 1);
     }
 }

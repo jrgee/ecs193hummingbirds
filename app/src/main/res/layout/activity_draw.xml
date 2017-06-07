@@ -227,13 +227,13 @@
 
     <Button
         android:id="@+id/scan_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Scan"
-        tools:layout_editor_absoluteX="139dp"
-        tools:layout_editor_absoluteY="395dp"
         android:layout_below="@+id/gridLayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="49dp" />
+        android:layout_marginTop="49dp"
+        android:text="Scan"
+        tools:layout_editor_absoluteX="139dp"
+        tools:layout_editor_absoluteY="395dp" />
 
 </RelativeLayout>

@@ -2,6 +2,10 @@ package beetag.zxingtest;
 
 import android.app.Application;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
+
 
 public class MyApplication extends Application {
 
@@ -43,5 +47,12 @@ public class MyApplication extends Application {
 
     public void resetArray(){
         globalString = new String [50][20];
+    }
+
+    public void deleteRow(int row) {
+        ArrayList<String[]> temp = new ArrayList<>(Arrays.asList(globalString));
+        temp.remove(row);
+        globalString = temp.toArray(globalString);
+        counter -= 1;
     }
 }
