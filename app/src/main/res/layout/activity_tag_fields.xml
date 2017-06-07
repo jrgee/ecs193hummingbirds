@@ -345,7 +345,6 @@
             android:layout_alignEnd="@+id/tableButton"
             android:layout_alignRight="@+id/tableButton"
             android:ems="10"
-            android:focusable="false"
             android:inputType="textMultiLine"
             android:lines="8"
             android:gravity="top|left"/>
