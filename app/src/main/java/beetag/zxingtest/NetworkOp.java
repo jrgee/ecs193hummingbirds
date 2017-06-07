@@ -95,7 +95,7 @@ public class NetworkOp extends AsyncTask<String, String, String[]> {
 
             String query = builder.build().getEncodedQuery();
 
-            Log.d("OUTPUT QUERY", query);
+            //Log.d("OUTPUT QUERY", query);
             OutputStream os = null;
             os = conn.getOutputStream();
             BufferedWriter writer = null;
@@ -104,29 +104,28 @@ public class NetworkOp extends AsyncTask<String, String, String[]> {
             writer.write(query);
             writer.flush();
             writer.close();
-
             os.close();
-
 
             conn.connect();
             success = 1;
 
         } catch (Exception e){
-            e.printStackTrace();
-            Log.d("Close connection", "fail");
+            //e.printStackTrace();
+            //Log.d("Close connection", "fail");
             Toast toast = Toast.makeText(context , "Connection failed", Toast.LENGTH_SHORT);
             toast.show();
         }finally {
             conn.disconnect();
-            Log.d("Close connection", "success");
+            //Log.d("Close connection", "success");
         }
 
         if(success == 1){
             Toast toast = Toast.makeText(context , "Line " + arrayReceived[19] + " sent", Toast.LENGTH_SHORT);
             toast.show();
-            Log.d("full rows", ((MyApplication)context).getCounter().toString());
+
+            //Log.d("full rows", ((MyApplication)context).getCounter().toString());
             if(Integer.parseInt(arrayReceived[19]) == ((MyApplication)context).getCounter()){
-                toast = Toast.makeText(context , "All Data sent to server", Toast.LENGTH_SHORT);
+                toast = Toast.makeText(context , "All data sent to server", Toast.LENGTH_SHORT);
                 toast.show();
                 ((MyApplication)context).setCounter(0);
                 ((MyApplication)context).setSendCounter(0);

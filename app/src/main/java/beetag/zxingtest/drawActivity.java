@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 import android.widget.CompoundButton;
 import 	android.graphics.drawable.Drawable;
@@ -52,9 +53,14 @@ public class drawActivity extends AppCompatActivity {
                     }
                 }
                 if (dec == -1) {
+                    Toast toast = Toast.makeText(context, "Invalid BEEtag", Toast.LENGTH_SHORT);
+                    toast.show();
+                    /*
                     Intent saveIntent= new Intent(drawActivity.this, MainActivity.class);
                     saveIntent.putExtra("debugInfo", "BEEtag invalid");
                     startActivity(saveIntent);
+                    finish();
+                    */
                 }
             }
         });

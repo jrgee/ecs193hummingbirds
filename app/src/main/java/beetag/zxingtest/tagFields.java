@@ -33,12 +33,12 @@ public class tagFields extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         final int i = ((MyApplication)getApplicationContext()).getCounter();
         updateArray = ((MyApplication)getApplicationContext()).getArray();
-        Log.d("myTag", ""+i);
+        //Log.d("myTag", ""+i);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tag_fields);
 
         Intent intent = getIntent();
-        final String beetag= intent.getStringExtra("beetag");
+        final String beetag = intent.getStringExtra("beetag");
         EditText beeText = (EditText) findViewById(R.id.beeText);
         beeText.setText(beetag);
 
@@ -170,8 +170,9 @@ public class tagFields extends AppCompatActivity {
                 Bundle mBundle = new Bundle();
                 mBundle.putSerializable("keyArray", updateArray);
                 saveValue.putExtras(mBundle);
-                saveValue.putExtra("fromMain", 0);
+                //saveValue.putExtra("fromMain", 0);
                 startActivity(saveValue);
+                finish();
             }
         });
 
@@ -179,8 +180,9 @@ public class tagFields extends AppCompatActivity {
         mainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent saveValue = new Intent(tagFields.this, MainActivity.class);
-                startActivity(saveValue);
+                //Intent saveValue = new Intent(tagFields.this, MainActivity.class);
+                //startActivity(saveValue);
+                finish();
             }
         });
 

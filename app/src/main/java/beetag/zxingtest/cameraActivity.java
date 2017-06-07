@@ -68,10 +68,10 @@ public class cameraActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Upon button press, go to Auxiliary Markers page
                 Intent saveValue = new Intent(cameraActivity.this, tagFields.class);
-                //CONFLICT RESOLVED
                 saveValue.putExtra("beetag", decimal);
 
                 startActivity(saveValue);
+                finish();
             }
         });
 
