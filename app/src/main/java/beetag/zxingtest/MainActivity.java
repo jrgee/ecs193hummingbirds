@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.os.Environment;
 import android.support.v4.content.FileProvider;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.zxing.common.*;
 import com.google.zxing.*;
@@ -65,16 +66,21 @@ public class MainActivity extends AppCompatActivity {
         Button scanButton = (Button) findViewById(R.id.scan_button);
         scanButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
+                int rc = ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA);
+                if (rc == PackageManager.PERMISSION_GRANTED) {
+                    //open built-in Android camera and save temporary image
+                    File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "scan.jpg");
+                    Uri outputFileUri = FileProvider.getUriForFile(MainActivity.this,
+                            BuildConfig.APPLICATION_ID + ".provider",
+                            file);
 
-                //open built-in Android camera and save temporary image
-                File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "scan.jpg");
-                Uri outputFileUri = FileProvider.getUriForFile(MainActivity.this,
-                        BuildConfig.APPLICATION_ID + ".provider",
-                        file);
-
-                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-                startActivityForResult(cameraIntent, 1);
+                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+                    startActivityForResult(cameraIntent, 1);
+                }else{
+                    Toast toast = Toast.makeText(getApplicationContext(), "Camera Permissions Denied", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
             }
         });
 
@@ -172,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
-                //Log.d("Partial bits", bits.toString());
+                Log.d("Partial bits", bits.toString());
             } catch (Exception e) {
                 //couldn't find code in image
                 Log.d("no code found", x + ", " + y);

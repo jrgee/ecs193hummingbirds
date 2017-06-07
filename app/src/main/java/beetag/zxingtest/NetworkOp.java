@@ -35,6 +35,7 @@ public class NetworkOp extends AsyncTask<String, String, String[]> {
 
     protected void onPostExecute(String[] arrayReceived) {
 
+        int success = 0;
         String sendRecorder = arrayReceived[0];
         String sendLocation = arrayReceived[1];
         String sendLifeStatus = arrayReceived[2];
@@ -108,13 +109,19 @@ public class NetworkOp extends AsyncTask<String, String, String[]> {
 
 
             conn.connect();
+            success = 1;
 
         } catch (Exception e){
             e.printStackTrace();
             Log.d("Close connection", "fail");
+            Toast toast = Toast.makeText(context , "Connection failed", Toast.LENGTH_SHORT);
+            toast.show();
         }finally {
             conn.disconnect();
             Log.d("Close connection", "success");
+        }
+
+        if(success == 1){
             Toast toast = Toast.makeText(context , "Line " + arrayReceived[19] + " sent", Toast.LENGTH_SHORT);
             toast.show();
             Log.d("full rows", ((MyApplication)context).getCounter().toString());
@@ -125,7 +132,6 @@ public class NetworkOp extends AsyncTask<String, String, String[]> {
                 ((MyApplication)context).setSendCounter(0);
                 ((MyApplication)context).resetArray();
             }
-
 
         }
     }
