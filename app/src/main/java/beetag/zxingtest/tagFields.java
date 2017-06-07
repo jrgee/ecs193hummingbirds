@@ -148,6 +148,9 @@ public class tagFields extends AppCompatActivity {
                 Spinner colorSpin = (Spinner) findViewById(R.id.colorSpin);
                 String beeColor = colorSpin.getSelectedItem().toString();
 
+                EditText noteText = (EditText) findViewById(R.id.noteText);
+                String noteValue = noteText.getText().toString();
+
                 updateArray [i][0] = recorder;
                 updateArray [i][1] = location;
                 updateArray [i][2] =  lifeValue;
@@ -166,6 +169,8 @@ public class tagFields extends AppCompatActivity {
                 updateArray [i][15] = species;
                 updateArray [i][16] = pox;
                 updateArray [i][17] = beeColor;
+                updateArray [i][18] = noteValue;
+
 
 
                 ((MyApplication)getApplicationContext()).setArray(updateArray);

@@ -54,7 +54,7 @@ public class NetworkOp extends AsyncTask<String, String, String[]> {
         String sendSpecies = arrayReceived[15];
         String sendPox = arrayReceived[16];
         String sendColor = arrayReceived[17];
-
+        String sendNote = arrayReceived[18];
 
         String[] recorderSplit = sendRecorder.split(" ");
         String[] speciesSplit = sendSpecies.split(" ");
@@ -97,7 +97,8 @@ public class NetworkOp extends AsyncTask<String, String, String[]> {
                     .appendQueryParameter("AgeCode", ageSplit[0])
                     .appendQueryParameter("SexCode", sexSplit[0])
                     .appendQueryParameter("SpeciesID", speciesSplit[0])
-                    .appendQueryParameter("PoxLesions2015", sendPox);
+                    .appendQueryParameter("PoxLesions2015", sendPox)
+                    .appendQueryParameter("Notes", sendNote);
 
             String query = builder.build().getEncodedQuery();
 
