@@ -10,10 +10,7 @@ import java.util.Arrays;
 public class MyApplication extends Application {
 
     private Integer counter = 0;
-
-
     private int sendCounter = 0;
-
     private String[][] globalString = new String [50][20];
 
     public Integer getCounter() {
@@ -35,7 +32,6 @@ public class MyApplication extends Application {
     public void addSendCounter() {
         sendCounter = sendCounter + 1;
     }
-
 
     public String[][] getArray(){
         return globalString;

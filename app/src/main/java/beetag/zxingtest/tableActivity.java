@@ -179,5 +179,13 @@ public class tableActivity extends AppCompatActivity {
         ((MyApplication)getApplicationContext()).deleteRow(row);
         TableLayout stk = (TableLayout) findViewById(R.id.table_main);
         stk.removeViewAt(row + 1);
+
+        int total = ((MyApplication)getApplicationContext()).getCounter();
+
+        //decrement ID of all buttons after this one by 1 to maintain proper order
+        for(int i=row+2; i<=total+1; i++){
+            Button btn = (Button) findViewById(i);
+            btn.setId(i-1);
+        }
     }
 }
