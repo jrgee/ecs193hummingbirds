@@ -52,7 +52,6 @@ public class BEEtag extends javax.swing.JFrame {
         AddDir = new javax.swing.JMenuItem();
         SaveAs = new javax.swing.JMenuItem();
         Close = new javax.swing.JMenuItem();
-        EditMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -119,9 +118,6 @@ public class BEEtag extends javax.swing.JFrame {
 
         jMenuBar1.add(FileMenu);
 
-        EditMenu.setText("Edit");
-        jMenuBar1.add(EditMenu);
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -166,7 +162,7 @@ public class BEEtag extends javax.swing.JFrame {
             tca.adjustColumns();
             
             //resize window to fit contents
-            this.setPreferredSize(new java.awt.Dimension(920, 400));
+            this.setPreferredSize(new java.awt.Dimension(1050, 400));
             this.pack();
         }
     }//GEN-LAST:event_AddImgActionPerformed
@@ -187,7 +183,7 @@ public class BEEtag extends javax.swing.JFrame {
             tca.adjustColumns();
             
             //resize window to fit contents
-            this.setPreferredSize(new java.awt.Dimension(920, 400));
+            this.setPreferredSize(new java.awt.Dimension(1050, 400));
             this.pack();
         }
     }//GEN-LAST:event_AddDirActionPerformed
@@ -575,7 +571,6 @@ public class BEEtag extends javax.swing.JFrame {
     private javax.swing.JMenuItem AddDir;
     private javax.swing.JMenuItem AddImg;
     private javax.swing.JMenuItem Close;
-    private javax.swing.JMenu EditMenu;
     private javax.swing.JMenu FileMenu;
     private javax.swing.JMenuItem New;
     private javax.swing.JTable RecordTable;
