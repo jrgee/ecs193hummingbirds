@@ -3,6 +3,7 @@ package beetag.zxingtest;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -45,17 +46,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         //Get camera permissions
         int rc = ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
-        if (rc == PackageManager.PERMISSION_GRANTED) {
+        if (rc != PackageManager.PERMISSION_GRANTED) {
             //createCameraSource(autoFocus, useFlash);
-        } else {
+        //} else {
             requestCameraPermission();
         }
 
-        //Get intrn permissions
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         TextView debug_info = (TextView) findViewById(R.id.debug_info);
         Intent intent = getIntent();
         final String info= intent.getStringExtra("debugInfo");

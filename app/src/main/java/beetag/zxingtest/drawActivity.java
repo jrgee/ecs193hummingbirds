@@ -2,6 +2,7 @@ package beetag.zxingtest;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.v4.content.ContextCompat;
 
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,8 @@ public class drawActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_draw);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         context = getApplicationContext();
         white = ContextCompat.getDrawable(context,R.drawable.white);
         black = ContextCompat.getDrawable(context,R.drawable.black);

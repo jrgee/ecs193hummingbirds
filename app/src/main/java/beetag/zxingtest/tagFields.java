@@ -3,6 +3,7 @@ package beetag.zxingtest;
 import android.Manifest;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -36,6 +37,7 @@ public class tagFields extends AppCompatActivity {
         //Log.d("myTag", ""+i);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tag_fields);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Intent intent = getIntent();
         final String beetag = intent.getStringExtra("beetag");
