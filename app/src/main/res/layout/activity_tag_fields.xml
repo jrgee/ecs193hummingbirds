@@ -240,7 +240,7 @@
 
 
         <TextView
-            android:text="RFID Number"
+            android:text="RFID Decimal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView25"
@@ -249,6 +249,28 @@
             android:layout_marginTop="50dp"
             android:textSize="18sp"
             android:id="@+id/textView26" />
+
+        <TextView
+            android:text="RFID Hex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView26"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="50dp"
+            android:textSize="18sp"
+            android:id="@+id/textView33" />
+
+        <EditText
+            android:id="@+id/rfidHex"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textView33"
+            android:layout_alignEnd="@+id/tableButton"
+            android:layout_alignRight="@+id/tableButton"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/ocr_button"
@@ -274,7 +296,7 @@
             android:text="Age Code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView26"
+            android:layout_below="@+id/textView33"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginTop="50dp"

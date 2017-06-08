@@ -151,6 +151,9 @@ public class tagFields extends AppCompatActivity {
                 EditText noteText = (EditText) findViewById(R.id.noteText);
                 String noteValue = noteText.getText().toString();
 
+                EditText rfidHexText = (EditText) findViewById(R.id.rfidHex);
+                String rfidHexValue = noteText.getText().toString();
+
                 updateArray [i][0] = recorder;
                 updateArray [i][1] = location;
                 updateArray [i][2] =  lifeValue;
@@ -170,6 +173,7 @@ public class tagFields extends AppCompatActivity {
                 updateArray [i][16] = pox;
                 updateArray [i][17] = beeColor;
                 updateArray [i][18] = noteValue;
+                updateArray [i][19] = rfidHexValue;
 
 
 

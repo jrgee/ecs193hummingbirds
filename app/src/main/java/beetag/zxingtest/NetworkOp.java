@@ -55,6 +55,7 @@ public class NetworkOp extends AsyncTask<String, String, String[]> {
         String sendPox = arrayReceived[16];
         String sendColor = arrayReceived[17];
         String sendNote = arrayReceived[18];
+        String sendRFIDHex = arrayReceived[19];
 
         String[] recorderSplit = sendRecorder.split(" ");
         String[] speciesSplit = sendSpecies.split(" ");
@@ -92,6 +93,7 @@ public class NetworkOp extends AsyncTask<String, String, String[]> {
                     //.appendQueryParameter("BandNumber", sendBand)
                     .appendQueryParameter("BEETagNumber", sendBee)
                     .appendQueryParameter("RFIDNumber", sendRFID)
+                    .appendQueryParameter("RFIDNumberHex", sendRFIDHex)
                     .appendQueryParameter("BEETagColor", colorSplit[0])
 
                     .appendQueryParameter("AgeCode", ageSplit[0])
@@ -102,7 +104,7 @@ public class NetworkOp extends AsyncTask<String, String, String[]> {
 
             String query = builder.build().getEncodedQuery();
 
-            //Log.d("OUTPUT QUERY", query);
+            Log.d("OUTPUT QUERY", query);
             OutputStream os = null;
             os = conn.getOutputStream();
             BufferedWriter writer = null;
