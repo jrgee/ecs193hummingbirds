@@ -70,6 +70,7 @@ public class NetworkOp extends AsyncTask<String, String, String[]> {
         String[] sexSplit = sendSex.split(" ");
         String[] tailSplit = sendTailColor.split(" ");
         String[] colorSplit = sendColor.split(" ");
+        String[] bandCodeSplit = sendBandCode.split(" ");
 
 
 
@@ -93,7 +94,7 @@ public class NetworkOp extends AsyncTask<String, String, String[]> {
                     .appendQueryParameter("Date", sendDate)
                     .appendQueryParameter("Time", sendTime)
                     .appendQueryParameter("TailBaseColor", tailSplit[0])
-                    .appendQueryParameter("BandCode", sendBandCode)
+                    .appendQueryParameter("BandCode", bandCodeSplit[0])
                     .appendQueryParameter("ShortBandLetter", sendShortLetter)
                     .appendQueryParameter("ShortBandNumber", sendShortBand)
                     //.appendQueryParameter("BandNumber", sendBand)
